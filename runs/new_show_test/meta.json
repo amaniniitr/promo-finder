@@ -1,0 +1,74 @@
+{
+  "version": "v2",
+  "generated": "2026-11-07T04:25:56",
+  "configured_models": {
+    "tag": "vertex/gemini-3.5-flash",
+    "screen": "vertex/gemini-3.1-flash-lite",
+    "rank": "vertex/gemini-3.5-flash"
+  },
+  "models_actually_used": {
+    "tag": {
+      "vertex/gemini-3.5-flash": 4
+    },
+    "screen": {},
+    "rank": {}
+  },
+  "fallback_calls": 0,
+  "episodes": 4,
+  "candidates": 23,
+  "rule_violations": 0,
+  "story_duplicates_removed": 17,
+  "ranked": 6,
+  "shortlist_size": 6,
+  "pairwise": {
+    "pairs_asked_both_ways": 15,
+    "position_consistency": 0.667,
+    "flip_rate": 0.333,
+    "first_position_win_rate": 0.467,
+    "verdicts": 30
+  },
+  "judge": "jev",
+  "jev_usage": {
+    "requests": 76,
+    "cached": 0,
+    "input_tokens": 92326,
+    "seconds": 26.47762441635132,
+    "cost_usd": 0.00388,
+    "model": "jev-1.14.0"
+  },
+  "llm_tokens_by_model": {
+    "vertex/gemini-3.5-flash": [
+      11583,
+      16227
+    ]
+  },
+  "posting_plan": {
+    "plan": [],
+    "hold": [
+      {
+        "id": "X03-E03E04",
+        "reason": "This clip must be held because its spoiler risk is 9.1, which is above the threshold of 5.0, as it reveals whether Julian survives his brother's deadly betrayal."
+      },
+      {
+        "id": "E03-W1",
+        "reason": "This clip must be held because its spoiler risk is 9.7, which is above the threshold of 5.0, as it reveals a supposedly dead murder victim walking through the door."
+      },
+      {
+        "id": "X01-E01E02",
+        "reason": "This clip must be held because its spoiler risk is 9.3, which is above the threshold of 5.0, as it reveals a pregnancy twist that upends the corporate power struggle."
+      },
+      {
+        "id": "E01-W3",
+        "reason": "This clip must be held because its spoiler risk is 9.7, which is above the threshold of 5.0, as it reveals the missing scar that exposes the impostor's true identity."
+      },
+      {
+        "id": "E02-W2",
+        "reason": "This clip must be held because its spoiler risk is 7.4, which is above the threshold of 5.0, as it reveals the answer to the question of Carter's true loyalty."
+      },
+      {
+        "id": "E01-W4",
+        "reason": "This clip must be held because its spoiler risk is 5.8, which is above the threshold of 5.0, as it reveals how Victoria handles the dangerous impostor."
+      }
+    ]
+  }
+}

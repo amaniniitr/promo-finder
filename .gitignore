@@ -1,0 +1,11 @@
+.venv/
+.cache/
+.env
+__pycache__/
+*.log
+.DS_Store
+# Kuku's input pack and every run on it are confidential: share runs/v3_final via a private link only.
+I Married a Broken Soldier*/
+runs/*
+!runs/new_show_test/
+experiments/*.json

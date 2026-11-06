@@ -1,0 +1,362 @@
+{
+  "meta": {
+    "version": "v2",
+    "generated": "2026-11-07T04:25:56",
+    "configured_models": {
+      "tag": "vertex/gemini-3.5-flash",
+      "screen": "vertex/gemini-3.1-flash-lite",
+      "rank": "vertex/gemini-3.5-flash"
+    },
+    "models_actually_used": {
+      "tag": {
+        "vertex/gemini-3.5-flash": 4
+      },
+      "screen": {},
+      "rank": {}
+    },
+    "fallback_calls": 0,
+    "episodes": 4,
+    "candidates": 23,
+    "rule_violations": 0,
+    "story_duplicates_removed": 17,
+    "ranked": 6,
+    "shortlist_size": 6,
+    "pairwise": {
+      "pairs_asked_both_ways": 15,
+      "position_consistency": 0.667,
+      "flip_rate": 0.333,
+      "first_position_win_rate": 0.467,
+      "verdicts": 30
+    },
+    "judge": "jev",
+    "jev_usage": {
+      "requests": 76,
+      "cached": 0,
+      "input_tokens": 92326,
+      "seconds": 26.47762441635132,
+      "cost_usd": 0.00388,
+      "model": "jev-1.14.0"
+    },
+    "llm_tokens_by_model": {
+      "vertex/gemini-3.5-flash": [
+        11583,
+        16227
+      ]
+    },
+    "posting_plan": {
+      "plan": [],
+      "hold": [
+        {
+          "id": "X03-E03E04",
+          "reason": "This clip must be held because its spoiler risk is 9.1, which is above the threshold of 5.0, as it reveals whether Julian survives his brother's deadly betrayal."
+        },
+        {
+          "id": "E03-W1",
+          "reason": "This clip must be held because its spoiler risk is 9.7, which is above the threshold of 5.0, as it reveals a supposedly dead murder victim walking through the door."
+        },
+        {
+          "id": "X01-E01E02",
+          "reason": "This clip must be held because its spoiler risk is 9.3, which is above the threshold of 5.0, as it reveals a pregnancy twist that upends the corporate power struggle."
+        },
+        {
+          "id": "E01-W3",
+          "reason": "This clip must be held because its spoiler risk is 9.7, which is above the threshold of 5.0, as it reveals the missing scar that exposes the impostor's true identity."
+        },
+        {
+          "id": "E02-W2",
+          "reason": "This clip must be held because its spoiler risk is 7.4, which is above the threshold of 5.0, as it reveals the answer to the question of Carter's true loyalty."
+        },
+        {
+          "id": "E01-W4",
+          "reason": "This clip must be held because its spoiler risk is 5.8, which is above the threshold of 5.0, as it reveals how Victoria handles the dangerous impostor."
+        }
+      ]
+    }
+  },
+  "promos": [
+    {
+      "id": "X03-E03E04",
+      "kind": "cross",
+      "title": "cross-episode Ep3 -> Ep4",
+      "segments": [
+        {
+          "episode": 3,
+          "start_beat": "E03-B014",
+          "end_beat": "E03-B014",
+          "start": 39.6,
+          "end": 52.5
+        },
+        {
+          "episode": 4,
+          "start_beat": "E04-B036",
+          "end_beat": "E04-B036",
+          "start": 52.1,
+          "end": 95.0
+        }
+      ],
+      "hook_beat": "E03-B014",
+      "hook": "The clip opens with a tight shot of Victoria turning and aggressively slapping Carter across the face.",
+      "cliffhanger": "Will Leo attack Julian with the syringe now that they are locked alone in the room together?",
+      "why": "A viewer will stop for the sudden physical violence of the slap and need the next episode to see if Julian can survive his brother's deadly betrayal.",
+      "picker_score": 9.0,
+      "hook_strength": 9.0,
+      "cliff_strength": 10.0,
+      "picker_model": "vertex/gemini-3.5-flash",
+      "judge_model": "jev-1.14.0",
+      "duration": 55.8,
+      "flags": [],
+      "fixes": [],
+      "judge": {
+        "hook": 9.93,
+        "cliffhanger": 9.97,
+        "standalone": 6.68,
+        "intensity": 9.96,
+        "spoiler_risk": 9.12,
+        "would_post": true,
+        "verdict": "Jev rubric (min confidence 0.59)",
+        "issues": ""
+      },
+      "screen_score": 8.364,
+      "screen_samples": [
+        8.341,
+        8.388
+      ],
+      "bt": 0.685,
+      "record": "4-0-1",
+      "final_score": 8.36,
+      "rank": 1
+    },
+    {
+      "id": "E03-W1",
+      "kind": "single",
+      "title": "00:39.60 hook -> cliff",
+      "segments": [
+        {
+          "episode": 3,
+          "start_beat": "E03-B014",
+          "end_beat": "E03-B030",
+          "start": 39.6,
+          "end": 89.0
+        }
+      ],
+      "hook_beat": "E03-B014",
+      "hook": "The clip opens with a tight shot of Victoria turning and aggressively slapping Carter across the face.",
+      "cliffhanger": "How will Victoria react to the sudden appearance of Julian, who has an identical face to Leo but with a deep scar?",
+      "why": "The opening slap grabs immediate attention, and the final reveal of a supposedly dead murder victim walking through the door forces the viewer to watch the next episode to see the confrontation.",
+      "picker_score": 10.0,
+      "hook_strength": 9.0,
+      "cliff_strength": 10.0,
+      "picker_model": "vertex/gemini-3.5-flash",
+      "judge_model": "jev-1.14.0",
+      "duration": 49.4,
+      "flags": [],
+      "fixes": [],
+      "judge": {
+        "hook": 9.96,
+        "cliffhanger": 9.8,
+        "standalone": 7.42,
+        "intensity": 10.0,
+        "spoiler_risk": 9.73,
+        "would_post": true,
+        "verdict": "Jev rubric (min confidence 0.48)",
+        "issues": ""
+      },
+      "screen_score": 8.292,
+      "screen_samples": [
+        8.263,
+        8.321
+      ],
+      "bt": 0.4478,
+      "record": "4-0-1",
+      "final_score": 8.29,
+      "rank": 2
+    },
+    {
+      "id": "X01-E01E02",
+      "kind": "cross",
+      "title": "cross-episode Ep1 -> Ep2",
+      "segments": [
+        {
+          "episode": 1,
+          "start_beat": "E01-B009",
+          "end_beat": "E01-B009",
+          "start": 27.6,
+          "end": 42.5
+        },
+        {
+          "episode": 2,
+          "start_beat": "E02-B029",
+          "end_beat": "E02-B029",
+          "start": 56.3,
+          "end": 97.5
+        }
+      ],
+      "hook_beat": "E01-B009",
+      "hook": "The clip opens with Victoria lunging forward and delivering a brutal, stinging slap across his face.",
+      "cliffhanger": "Will Victoria avoid being arrested and ruined now that she has produced a positive pregnancy test for Julian's heir?",
+      "why": "The physical confrontation of the opening slap hooks a scrolling viewer, while the final pregnancy twist completely upends the corporate power struggle.",
+      "picker_score": 9.5,
+      "hook_strength": 10.0,
+      "cliff_strength": 10.0,
+      "picker_model": "vertex/gemini-3.5-flash",
+      "judge_model": "jev-1.14.0",
+      "duration": 56.1,
+      "flags": [],
+      "fixes": [],
+      "judge": {
+        "hook": 9.88,
+        "cliffhanger": 9.56,
+        "standalone": 3.32,
+        "intensity": 9.97,
+        "spoiler_risk": 9.32,
+        "would_post": false,
+        "verdict": "Jev rubric (min confidence 0.54)",
+        "issues": ""
+      },
+      "screen_score": 7.495,
+      "screen_samples": [
+        7.435,
+        7.554
+      ],
+      "bt": 0.0142,
+      "record": "1-2-2",
+      "final_score": 7.5,
+      "rank": 3
+    },
+    {
+      "id": "E01-W3",
+      "kind": "single",
+      "title": "00:35.10 hook -> cliff",
+      "segments": [
+        {
+          "episode": 1,
+          "start_beat": "E01-B012",
+          "end_beat": "E01-B026",
+          "start": 35.1,
+          "end": 78.5
+        }
+      ],
+      "hook_beat": "E01-B012",
+      "hook": "The clip opens with Leo violently grabbing Victoria's wrist as she tries to pull away.",
+      "cliffhanger": "Who is this man posing as Julian, given that his wrist is completely flawless and lacks the real Julian's famous scar?",
+      "why": "The physical struggle in the first three seconds immediately stops a viewer, and the final reveal of the missing scar creates an intense mystery about the impostor's true identity.",
+      "picker_score": 8.5,
+      "hook_strength": 8.0,
+      "cliff_strength": 8.0,
+      "picker_model": "vertex/gemini-3.5-flash",
+      "judge_model": "jev-1.14.0",
+      "duration": 43.4,
+      "flags": [],
+      "fixes": [],
+      "judge": {
+        "hook": 9.59,
+        "cliffhanger": 9.8,
+        "standalone": 6.73,
+        "intensity": 10.0,
+        "spoiler_risk": 9.7,
+        "would_post": true,
+        "verdict": "Jev rubric (min confidence 0.44)",
+        "issues": ""
+      },
+      "screen_score": 8.053,
+      "screen_samples": [
+        7.989,
+        8.117
+      ],
+      "bt": -0.0575,
+      "record": "1-2-2",
+      "final_score": 8.05,
+      "rank": 4
+    },
+    {
+      "id": "E02-W2",
+      "kind": "single",
+      "title": "00:02.90 hook -> cliff",
+      "segments": [
+        {
+          "episode": 2,
+          "start_beat": "E02-B001",
+          "end_beat": "E02-B015",
+          "start": 2.9,
+          "end": 49.0
+        }
+      ],
+      "hook_beat": "E02-B001",
+      "hook": "The clip opens with Victoria stepping forward and raising her hand to deliver a hard slap across Damian's face.",
+      "cliffhanger": "Whose side is Carter actually on in this corporate power struggle?",
+      "why": "The physical tension of a blocked slap immediately stops a scrolling viewer, and the final question of Carter's true loyalty forces them to watch the next episode.",
+      "picker_score": 9.0,
+      "hook_strength": 9.0,
+      "cliff_strength": 8.0,
+      "picker_model": "vertex/gemini-3.5-flash",
+      "judge_model": "jev-1.14.0",
+      "duration": 46.1,
+      "flags": [],
+      "fixes": [],
+      "judge": {
+        "hook": 9.55,
+        "cliffhanger": 9.49,
+        "standalone": 7.55,
+        "intensity": 9.16,
+        "spoiler_risk": 7.42,
+        "would_post": true,
+        "verdict": "Jev rubric (min confidence 0.53)",
+        "issues": ""
+      },
+      "screen_score": 8.629,
+      "screen_samples": [
+        8.603,
+        8.655
+      ],
+      "bt": -0.446,
+      "record": "0-3-2",
+      "final_score": 8.63,
+      "rank": 5
+    },
+    {
+      "id": "E01-W4",
+      "kind": "single",
+      "title": "00:11.60 hook -> cliff",
+      "segments": [
+        {
+          "episode": 1,
+          "start_beat": "E01-B004",
+          "end_beat": "E01-B015",
+          "start": 11.6,
+          "end": 46.0
+        }
+      ],
+      "hook_beat": "E01-B004",
+      "hook": "Victoria demands, \"Sign it, Julian. Your family's entire legacy belongs to me now.\"",
+      "cliffhanger": "What will Leo do to Victoria now that he has revealed the real Julian was weak and gullible?",
+      "why": "The high-stakes demand for a family legacy immediately hooks a viewer, and the sudden physical escalation leaves them needing to see how Victoria handles this dangerous impostor.",
+      "picker_score": 8.0,
+      "hook_strength": 7.0,
+      "cliff_strength": 8.0,
+      "picker_model": "vertex/gemini-3.5-flash",
+      "judge_model": "jev-1.14.0",
+      "duration": 34.4,
+      "flags": [],
+      "fixes": [],
+      "judge": {
+        "hook": 7.34,
+        "cliffhanger": 8.65,
+        "standalone": 6.13,
+        "intensity": 9.8,
+        "spoiler_risk": 5.82,
+        "would_post": true,
+        "verdict": "Jev rubric (min confidence 0.52)",
+        "issues": ""
+      },
+      "screen_score": 7.983,
+      "screen_samples": [
+        7.96,
+        8.006
+      ],
+      "bt": -0.6435,
+      "record": "0-3-2",
+      "final_score": 7.98,
+      "rank": 6
+    }
+  ]
+}

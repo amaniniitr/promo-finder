@@ -1,0 +1,2061 @@
+{
+ "tags": {
+  "1": {
+   "hooks": [
+    {
+     "beat": "E01-B009",
+     "strength": 10.0,
+     "note": "Victoria delivers a brutal, stinging slap across Leo's face"
+    },
+    {
+     "beat": "E01-B018",
+     "strength": 9.0,
+     "note": "Leo reveals Julian is dead: 'Julian died in that fiery car crash you arranged three months ago, dearest.'"
+    },
+    {
+     "beat": "E01-B012",
+     "strength": 8.0,
+     "note": "Leo violently grabs Victoria's wrist as she tries to pull away"
+    },
+    {
+     "beat": "E01-B022",
+     "strength": 8.0,
+     "note": "Leo flings Victoria onto the leather sofa as she scrambles backward in terror"
+    },
+    {
+     "beat": "E01-B029",
+     "strength": 8.0,
+     "note": "Leo threatens her: '...until I decide to show them the videotape of you cutting his brakes.'"
+    },
+    {
+     "beat": "E01-B004",
+     "strength": 7.0,
+     "note": "Victoria's arrogant demand: 'Sign it, Julian. Your family's entire legacy belongs to me now.'"
+    }
+   ],
+   "cliffs": [
+    {
+     "beat": "E01-B029",
+     "strength": 10.0,
+     "note": "How will Victoria react to Leo having videotaped proof that she murdered the real Julian?"
+    },
+    {
+     "beat": "E01-B018",
+     "strength": 9.0,
+     "note": "How will Victoria defend herself now that this impostor knows she murdered her husband?"
+    },
+    {
+     "beat": "E01-B026",
+     "strength": 8.0,
+     "note": "Will Victoria immediately call his bluff, or will the missing scar confirm her worst fears?"
+    },
+    {
+     "beat": "E01-B015",
+     "strength": 8.0,
+     "note": "Who is this dangerous man posing as Julian, and what does he plan to do to her?"
+    },
+    {
+     "beat": "E01-B017",
+     "strength": 7.0,
+     "note": "Will Leo reveal his actual identity to Victoria after she asks 'Who are you?'"
+    },
+    {
+     "beat": "E01-B012",
+     "strength": 7.0,
+     "note": "What will Leo do to Victoria now that he has physically overpowered her?"
+    },
+    {
+     "beat": "E01-B031",
+     "strength": 7.0,
+     "note": "episode ending (writers' cliffhanger)",
+     "auto": true
+    }
+   ],
+   "model": "vertex/gemini-3.5-flash",
+   "invalid_ids": 0
+  },
+  "2": {
+   "hooks": [
+    {
+     "beat": "E02-B001",
+     "strength": 9.0,
+     "note": "Victoria steps forward to deliver a hard slap across Damian's face"
+    },
+    {
+     "beat": "E02-B005",
+     "strength": 8.0,
+     "note": "Victoria screams, \"You're an impostor! A gutter rat pretending to be a king!\""
+    },
+    {
+     "beat": "E02-B008",
+     "strength": 8.0,
+     "note": "Damian accuses her of murder: \"The same car crash you engineered by tampering with his brake lines.\""
+    },
+    {
+     "beat": "E02-B021",
+     "strength": 8.0,
+     "note": "Damian lists her crimes and threatens immediate arrest: \"Embezzlement, grand larceny, and conspiracy to commit murder. The police are already downstairs.\""
+    },
+    {
+     "beat": "E02-B017",
+     "strength": 7.0,
+     "note": "Carter delivers a cold betrayal: \"I'm on the winning side, Victoria.\""
+    }
+   ],
+   "cliffs": [
+    {
+     "beat": "E02-B029",
+     "strength": 10.0,
+     "note": "How will Damian and the board react to Victoria's shocking pregnancy claim, and is she actually carrying the legal heir?"
+    },
+    {
+     "beat": "E02-B015",
+     "strength": 8.0,
+     "note": "Whose side is Carter actually on, and is Victoria about to be completely ruined?"
+    },
+    {
+     "beat": "E02-B008",
+     "strength": 8.0,
+     "note": "Does Damian have concrete proof that Victoria tampered with the brake lines to kill his twin?"
+    },
+    {
+     "beat": "E02-B021",
+     "strength": 7.0,
+     "note": "Will Victoria actually be taken away by the police right now, or does she have a way out?"
+    },
+    {
+     "beat": "E02-B030",
+     "strength": 7.0,
+     "note": "episode ending (writers' cliffhanger)",
+     "auto": true
+    }
+   ],
+   "model": "vertex/gemini-3.5-flash",
+   "invalid_ids": 0
+  },
+  "3": {
+   "hooks": [
+    {
+     "beat": "E03-B006",
+     "strength": 9.0,
+     "note": "Shocking paternity reveal: 'Julian had a vasectomy at twenty-five, Victoria. Who's the real father?'"
+    },
+    {
+     "beat": "E03-B014",
+     "strength": 9.0,
+     "note": "Physical violence: Victoria aggressively slaps her attorney across the face."
+    },
+    {
+     "beat": "E03-B030",
+     "strength": 9.0,
+     "note": "Shocking resurrection reveal: 'Did you really think a little poison could keep me down, sweetheart?'"
+    },
+    {
+     "beat": "E03-B022",
+     "strength": 8.0,
+     "note": "Direct murder accusation: 'Then why did the toxicology report find traces of your digitalis?'"
+    },
+    {
+     "beat": "E03-B018",
+     "strength": 8.0,
+     "note": "Physical confrontation and threat: Leo catches Victoria's wrist and warns her about a 'murder file'."
+    },
+    {
+     "beat": "E03-B016",
+     "strength": 7.0,
+     "note": "High-energy betrayal confrontation: 'You spineless traitor! I made you!'"
+    }
+   ],
+   "cliffs": [
+    {
+     "beat": "E03-B030",
+     "strength": 10.0,
+     "note": "How is Julian alive, and what will he do to Victoria now that he has returned?"
+    },
+    {
+     "beat": "E03-B026",
+     "strength": 9.0,
+     "note": "Who is the victim that is going to testify, and is Julian actually alive?"
+    },
+    {
+     "beat": "E03-B022",
+     "strength": 8.0,
+     "note": "How will Victoria react to the proof that she poisoned her fianc\u00e9?"
+    },
+    {
+     "beat": "E03-B011",
+     "strength": 8.0,
+     "note": "Who is the ally that betrayed Victoria and handed over the keys to her enemy?"
+    },
+    {
+     "beat": "E03-B018",
+     "strength": 7.0,
+     "note": "Does Leo actually have a file proving Victoria murdered his twin brother?"
+    },
+    {
+     "beat": "E03-B032",
+     "strength": 7.0,
+     "note": "episode ending (writers' cliffhanger)",
+     "auto": true
+    }
+   ],
+   "model": "vertex/gemini-3.5-flash",
+   "invalid_ids": 0
+  },
+  "4": {
+   "hooks": [
+    {
+     "beat": "E04-B024",
+     "strength": 10.0,
+     "note": "Victoria drops a massive bombshell: 'Ask your \"beloved brother\" who paid me to kill you.'"
+    },
+    {
+     "beat": "E04-B016",
+     "strength": 9.0,
+     "note": "Victoria lunges to slap Julian, but Leo grabs her wrist mid-air in slow-motion."
+    },
+    {
+     "beat": "E04-B004",
+     "strength": 9.0,
+     "note": "Victoria screams in terror at seeing a dead man: 'No... it's impossible. I saw your body in the morgue!'"
+    },
+    {
+     "beat": "E04-B034",
+     "strength": 9.0,
+     "note": "Leo turns on his own twin with a chilling threat: 'She's right, brother. There's only room for one CEO.'"
+    },
+    {
+     "beat": "E04-B014",
+     "strength": 8.0,
+     "note": "Leo coldly accuses Victoria of murder: 'They just heard you confess to poisoning my car's brakes.'"
+    },
+    {
+     "beat": "E04-B030",
+     "strength": 8.0,
+     "note": "Victoria laughs maniacally while warning Julian: 'He wanted the empire all to himself, fool. And now, you're trapped alone with him.'"
+    }
+   ],
+   "cliffs": [
+    {
+     "beat": "E04-B036",
+     "strength": 10.0,
+     "note": "Will Leo use the syringe on Julian now that they are locked in the room together?"
+    },
+    {
+     "beat": "E04-B034",
+     "strength": 9.0,
+     "note": "Is Leo about to murder his twin brother to take the CEO position for himself?"
+    },
+    {
+     "beat": "E04-B029",
+     "strength": 9.0,
+     "note": "Why is Leo secretly pulling a syringe out of his pocket while looking at Julian?"
+    },
+    {
+     "beat": "E04-B024",
+     "strength": 9.0,
+     "note": "Did Leo actually hire Victoria to kill his own twin brother Julian?"
+    },
+    {
+     "beat": "E04-B030",
+     "strength": 8.0,
+     "note": "How will Julian defend himself now that he is trapped alone with a brother who wants him dead?"
+    },
+    {
+     "beat": "E04-B027",
+     "strength": 8.0,
+     "note": "Will Julian believe Victoria's warning, or is he too late to realize his brother's betrayal?"
+    }
+   ],
+   "model": "vertex/gemini-3.5-flash",
+   "invalid_ids": 0
+  }
+ },
+ "window_stats": {
+  "1": {
+   "pairs": 27,
+   "single": 16,
+   "stitched": 5,
+   "too_close": 6,
+   "too_far": 0,
+   "kept": 4
+  },
+  "2": {
+   "pairs": 19,
+   "single": 10,
+   "stitched": 7,
+   "too_close": 2,
+   "too_far": 0,
+   "kept": 3
+  },
+  "3": {
+   "pairs": 24,
+   "single": 15,
+   "stitched": 3,
+   "too_close": 6,
+   "too_far": 0,
+   "kept": 4
+  },
+  "4": {
+   "pairs": 26,
+   "single": 15,
+   "stitched": 5,
+   "too_close": 6,
+   "too_far": 0,
+   "kept": 4
+  },
+  "cross": {
+   "pairs_considered": 73,
+   "no_shared_character": 0,
+   "no_fit": 10,
+   "built": 63,
+   "kept": 8
+  }
+ },
+ "violations": {},
+ "duplicates": [
+  {
+   "dropped": "E04-W2",
+   "kept": "X03-E03E04",
+   "cosine": 0.933
+  },
+  {
+   "dropped": "X02-E02E03",
+   "kept": "E03-W1",
+   "cosine": 0.907
+  },
+  {
+   "dropped": "X05-E01E04",
+   "kept": "X03-E03E04",
+   "cosine": 0.912
+  },
+  {
+   "dropped": "E04-W1",
+   "kept": "X03-E03E04",
+   "cosine": 0.969
+  },
+  {
+   "dropped": "E03-W4",
+   "kept": "E03-W1",
+   "cosine": 0.962
+  },
+  {
+   "dropped": "E01-W1",
+   "kept": "E01-W3",
+   "cosine": 0.949
+  },
+  {
+   "dropped": "X07-E01E02",
+   "kept": "E02-W2",
+   "cosine": 0.949
+  },
+  {
+   "dropped": "X06-E02E03",
+   "kept": "E03-W1",
+   "cosine": 0.875
+  },
+  {
+   "dropped": "X04-E03E04",
+   "kept": "X03-E03E04",
+   "cosine": 0.928
+  },
+  {
+   "dropped": "X08-E02E03",
+   "kept": "E03-W1",
+   "cosine": 0.964
+  },
+  {
+   "dropped": "E01-W2",
+   "kept": "E01-W3",
+   "cosine": 0.952
+  },
+  {
+   "dropped": "E04-W4",
+   "kept": "X03-E03E04",
+   "cosine": 0.954
+  },
+  {
+   "dropped": "E03-W2",
+   "kept": "E03-W1",
+   "cosine": 0.902
+  },
+  {
+   "dropped": "E04-W3",
+   "kept": "X03-E03E04",
+   "cosine": 0.91
+  },
+  {
+   "dropped": "E02-W1",
+   "kept": "X01-E01E02",
+   "cosine": 0.934
+  },
+  {
+   "dropped": "E03-W3",
+   "kept": "E03-W1",
+   "cosine": 0.954
+  },
+  {
+   "dropped": "E02-W3",
+   "kept": "E02-W2",
+   "cosine": 0.931
+  }
+ ],
+ "screen_per_sample": [
+  {
+   "E01-W1": 7.729,
+   "E01-W2": 7.577,
+   "E01-W3": 7.989,
+   "E01-W4": 7.96,
+   "E02-W1": 7.299,
+   "E02-W2": 8.603,
+   "E02-W3": 6.038,
+   "E03-W1": 8.263,
+   "E03-W2": 7.434,
+   "E03-W3": 7.288,
+   "E03-W4": 7.818,
+   "E04-W1": 7.927,
+   "E04-W2": 8.261,
+   "E04-W3": 7.391,
+   "E04-W4": 7.447,
+   "X01-E01E02": 7.435,
+   "X02-E02E03": 8.072,
+   "X03-E03E04": 8.341,
+   "X04-E03E04": 7.549,
+   "X05-E01E04": 7.994,
+   "X06-E02E03": 7.646,
+   "X07-E01E02": 7.654,
+   "X08-E02E03": 7.57
+  },
+  {
+   "E01-W1": 7.836,
+   "E01-W2": 7.504,
+   "E01-W3": 8.117,
+   "E01-W4": 8.006,
+   "E02-W1": 7.465,
+   "E02-W2": 8.655,
+   "E02-W3": 6.279,
+   "E03-W1": 8.321,
+   "E03-W2": 7.513,
+   "E03-W3": 7.205,
+   "E03-W4": 8.015,
+   "E04-W1": 7.959,
+   "E04-W2": 8.269,
+   "E04-W3": 7.506,
+   "E04-W4": 7.508,
+   "X01-E01E02": 7.554,
+   "X02-E02E03": 8.213,
+   "X03-E03E04": 8.388,
+   "X04-E03E04": 7.646,
+   "X05-E01E04": 8.044,
+   "X06-E02E03": 7.774,
+   "X07-E01E02": 7.787,
+   "X08-E02E03": 7.608
+  }
+ ],
+ "pairwise_verdicts": [
+  {
+   "first": "E02-W2",
+   "second": "E03-W1",
+   "winner": "E03-W1",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.15
+  },
+  {
+   "first": "E03-W1",
+   "second": "E02-W2",
+   "winner": "E03-W1",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.41
+  },
+  {
+   "first": "E02-W2",
+   "second": "X03-E03E04",
+   "winner": "X03-E03E04",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.1
+  },
+  {
+   "first": "X03-E03E04",
+   "second": "E02-W2",
+   "winner": "X03-E03E04",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.24
+  },
+  {
+   "first": "E02-W2",
+   "second": "E01-W3",
+   "winner": "E01-W3",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.22
+  },
+  {
+   "first": "E01-W3",
+   "second": "E02-W2",
+   "winner": "E01-W3",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.47
+  },
+  {
+   "first": "E02-W2",
+   "second": "E01-W4",
+   "winner": "E01-W4",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.42
+  },
+  {
+   "first": "E01-W4",
+   "second": "E02-W2",
+   "winner": "E02-W2",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.76
+  },
+  {
+   "first": "E02-W2",
+   "second": "X01-E01E02",
+   "winner": "X01-E01E02",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.19
+  },
+  {
+   "first": "X01-E01E02",
+   "second": "E02-W2",
+   "winner": "E02-W2",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.57
+  },
+  {
+   "first": "E03-W1",
+   "second": "X03-E03E04",
+   "winner": "E03-W1",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.53
+  },
+  {
+   "first": "X03-E03E04",
+   "second": "E03-W1",
+   "winner": "X03-E03E04",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.31
+  },
+  {
+   "first": "E03-W1",
+   "second": "E01-W3",
+   "winner": "E03-W1",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.64
+  },
+  {
+   "first": "E01-W3",
+   "second": "E03-W1",
+   "winner": "E03-W1",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.74
+  },
+  {
+   "first": "E03-W1",
+   "second": "E01-W4",
+   "winner": "E03-W1",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.63
+  },
+  {
+   "first": "E01-W4",
+   "second": "E03-W1",
+   "winner": "E03-W1",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.91
+  },
+  {
+   "first": "E03-W1",
+   "second": "X01-E01E02",
+   "winner": "E03-W1",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.54
+  },
+  {
+   "first": "X01-E01E02",
+   "second": "E03-W1",
+   "winner": "E03-W1",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.74
+  },
+  {
+   "first": "X03-E03E04",
+   "second": "E01-W3",
+   "winner": "X03-E03E04",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.65
+  },
+  {
+   "first": "E01-W3",
+   "second": "X03-E03E04",
+   "winner": "X03-E03E04",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.54
+  },
+  {
+   "first": "X03-E03E04",
+   "second": "E01-W4",
+   "winner": "X03-E03E04",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.77
+  },
+  {
+   "first": "E01-W4",
+   "second": "X03-E03E04",
+   "winner": "X03-E03E04",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.93
+  },
+  {
+   "first": "X03-E03E04",
+   "second": "X01-E01E02",
+   "winner": "X03-E03E04",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.71
+  },
+  {
+   "first": "X01-E01E02",
+   "second": "X03-E03E04",
+   "winner": "X03-E03E04",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.8
+  },
+  {
+   "first": "E01-W3",
+   "second": "E01-W4",
+   "winner": "E01-W3",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.68
+  },
+  {
+   "first": "E01-W4",
+   "second": "E01-W3",
+   "winner": "E01-W4",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.49
+  },
+  {
+   "first": "E01-W3",
+   "second": "X01-E01E02",
+   "winner": "X01-E01E02",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.39
+  },
+  {
+   "first": "X01-E01E02",
+   "second": "E01-W3",
+   "winner": "E01-W3",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.51
+  },
+  {
+   "first": "E01-W4",
+   "second": "X01-E01E02",
+   "winner": "X01-E01E02",
+   "first_won": false,
+   "model": "jev-1.14.0",
+   "p_a": 0.18
+  },
+  {
+   "first": "X01-E01E02",
+   "second": "E01-W4",
+   "winner": "X01-E01E02",
+   "first_won": true,
+   "model": "jev-1.14.0",
+   "p_a": 0.32
+  }
+ ],
+ "bt": {
+  "E02-W2": -0.446,
+  "E03-W1": 0.4478,
+  "X03-E03E04": 0.685,
+  "E01-W3": -0.0575,
+  "E01-W4": -0.6435,
+  "X01-E01E02": 0.0142
+ },
+ "split_half_bt": [
+  {
+   "E02-W2": -2.5041,
+   "E03-W1": 2.5041,
+   "X03-E03E04": 1.3234,
+   "E01-W3": -0.419,
+   "E01-W4": -1.3234,
+   "X01-E01E02": 0.419
+  },
+  {
+   "E02-W2": -0.4568,
+   "E03-W1": 1.1073,
+   "X03-E03E04": 2.2264,
+   "E01-W3": -0.4568,
+   "E01-W4": -1.2101,
+   "X01-E01E02": -1.2101
+  }
+ ],
+ "all_candidates": [
+  {
+   "id": "E01-W1",
+   "kind": "single",
+   "title": "00:27.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 1,
+     "start_beat": "E01-B009",
+     "end_beat": "E01-B018",
+     "start": 27.6,
+     "end": 56.5
+    }
+   ],
+   "hook_beat": "E01-B009",
+   "hook": "Victoria delivers a brutal, stinging slap across Leo's face",
+   "cliffhanger": "How will Victoria defend herself now that this impostor knows she murdered her husband?",
+   "why": "hook 10/10 -> cliff 9/10",
+   "picker_score": 10.0,
+   "hook_strength": 10.0,
+   "cliff_strength": 9.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 28.9,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.84,
+    "cliffhanger": 9.64,
+    "standalone": 5.25,
+    "intensity": 10.0,
+    "spoiler_risk": 9.7,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.38)",
+    "issues": "low Jev confidence: review"
+   },
+   "screen_score": 7.783,
+   "screen_samples": [
+    7.729,
+    7.836
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E01-W2",
+   "kind": "single",
+   "title": "00:52.10 hook -> cliff",
+   "segments": [
+    {
+     "episode": 1,
+     "start_beat": "E01-B018",
+     "end_beat": "E01-B029",
+     "start": 52.1,
+     "end": 89.0
+    }
+   ],
+   "hook_beat": "E01-B018",
+   "hook": "Leo reveals Julian is dead: 'Julian died in that fiery car crash you arranged three months ago, dearest.'",
+   "cliffhanger": "How will Victoria react to Leo having videotaped proof that she murdered the real Julian?",
+   "why": "hook 9/10 -> cliff 10/10",
+   "picker_score": 10.0,
+   "hook_strength": 9.0,
+   "cliff_strength": 10.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 36.9,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.53,
+    "cliffhanger": 9.24,
+    "standalone": 7.33,
+    "intensity": 9.8,
+    "spoiler_risk": 9.05,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.28)",
+    "issues": "low Jev confidence: review"
+   },
+   "screen_score": 7.54,
+   "screen_samples": [
+    7.577,
+    7.504
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E01-W3",
+   "kind": "single",
+   "title": "00:35.10 hook -> cliff",
+   "segments": [
+    {
+     "episode": 1,
+     "start_beat": "E01-B012",
+     "end_beat": "E01-B026",
+     "start": 35.1,
+     "end": 78.5
+    }
+   ],
+   "hook_beat": "E01-B012",
+   "hook": "The clip opens with Leo violently grabbing Victoria's wrist as she tries to pull away.",
+   "cliffhanger": "Who is this man posing as Julian, given that his wrist is completely flawless and lacks the real Julian's famous scar?",
+   "why": "The physical struggle in the first three seconds immediately stops a viewer, and the final reveal of the missing scar creates an intense mystery about the impostor's true identity.",
+   "picker_score": 8.5,
+   "hook_strength": 8.0,
+   "cliff_strength": 8.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "jev-1.14.0",
+   "duration": 43.4,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.59,
+    "cliffhanger": 9.8,
+    "standalone": 6.73,
+    "intensity": 10.0,
+    "spoiler_risk": 9.7,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.44)",
+    "issues": ""
+   },
+   "screen_score": 8.053,
+   "screen_samples": [
+    7.989,
+    8.117
+   ],
+   "bt": -0.0575,
+   "record": "1-2-2",
+   "final_score": 8.05,
+   "rank": 4
+  },
+  {
+   "id": "E01-W4",
+   "kind": "single",
+   "title": "00:11.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 1,
+     "start_beat": "E01-B004",
+     "end_beat": "E01-B015",
+     "start": 11.6,
+     "end": 46.0
+    }
+   ],
+   "hook_beat": "E01-B004",
+   "hook": "Victoria demands, \"Sign it, Julian. Your family's entire legacy belongs to me now.\"",
+   "cliffhanger": "What will Leo do to Victoria now that he has revealed the real Julian was weak and gullible?",
+   "why": "The high-stakes demand for a family legacy immediately hooks a viewer, and the sudden physical escalation leaves them needing to see how Victoria handles this dangerous impostor.",
+   "picker_score": 8.0,
+   "hook_strength": 7.0,
+   "cliff_strength": 8.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "jev-1.14.0",
+   "duration": 34.4,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.34,
+    "cliffhanger": 8.65,
+    "standalone": 6.13,
+    "intensity": 9.8,
+    "spoiler_risk": 5.82,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.52)",
+    "issues": ""
+   },
+   "screen_score": 7.983,
+   "screen_samples": [
+    7.96,
+    8.006
+   ],
+   "bt": -0.6435,
+   "record": "0-3-2",
+   "final_score": 7.98,
+   "rank": 6
+  },
+  {
+   "id": "E02-W1",
+   "kind": "single",
+   "title": "01:05.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 2,
+     "start_beat": "E02-B021",
+     "end_beat": "E02-B029",
+     "start": 65.6,
+     "end": 97.5
+    }
+   ],
+   "hook_beat": "E02-B021",
+   "hook": "Damian lists her crimes and threatens immediate arrest: \"Embezzlement, grand larceny, and conspiracy to commit murder. The police are already downstairs.\"",
+   "cliffhanger": "How will Damian and the board react to Victoria's shocking pregnancy claim, and is she actually carrying the legal heir?",
+   "why": "hook 8/10 -> cliff 10/10",
+   "picker_score": 9.5,
+   "hook_strength": 8.0,
+   "cliff_strength": 10.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 31.9,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.57,
+    "cliffhanger": 9.34,
+    "standalone": 6.52,
+    "intensity": 9.82,
+    "spoiler_risk": 9.2,
+    "would_post": false,
+    "verdict": "Jev rubric (min confidence 0.57)",
+    "issues": ""
+   },
+   "screen_score": 7.382,
+   "screen_samples": [
+    7.299,
+    7.465
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E02-W2",
+   "kind": "single",
+   "title": "00:02.90 hook -> cliff",
+   "segments": [
+    {
+     "episode": 2,
+     "start_beat": "E02-B001",
+     "end_beat": "E02-B015",
+     "start": 2.9,
+     "end": 49.0
+    }
+   ],
+   "hook_beat": "E02-B001",
+   "hook": "The clip opens with Victoria stepping forward and raising her hand to deliver a hard slap across Damian's face.",
+   "cliffhanger": "Whose side is Carter actually on in this corporate power struggle?",
+   "why": "The physical tension of a blocked slap immediately stops a scrolling viewer, and the final question of Carter's true loyalty forces them to watch the next episode.",
+   "picker_score": 9.0,
+   "hook_strength": 9.0,
+   "cliff_strength": 8.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "jev-1.14.0",
+   "duration": 46.1,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.55,
+    "cliffhanger": 9.49,
+    "standalone": 7.55,
+    "intensity": 9.16,
+    "spoiler_risk": 7.42,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.53)",
+    "issues": ""
+   },
+   "screen_score": 8.629,
+   "screen_samples": [
+    8.603,
+    8.655
+   ],
+   "bt": -0.446,
+   "record": "0-3-2",
+   "final_score": 8.63,
+   "rank": 5
+  },
+  {
+   "id": "E02-W3",
+   "kind": "single",
+   "title": "00:23.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 2,
+     "start_beat": "E02-B008",
+     "end_beat": "E02-B021",
+     "start": 23.6,
+     "end": 69.5
+    }
+   ],
+   "hook_beat": "E02-B008",
+   "hook": "Damian accuses her of murder: \"The same car crash you engineered by tampering with his brake lines.\"",
+   "cliffhanger": "Will Victoria actually be taken away by the police right now, or does she have a way out?",
+   "why": "hook 8/10 -> cliff 7/10",
+   "picker_score": 8.0,
+   "hook_strength": 8.0,
+   "cliff_strength": 7.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 45.9,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.55,
+    "cliffhanger": 4.59,
+    "standalone": 8.35,
+    "intensity": 9.94,
+    "spoiler_risk": 9.8,
+    "would_post": false,
+    "verdict": "Jev rubric (min confidence 0.00)",
+    "issues": "low Jev confidence: review"
+   },
+   "screen_score": 6.159,
+   "screen_samples": [
+    6.038,
+    6.279
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E03-W1",
+   "kind": "single",
+   "title": "00:39.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 3,
+     "start_beat": "E03-B014",
+     "end_beat": "E03-B030",
+     "start": 39.6,
+     "end": 89.0
+    }
+   ],
+   "hook_beat": "E03-B014",
+   "hook": "The clip opens with a tight shot of Victoria turning and aggressively slapping Carter across the face.",
+   "cliffhanger": "How will Victoria react to the sudden appearance of Julian, who has an identical face to Leo but with a deep scar?",
+   "why": "The opening slap grabs immediate attention, and the final reveal of a supposedly dead murder victim walking through the door forces the viewer to watch the next episode to see the confrontation.",
+   "picker_score": 10.0,
+   "hook_strength": 9.0,
+   "cliff_strength": 10.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "jev-1.14.0",
+   "duration": 49.4,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.96,
+    "cliffhanger": 9.8,
+    "standalone": 7.42,
+    "intensity": 10.0,
+    "spoiler_risk": 9.73,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.48)",
+    "issues": ""
+   },
+   "screen_score": 8.292,
+   "screen_samples": [
+    8.263,
+    8.321
+   ],
+   "bt": 0.4478,
+   "record": "4-0-1",
+   "final_score": 8.29,
+   "rank": 2
+  },
+  {
+   "id": "E03-W2",
+   "kind": "single",
+   "title": "00:16.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 3,
+     "start_beat": "E03-B006",
+     "end_beat": "E03-B022",
+     "start": 16.6,
+     "end": 65.0
+    }
+   ],
+   "hook_beat": "E03-B006",
+   "hook": "Shocking paternity reveal: 'Julian had a vasectomy at twenty-five, Victoria. Who's the real father?'",
+   "cliffhanger": "How will Victoria react to the proof that she poisoned her fianc\u00e9?",
+   "why": "hook 9/10 -> cliff 8/10",
+   "picker_score": 9.0,
+   "hook_strength": 9.0,
+   "cliff_strength": 8.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 48.4,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.51,
+    "cliffhanger": 9.74,
+    "standalone": 7.02,
+    "intensity": 9.97,
+    "spoiler_risk": 9.67,
+    "would_post": false,
+    "verdict": "Jev rubric (min confidence 0.55)",
+    "issues": ""
+   },
+   "screen_score": 7.473,
+   "screen_samples": [
+    7.434,
+    7.513
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E03-W3",
+   "kind": "single",
+   "title": "01:01.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 3,
+     "start_beat": "E03-B022",
+     "end_beat": "E03-B032",
+     "start": 61.6,
+     "end": 95.0
+    }
+   ],
+   "hook_beat": "E03-B022",
+   "hook": "Direct murder accusation: 'Then why did the toxicology report find traces of your digitalis?'",
+   "cliffhanger": "episode ending (writers' cliffhanger)",
+   "why": "hook 8/10 -> cliff 7/10",
+   "picker_score": 8.0,
+   "hook_strength": 8.0,
+   "cliff_strength": 7.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 33.4,
+   "flags": [
+    "ends_on_episode_finale"
+   ],
+   "fixes": [],
+   "judge": {
+    "hook": 6.94,
+    "cliffhanger": 9.75,
+    "standalone": 6.8,
+    "intensity": 10.0,
+    "spoiler_risk": 9.73,
+    "would_post": false,
+    "verdict": "Jev rubric (min confidence 0.55)",
+    "issues": ""
+   },
+   "screen_score": 7.247,
+   "screen_samples": [
+    7.288,
+    7.205
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E03-W4",
+   "kind": "single",
+   "title": "00:43.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 3,
+     "start_beat": "E03-B016",
+     "end_beat": "E03-B022",
+     "start": 43.6,
+     "end": 65.0
+    }
+   ],
+   "hook_beat": "E03-B016",
+   "hook": "High-energy betrayal confrontation: 'You spineless traitor! I made you!'",
+   "cliffhanger": "How will Victoria react to the proof that she poisoned her fianc\u00e9?",
+   "why": "hook 7/10 -> cliff 8/10",
+   "picker_score": 7.5,
+   "hook_strength": 7.0,
+   "cliff_strength": 8.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 21.4,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 8.09,
+    "cliffhanger": 9.41,
+    "standalone": 6.68,
+    "intensity": 9.18,
+    "spoiler_risk": 7.68,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.60)",
+    "issues": ""
+   },
+   "screen_score": 7.917,
+   "screen_samples": [
+    7.818,
+    8.015
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E04-W1",
+   "kind": "single",
+   "title": "01:00.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 4,
+     "start_beat": "E04-B024",
+     "end_beat": "E04-B036",
+     "start": 60.6,
+     "end": 95.0
+    }
+   ],
+   "hook_beat": "E04-B024",
+   "hook": "Victoria drops a massive bombshell: 'Ask your \"beloved brother\" who paid me to kill you.'",
+   "cliffhanger": "Will Leo use the syringe on Julian now that they are locked in the room together?",
+   "why": "hook 10/10 -> cliff 10/10",
+   "picker_score": 10.5,
+   "hook_strength": 10.0,
+   "cliff_strength": 10.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 34.4,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.54,
+    "cliffhanger": 9.97,
+    "standalone": 8.58,
+    "intensity": 9.89,
+    "spoiler_risk": 9.35,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.58)",
+    "issues": ""
+   },
+   "screen_score": 7.943,
+   "screen_samples": [
+    7.927,
+    7.959
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E04-W2",
+   "kind": "single",
+   "title": "00:40.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 4,
+     "start_beat": "E04-B016",
+     "end_beat": "E04-B029",
+     "start": 40.6,
+     "end": 76.5
+    }
+   ],
+   "hook_beat": "E04-B016",
+   "hook": "Victoria lunges to slap Julian, but Leo grabs her wrist mid-air in slow-motion.",
+   "cliffhanger": "Why is Leo secretly pulling a syringe out of his pocket while looking at Julian?",
+   "why": "hook 9/10 -> cliff 9/10",
+   "picker_score": 9.5,
+   "hook_strength": 9.0,
+   "cliff_strength": 9.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 35.9,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.27,
+    "cliffhanger": 9.93,
+    "standalone": 6.9,
+    "intensity": 9.97,
+    "spoiler_risk": 8.9,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.58)",
+    "issues": ""
+   },
+   "screen_score": 8.265,
+   "screen_samples": [
+    8.261,
+    8.269
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E04-W3",
+   "kind": "single",
+   "title": "00:09.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 4,
+     "start_beat": "E04-B004",
+     "end_beat": "E04-B024",
+     "start": 9.6,
+     "end": 63.5
+    }
+   ],
+   "hook_beat": "E04-B004",
+   "hook": "Victoria screams in terror at seeing a dead man: 'No... it's impossible. I saw your body in the morgue!'",
+   "cliffhanger": "Did Leo actually hire Victoria to kill his own twin brother Julian?",
+   "why": "hook 9/10 -> cliff 9/10",
+   "picker_score": 9.0,
+   "hook_strength": 9.0,
+   "cliff_strength": 9.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 53.9,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.36,
+    "cliffhanger": 9.69,
+    "standalone": 7.02,
+    "intensity": 9.97,
+    "spoiler_risk": 9.55,
+    "would_post": false,
+    "verdict": "Jev rubric (min confidence 0.56)",
+    "issues": ""
+   },
+   "screen_score": 7.449,
+   "screen_samples": [
+    7.391,
+    7.506
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "E04-W4",
+   "kind": "stitched",
+   "title": "2-part 00:09.60 hook -> cliff",
+   "segments": [
+    {
+     "episode": 4,
+     "start_beat": "E04-B004",
+     "end_beat": "E04-B004",
+     "start": 9.6,
+     "end": 25.5
+    },
+    {
+     "episode": 4,
+     "start_beat": "E04-B034",
+     "end_beat": "E04-B034",
+     "start": 52.1,
+     "end": 89.5
+    }
+   ],
+   "hook_beat": "E04-B004",
+   "hook": "Victoria screams in terror at seeing a dead man: 'No... it's impossible. I saw your body in the morgue!'",
+   "cliffhanger": "Is Leo about to murder his twin brother to take the CEO position for himself?",
+   "why": "hook 9/10 -> cliff 9/10",
+   "picker_score": 8.5,
+   "hook_strength": 9.0,
+   "cliff_strength": 9.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 53.3,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.3,
+    "cliffhanger": 9.82,
+    "standalone": 7.1,
+    "intensity": 9.97,
+    "spoiler_risk": 9.58,
+    "would_post": false,
+    "verdict": "Jev rubric (min confidence 0.56)",
+    "issues": ""
+   },
+   "screen_score": 7.478,
+   "screen_samples": [
+    7.447,
+    7.508
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "X01-E01E02",
+   "kind": "cross",
+   "title": "cross-episode Ep1 -> Ep2",
+   "segments": [
+    {
+     "episode": 1,
+     "start_beat": "E01-B009",
+     "end_beat": "E01-B009",
+     "start": 27.6,
+     "end": 42.5
+    },
+    {
+     "episode": 2,
+     "start_beat": "E02-B029",
+     "end_beat": "E02-B029",
+     "start": 56.3,
+     "end": 97.5
+    }
+   ],
+   "hook_beat": "E01-B009",
+   "hook": "The clip opens with Victoria lunging forward and delivering a brutal, stinging slap across his face.",
+   "cliffhanger": "Will Victoria avoid being arrested and ruined now that she has produced a positive pregnancy test for Julian's heir?",
+   "why": "The physical confrontation of the opening slap hooks a scrolling viewer, while the final pregnancy twist completely upends the corporate power struggle.",
+   "picker_score": 9.5,
+   "hook_strength": 10.0,
+   "cliff_strength": 10.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "jev-1.14.0",
+   "duration": 56.1,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.88,
+    "cliffhanger": 9.56,
+    "standalone": 3.32,
+    "intensity": 9.97,
+    "spoiler_risk": 9.32,
+    "would_post": false,
+    "verdict": "Jev rubric (min confidence 0.54)",
+    "issues": ""
+   },
+   "screen_score": 7.495,
+   "screen_samples": [
+    7.435,
+    7.554
+   ],
+   "bt": 0.0142,
+   "record": "1-2-2",
+   "final_score": 7.5,
+   "rank": 3
+  },
+  {
+   "id": "X02-E02E03",
+   "kind": "cross",
+   "title": "cross-episode Ep2 -> Ep3",
+   "segments": [
+    {
+     "episode": 2,
+     "start_beat": "E02-B001",
+     "end_beat": "E02-B001",
+     "start": 2.9,
+     "end": 16.8
+    },
+    {
+     "episode": 3,
+     "start_beat": "E03-B030",
+     "end_beat": "E03-B030",
+     "start": 49.1,
+     "end": 89.0
+    }
+   ],
+   "hook_beat": "E02-B001",
+   "hook": "Victoria steps forward to deliver a hard slap across Damian's face",
+   "cliffhanger": "How is Julian alive, and what will he do to Victoria now that he has returned?",
+   "why": "Ep2 hook 9/10 -> Ep3 cliff 10/10",
+   "picker_score": 9.0,
+   "hook_strength": 9.0,
+   "cliff_strength": 10.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 53.8,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.6,
+    "cliffhanger": 9.85,
+    "standalone": 6.95,
+    "intensity": 9.99,
+    "spoiler_risk": 9.6,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.53)",
+    "issues": ""
+   },
+   "screen_score": 8.142,
+   "screen_samples": [
+    8.072,
+    8.213
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "X03-E03E04",
+   "kind": "cross",
+   "title": "cross-episode Ep3 -> Ep4",
+   "segments": [
+    {
+     "episode": 3,
+     "start_beat": "E03-B014",
+     "end_beat": "E03-B014",
+     "start": 39.6,
+     "end": 52.5
+    },
+    {
+     "episode": 4,
+     "start_beat": "E04-B036",
+     "end_beat": "E04-B036",
+     "start": 52.1,
+     "end": 95.0
+    }
+   ],
+   "hook_beat": "E03-B014",
+   "hook": "The clip opens with a tight shot of Victoria turning and aggressively slapping Carter across the face.",
+   "cliffhanger": "Will Leo attack Julian with the syringe now that they are locked alone in the room together?",
+   "why": "A viewer will stop for the sudden physical violence of the slap and need the next episode to see if Julian can survive his brother's deadly betrayal.",
+   "picker_score": 9.0,
+   "hook_strength": 9.0,
+   "cliff_strength": 10.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "jev-1.14.0",
+   "duration": 55.8,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.93,
+    "cliffhanger": 9.97,
+    "standalone": 6.68,
+    "intensity": 9.96,
+    "spoiler_risk": 9.12,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.59)",
+    "issues": ""
+   },
+   "screen_score": 8.364,
+   "screen_samples": [
+    8.341,
+    8.388
+   ],
+   "bt": 0.685,
+   "record": "4-0-1",
+   "final_score": 8.36,
+   "rank": 1
+  },
+  {
+   "id": "X04-E03E04",
+   "kind": "cross",
+   "title": "cross-episode Ep3 -> Ep4",
+   "segments": [
+    {
+     "episode": 3,
+     "start_beat": "E03-B006",
+     "end_beat": "E03-B006",
+     "start": 16.6,
+     "end": 25.5
+    },
+    {
+     "episode": 4,
+     "start_beat": "E04-B029",
+     "end_beat": "E04-B029",
+     "start": 30.1,
+     "end": 76.5
+    }
+   ],
+   "hook_beat": "E03-B006",
+   "hook": "Shocking paternity reveal: 'Julian had a vasectomy at twenty-five, Victoria. Who's the real father?'",
+   "cliffhanger": "Why is Leo secretly pulling a syringe out of his pocket while looking at Julian?",
+   "why": "Ep3 hook 9/10 -> Ep4 cliff 9/10",
+   "picker_score": 8.5,
+   "hook_strength": 9.0,
+   "cliff_strength": 9.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 55.3,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.51,
+    "cliffhanger": 9.97,
+    "standalone": 6.63,
+    "intensity": 10.0,
+    "spoiler_risk": 9.25,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.54)",
+    "issues": ""
+   },
+   "screen_score": 7.598,
+   "screen_samples": [
+    7.549,
+    7.646
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "X05-E01E04",
+   "kind": "cross",
+   "title": "cross-episode Ep1 -> Ep4",
+   "segments": [
+    {
+     "episode": 1,
+     "start_beat": "E01-B012",
+     "end_beat": "E01-B012",
+     "start": 35.1,
+     "end": 46.0
+    },
+    {
+     "episode": 4,
+     "start_beat": "E04-B024",
+     "end_beat": "E04-B024",
+     "start": 17.6,
+     "end": 63.5
+    }
+   ],
+   "hook_beat": "E01-B012",
+   "hook": "Leo violently grabs Victoria's wrist as she tries to pull away",
+   "cliffhanger": "Did Leo actually hire Victoria to kill his own twin brother Julian?",
+   "why": "Ep1 hook 8/10 -> Ep4 cliff 9/10",
+   "picker_score": 8.0,
+   "hook_strength": 8.0,
+   "cliff_strength": 9.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 56.8,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 9.64,
+    "cliffhanger": 9.74,
+    "standalone": 6.48,
+    "intensity": 9.97,
+    "spoiler_risk": 9.62,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.49)",
+    "issues": ""
+   },
+   "screen_score": 8.019,
+   "screen_samples": [
+    7.994,
+    8.044
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "X06-E02E03",
+   "kind": "cross",
+   "title": "cross-episode Ep2 -> Ep3",
+   "segments": [
+    {
+     "episode": 2,
+     "start_beat": "E02-B021",
+     "end_beat": "E02-B021",
+     "start": 65.6,
+     "end": 77.0
+    },
+    {
+     "episode": 3,
+     "start_beat": "E03-B022",
+     "end_beat": "E03-B022",
+     "start": 22.6,
+     "end": 65.0
+    }
+   ],
+   "hook_beat": "E02-B021",
+   "hook": "Damian lists her crimes and threatens immediate arrest: \"Embezzlement, grand larceny, and conspiracy to commit murder. The police are already downstairs.\"",
+   "cliffhanger": "How will Victoria react to the proof that she poisoned her fianc\u00e9?",
+   "why": "Ep2 hook 8/10 -> Ep3 cliff 8/10",
+   "picker_score": 7.5,
+   "hook_strength": 8.0,
+   "cliff_strength": 8.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 53.8,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.59,
+    "cliffhanger": 9.65,
+    "standalone": 7.87,
+    "intensity": 9.97,
+    "spoiler_risk": 9.43,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.49)",
+    "issues": ""
+   },
+   "screen_score": 7.71,
+   "screen_samples": [
+    7.646,
+    7.774
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "X07-E01E02",
+   "kind": "cross",
+   "title": "cross-episode Ep1 -> Ep2",
+   "segments": [
+    {
+     "episode": 1,
+     "start_beat": "E01-B004",
+     "end_beat": "E01-B004",
+     "start": 11.6,
+     "end": 21.0
+    },
+    {
+     "episode": 2,
+     "start_beat": "E02-B015",
+     "end_beat": "E02-B015",
+     "start": 10.0,
+     "end": 49.0
+    }
+   ],
+   "hook_beat": "E01-B004",
+   "hook": "Victoria's arrogant demand: 'Sign it, Julian. Your family's entire legacy belongs to me now.'",
+   "cliffhanger": "Whose side is Carter actually on, and is Victoria about to be completely ruined?",
+   "why": "Ep1 hook 7/10 -> Ep2 cliff 8/10",
+   "picker_score": 7.0,
+   "hook_strength": 7.0,
+   "cliff_strength": 8.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 48.4,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.31,
+    "cliffhanger": 9.55,
+    "standalone": 7.08,
+    "intensity": 9.1,
+    "spoiler_risk": 7.92,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.53)",
+    "issues": ""
+   },
+   "screen_score": 7.72,
+   "screen_samples": [
+    7.654,
+    7.787
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  },
+  {
+   "id": "X08-E02E03",
+   "kind": "cross",
+   "title": "cross-episode Ep2 -> Ep3",
+   "segments": [
+    {
+     "episode": 2,
+     "start_beat": "E02-B008",
+     "end_beat": "E02-B008",
+     "start": 23.6,
+     "end": 30.0
+    },
+    {
+     "episode": 3,
+     "start_beat": "E03-B032",
+     "end_beat": "E03-B032",
+     "start": 43.6,
+     "end": 95.0
+    }
+   ],
+   "hook_beat": "E02-B008",
+   "hook": "Damian accuses her of murder: \"The same car crash you engineered by tampering with his brake lines.\"",
+   "cliffhanger": "episode ending (writers' cliffhanger)",
+   "why": "Ep2 hook 8/10 -> Ep3 cliff 7/10",
+   "picker_score": 7.0,
+   "hook_strength": 8.0,
+   "cliff_strength": 7.0,
+   "picker_model": "vertex/gemini-3.5-flash",
+   "judge_model": "",
+   "duration": 57.8,
+   "flags": [],
+   "fixes": [],
+   "judge": {
+    "hook": 7.51,
+    "cliffhanger": 9.8,
+    "standalone": 7.65,
+    "intensity": 10.0,
+    "spoiler_risk": 9.78,
+    "would_post": true,
+    "verdict": "Jev rubric (min confidence 0.41)",
+    "issues": ""
+   },
+   "screen_score": 7.589,
+   "screen_samples": [
+    7.57,
+    7.608
+   ],
+   "bt": null,
+   "record": "",
+   "final_score": 0,
+   "rank": 0
+  }
+ ],
+ "calls": [
+  {
+   "role": "tag",
+   "model": "vertex/gemini-3.5-flash",
+   "cached": false,
+   "fallback": false
+  },
+  {
+   "role": "tag",
+   "model": "vertex/gemini-3.5-flash",
+   "cached": false,
+   "fallback": false
+  },
+  {
+   "role": "tag",
+   "model": "vertex/gemini-3.5-flash",
+   "cached": false,
+   "fallback": false
+  },
+  {
+   "role": "tag",
+   "model": "vertex/gemini-3.5-flash",
+   "cached": false,
+   "fallback": false
+  },
+  {
+   "role": "explain",
+   "model": "vertex/gemini-3.5-flash",
+   "cached": false,
+   "fallback": false
+  },
+  {
+   "role": "explain",
+   "model": "vertex/gemini-3.5-flash",
+   "cached": false,
+   "fallback": false
+  }
+ ],
+ "jev_comparisons": [
+  {
+   "a": "E02-W2",
+   "b": "E03-W1",
+   "p_a_first": 0.15,
+   "p_a_second": 0.41,
+   "p": 0.28,
+   "agree": true,
+   "conf": 0.18,
+   "first_shown_won": [
+    false,
+    true
+   ]
+  },
+  {
+   "a": "E02-W2",
+   "b": "X03-E03E04",
+   "p_a_first": 0.1,
+   "p_a_second": 0.24,
+   "p": 0.17,
+   "agree": true,
+   "conf": 0.52,
+   "first_shown_won": [
+    false,
+    true
+   ]
+  },
+  {
+   "a": "E02-W2",
+   "b": "E01-W3",
+   "p_a_first": 0.22,
+   "p_a_second": 0.47,
+   "p": 0.345,
+   "agree": true,
+   "conf": 0.06,
+   "first_shown_won": [
+    false,
+    true
+   ]
+  },
+  {
+   "a": "E02-W2",
+   "b": "E01-W4",
+   "p_a_first": 0.42,
+   "p_a_second": 0.76,
+   "p": 0.59,
+   "agree": false,
+   "conf": 0.16,
+   "first_shown_won": [
+    false,
+    false
+   ]
+  },
+  {
+   "a": "E02-W2",
+   "b": "X01-E01E02",
+   "p_a_first": 0.19,
+   "p_a_second": 0.57,
+   "p": 0.38,
+   "agree": false,
+   "conf": 0.14,
+   "first_shown_won": [
+    false,
+    false
+   ]
+  },
+  {
+   "a": "E03-W1",
+   "b": "X03-E03E04",
+   "p_a_first": 0.53,
+   "p_a_second": 0.31,
+   "p": 0.42,
+   "agree": false,
+   "conf": 0.06,
+   "first_shown_won": [
+    true,
+    true
+   ]
+  },
+  {
+   "a": "E03-W1",
+   "b": "E01-W3",
+   "p_a_first": 0.64,
+   "p_a_second": 0.74,
+   "p": 0.69,
+   "agree": true,
+   "conf": 0.28,
+   "first_shown_won": [
+    true,
+    false
+   ]
+  },
+  {
+   "a": "E03-W1",
+   "b": "E01-W4",
+   "p_a_first": 0.63,
+   "p_a_second": 0.91,
+   "p": 0.77,
+   "agree": true,
+   "conf": 0.26,
+   "first_shown_won": [
+    true,
+    false
+   ]
+  },
+  {
+   "a": "E03-W1",
+   "b": "X01-E01E02",
+   "p_a_first": 0.54,
+   "p_a_second": 0.74,
+   "p": 0.64,
+   "agree": true,
+   "conf": 0.08,
+   "first_shown_won": [
+    true,
+    false
+   ]
+  },
+  {
+   "a": "X03-E03E04",
+   "b": "E01-W3",
+   "p_a_first": 0.65,
+   "p_a_second": 0.54,
+   "p": 0.595,
+   "agree": true,
+   "conf": 0.08,
+   "first_shown_won": [
+    true,
+    false
+   ]
+  },
+  {
+   "a": "X03-E03E04",
+   "b": "E01-W4",
+   "p_a_first": 0.77,
+   "p_a_second": 0.93,
+   "p": 0.85,
+   "agree": true,
+   "conf": 0.54,
+   "first_shown_won": [
+    true,
+    false
+   ]
+  },
+  {
+   "a": "X03-E03E04",
+   "b": "X01-E01E02",
+   "p_a_first": 0.71,
+   "p_a_second": 0.8,
+   "p": 0.755,
+   "agree": true,
+   "conf": 0.42,
+   "first_shown_won": [
+    true,
+    false
+   ]
+  },
+  {
+   "a": "E01-W3",
+   "b": "E01-W4",
+   "p_a_first": 0.68,
+   "p_a_second": 0.49,
+   "p": 0.585,
+   "agree": false,
+   "conf": 0.02,
+   "first_shown_won": [
+    true,
+    true
+   ]
+  },
+  {
+   "a": "E01-W3",
+   "b": "X01-E01E02",
+   "p_a_first": 0.39,
+   "p_a_second": 0.51,
+   "p": 0.45,
+   "agree": false,
+   "conf": 0.02,
+   "first_shown_won": [
+    false,
+    false
+   ]
+  },
+  {
+   "a": "E01-W4",
+   "b": "X01-E01E02",
+   "p_a_first": 0.18,
+   "p_a_second": 0.32,
+   "p": 0.25,
+   "agree": true,
+   "conf": 0.36,
+   "first_shown_won": [
+    false,
+    true
+   ]
+  }
+ ],
+ "escalated": []
+}

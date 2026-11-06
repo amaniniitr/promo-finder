@@ -94,7 +94,7 @@ td.rk { font-weight: 700; color: #e4572e; font-size: 10pt }
 svg text.bl { font-size: 7.6pt; fill: #333 } svg text.bv { font-size: 7.6pt; fill: #111; font-weight: 600 }
 .cmp td:nth-child(2) { color: #9a3b2a } .cmp td:nth-child(3) { color: #13744e; font-weight: 600 }
 .foot { position: absolute; bottom: .1in; left: .32in; right: .32in; font-size: 7pt; color: #888; display: flex; justify-content: space-between }
-.p2 { font-size: 9.9pt } .p2 table { font-size: 8.8pt } .p2 .card { padding: 8px 10px }
+.p2 { font-size: 9.6pt } .p2 table { font-size: 8.8pt } .p2 .card { padding: 8px 10px }
 .p2 svg text.bl, .p2 svg text.bv { font-size: 8.4pt }
 .tag { display: inline-block; background: #fff; border: 1px solid #ccd; border-radius: 3px; padding: 0 4px; font-size: 7.4pt; margin: 1px 2px 1px 0 }
 """
@@ -177,7 +177,7 @@ page2 = f"""
    <div><b>A. Planted hooks</b> <span class="mut">(29 real episodes; one calm line swapped for a known shocking line, one for a neutral decoy)</span></div>
    {bars([("hook found", 90, "#1f9d6b", "26/29"), ("clip starts on it", 86, "#1f9d6b", "25/29"), ("decoy tagged", 0, "#c0392b", "0/29"), ("random tagger", 13, "#aab", "")])}
    <div style="margin-top:4px"><b>B. Writers' own cliffhanger</b> <span class="mut">(model marks a cliff in an episode's last 8s; writers end every episode on one)</span></div>
-   {bars([("free lite model", 94, "#2d6cdf", "47/50"), ("Vertex 3.5-flash", 82, "#2d6cdf", "41/50"), ("random tagger", 22, "#aab", "")])}
+   {bars([("free lite model", 94, "#2d6cdf", "47/50"), ("  random", 18, "#aab", ""), ("Vertex 3.5-flash", 82, "#2d6cdf", "41/50"), ("  random", 26, "#aab", "")])}
    <div class="mut" style="margin-top:3px">All p &lt; 10⁻¹⁶ vs chance. <b>Tagger choice:</b> 3.5-flash finds planted hooks better (90% vs 83%; clips 86% vs 66%); the lite model finds endings better, but the episode end is always added as a cliff candidate, so endings aren't lost.</div>
   </div>
 
@@ -210,7 +210,7 @@ page2 = f"""
    <li><b>Next:</b> 30–40 blind editor ratings to pick the judge that matches humans; vision check of the first 3s once footage is available.</li></ul>
   </div>
  </div>
- <div class="foot"><span>Sources: experiments/BASELINE_v1.md · RESULTS.md · JEV_RESULTS.md · REALWORLD_RESULTS*.md · AUDIT_*.md · ANALYSIS.md · runs/v3_final/meta.json</span><span>2 / 2</span></div>
+ <div class="foot"><span>Sources: experiments/DECK_EVIDENCE.md · BASELINE_v1.md · RESULTS.md · JEV_RESULTS.md · REALWORLD_RESULTS*.md · AUDIT_*.md · ANALYSIS.md · runs/v3_final/meta.json</span><span>2 / 2</span></div>
 </div>"""
 
 OUT.mkdir(exist_ok=True)

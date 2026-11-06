@@ -1,4 +1,9 @@
-# Deploy: GitHub (private) + Vercel
+# Deploy: GitHub + Vercel
+
+**Fast path:** `sh scripts/publish.sh` runs every Terminal step. The browser steps are in `../ASIDE_TASK.md` (for the Aside agent). The notes below explain what happens.
+
+Architecture: `vercel.json` (repo root) serves `web/` as a static site, plus one Python function `api/run.py` (300 s, minimal deps in `requirements.txt`) that runs the real pipeline on up to 5 episodes. Keys live only in Vercel environment variables; `RUN_PASSPHRASE` gates every live run. Test the whole thing locally with `.venv/bin/python scripts/dev_server.py` → http://localhost:3000
+
 
 What gets published:
 - **GitHub:** code, tests, experiment write-ups, the synthetic demo run, and `web/` (the Vercel site). It does **not** include `.env` (your keys), the Kuku input pack, the full-pack runs or the deck PDF. `.gitignore` excludes them, and a pre-push hook (`scripts/check_secrets.py`) blocks the push if a key, the passphrase or plaintext Kuku script text slips in.
@@ -29,14 +34,14 @@ If Git asks for a password, use a GitHub personal access token (https://github.c
 1. Open https://vercel.com/new and sign in with GitHub.
 2. Click **Import** next to `promo-finder`. If it's not listed, click "Adjust GitHub App Permissions" and give Vercel access to that one repo.
 3. Configure:
-   - **Root Directory:** click Edit → choose `web`
+   - **Root Directory:** leave `./` (repo root; `vercel.json` points the site at `web/`)
    - **Framework Preset:** Other
    - **Build Command / Output Directory / Install Command:** leave empty
-   - **Environment Variables:** none (the site needs no keys)
+   - **Environment Variables:** none here; `scripts/publish.sh` copies `VERTEX_API_KEY`, `GEMINI_API_KEY`, `TYPESAFE_API_KEY`, `RUN_PASSPHRASE` from `.env` with the Vercel CLI
 4. Click **Deploy**. You get a URL like `https://promo-finder-xxxx.vercel.app`.
 5. Leave **Settings → Deployment Protection → Vercel Authentication** OFF for production. If it's on, reviewers would be asked to log in to Vercel.
 
-Alternative without the dashboard: `cd web && npx vercel --prod` (it logs you in through the browser).
+Alternative without the dashboard: put `VERCEL_TOKEN=...` in `.env` and run `sh scripts/publish.sh`, which deploys with the CLI.
 
 ## 4. Put the links into the deck and the site, then redeploy
 ```bash

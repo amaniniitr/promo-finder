@@ -1,5 +1,12 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": "web",
   "cleanUrls": true,
+  "functions": {
+    "api/run.py": { "maxDuration": 300, "memory": 1024, "includeFiles": "promo/**" }
+  },
   "headers": [
     { "source": "/(.*)", "headers": [
       { "key": "X-Robots-Tag", "value": "noindex, nofollow" },

@@ -61,6 +61,7 @@ button.sec { background:var(--ink) } .err { color:var(--bad); font-size:13px; mi
  </div>
  <div class="tabs">
   <div class="tab on" data-t="kuku">Kuku show · 50 episodes (locked)</div>
+  <div class="tab" data-t="live">▶ Try it live</div>
   <div class="tab" data-t="demo">Synthetic demo show (public)</div>
   <div class="tab" data-t="run">Run it yourself</div>
  </div>
@@ -72,7 +73,7 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt = t => { const m = Math.floor(t/60), s = (t%60).toFixed(1).padStart(4,"0"); return `${m}:${s}` };
 const segs = p => p.segments.map(s => `E${s.episode} ${fmt(s.start)}–${fmt(s.end)}`).join(" + ");
-let DATA = { kuku: null, demo: null }, TAB = "kuku";
+let DATA = { kuku: null, demo: null, live: null }, TAB = "kuku";
 
 async function decrypt(blob, pass) {
   const b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -102,13 +103,16 @@ function lockView() {
 function render() {
   const D = DATA[TAB];
   if (TAB === "run") return runView();
+  if (TAB === "live" && !D) return liveForm();
   if (!D) return TAB === "kuku" ? lockView() : null;
   const m = D.meta, P = D.promos, pw = m.pairwise || {};
   const plan = (m.posting_plan || {}).plan || [], hold = (m.posting_plan || {}).hold || [];
   const by = Object.fromEntries(P.map(p => [p.id, p]));
   const top = P.filter(p => p.bt !== null && p.bt !== undefined), lo = Math.min(...top.map(p => p.bt)), hi = Math.max(...top.map(p => p.bt));
   $("#view").innerHTML = `
-   <div class="note" style="margin-bottom:10px"><b>${esc(m.label)}</b> · generated ${esc(m.generated || "")}</div>
+   <div class="note" style="margin-bottom:10px"><b>${esc(m.label)}</b> · generated ${esc(m.generated || "")}
+    ${TAB === "live" ? ` · ran in <b>${m.run_seconds}s</b> · tag <code>${esc(m.models.tag)}</code> · judge <code>${esc(m.models.judge)}</code>
+      <button class="sec" style="margin-left:8px;padding:5px 12px" onclick="DATA.live=null;render()">Run again</button>` : ""}</div>
    <div class="kpis">
     <div class="kpi"><b>${m.ranked}</b><span>ranked promos from ${m.candidates} candidate clips</span></div>
     <div class="kpi"><b>${m.rule_violations}</b><span>rule violations (20–60s, hook ≤ 3s)</span></div>
@@ -156,11 +160,53 @@ function dl(kind) {
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.click();
 }
 
+async function liveForm() {
+  let health = {}, samples = [];
+  try { health = await (await fetch("api/run")).json(); } catch (e) {}
+  try { samples = await (await fetch("data/samples/index.json")).json(); } catch (e) {}
+  const lim = health.limits || { files: 5, chars_per_file: 30000 };
+  $("#view").innerHTML = `<div class="card"><h2>Run the real pipeline in your browser</h2>
+   <div class="note">Runs on Vercel: parse → tag (Gemini) → build clips → score + rank (Jev) → notes and posting plan. Takes about 30–90 s for up to ${lim.files} episodes.
+   ${health.live_runs_enabled ? `Configured: tag <code>${esc((health.models || {}).tag)}</code>, judge <code>${esc((health.models || {}).judge)}</code>.` :
+     `<b style="color:var(--bad)">Live runs are not enabled on this deployment (no API key or RUN_PASSPHRASE set).</b>`}</div>
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px">
+    <div><div class="lbl">A. SAMPLE SHOW (AI-written, 4 episodes, different script format)</div>
+     ${samples.map((n, i) => `<label style="display:block;font-size:14px;margin:4px 0"><input type="checkbox" class="smp" value="${esc(n)}" checked> ${esc(n)}</label>`).join("")}
+     <div class="note">Open one: ${samples.map(n => `<a href="data/samples/${encodeURIComponent(n)}" target="_blank">${esc(n)}</a>`).join(" · ")}</div></div>
+    <div><div class="lbl">B. OR UPLOAD YOUR OWN EPISODES (.txt, up to ${lim.files}, ${(lim.chars_per_file / 1000) | 0}k chars each)</div>
+     <input type="file" id="up" accept=".txt,.md,.fountain" multiple style="margin:8px 0">
+     <div class="note">Uploaded files replace the sample. Any timestamped format works: <code>**ACTION:**</code> + <code>Start: (00:01.00) | End: (00:04.80)</code>, <code>NAME (Emotion): [00:01.0 - 00:04.8] "line"</code>, SRT-style times…</div></div></div>
+   <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
+    <input id="rpw" type="password" placeholder="passphrase (from the submission form)" style="flex:1;padding:10px;border-radius:10px;border:1px solid #CBD5E1;font-size:14px" value="${esc(sessionStorage.getItem("pf_pw") || "")}">
+    <button id="runbtn" ${health.live_runs_enabled ? "" : "disabled"}>Run pipeline</button></div>
+   <div class="err" id="rerr" style="margin-top:8px"></div></div>`;
+  $("#runbtn").onclick = async () => {
+    const up = [...$("#up").files];
+    let files;
+    if (up.length) files = await Promise.all(up.map(async f => ({ name: f.name, text: await f.text() })));
+    else files = await Promise.all([...document.querySelectorAll(".smp:checked")].map(async c =>
+                 ({ name: c.value, text: await (await fetch("data/samples/" + encodeURIComponent(c.value))).text() })));
+    if (!files.length) return $("#rerr").textContent = "Pick at least one episode.";
+    if (files.length > lim.files) return $("#rerr").textContent = `At most ${lim.files} episodes per run.`;
+    const t0 = Date.now(); $("#runbtn").disabled = true;
+    const tick = setInterval(() => $("#rerr").textContent = `Running on ${files.length} episode(s)… ${((Date.now() - t0) / 1000) | 0}s`, 500);
+    try {
+      const r = await fetch("api/run", { method: "POST", headers: { "Content-Type": "application/json" },
+                                          body: JSON.stringify({ passphrase: $("#rpw").value.trim(), files }) });
+      const d = await r.json().catch(() => ({ error: `HTTP ${r.status}` }));
+      clearInterval(tick);
+      if (!r.ok) { $("#rerr").textContent = d.error || `HTTP ${r.status}`; $("#runbtn").disabled = false; return; }
+      sessionStorage.setItem("pf_pw", $("#rpw").value.trim());
+      DATA.live = d; render();
+    } catch (e) { clearInterval(tick); $("#rerr").textContent = "Request failed: " + e; $("#runbtn").disabled = false; }
+  };
+}
+
 function runView() {
   $("#view").innerHTML = `<div class="card"><h2>Run it on any show</h2><div class="note">
-  The pipeline needs API keys and takes ~7 minutes for 50 episodes, so it runs locally, not on this site. This site only shows saved runs; no key is ever sent to it.</div>
+  The <b>▶ Try it live</b> tab runs the pipeline on Vercel for up to 5 episodes (keys stay server-side). A full 50-episode show takes ~7 minutes, which is longer than a serverless call allows, so run that locally:</div>
   <pre>git clone ${esc(LINKS.repo || "<repo url>")} && cd promo-finder
-python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+python3 -m venv .venv && .venv/bin/pip install -r requirements-local.txt
 cp .env.example .env          # add GEMINI_API_KEY (free); optional VERTEX_API_KEY, TYPESAFE_API_KEY
 .venv/bin/python run.py "&lt;folder of episode .txt files&gt;" --out runs/latest
 .venv/bin/python demo.py runs/latest          # print top promos + posting plan

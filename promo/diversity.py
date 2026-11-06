@@ -15,13 +15,21 @@ import json
 import os
 import time
 
-import litellm
-
-from .llm import CACHE_DIR
+from . import rest_llm
+from .llm import CACHE_DIR, litellm
 from .metrics import cosine
 
 EMBED_MODEL = os.getenv("PROMO_EMBED_MODEL", "gemini/gemini-embedding-001")
 _EMB_CACHE = CACHE_DIR / "embeddings.json"
+
+
+def _local_vec(t: str, dim: int = 512) -> list[float]:
+    """Fallback when no embedding API is reachable: hashed bag of words (weaker, but deterministic)."""
+    import re as _re
+    v = [0.0] * dim
+    for w in _re.findall(r"[a-z']{3,}", t.lower()):
+        v[int(hashlib.md5(w.encode()).hexdigest(), 16) % dim] += 1.0
+    return v
 
 
 def embed(texts: list[str], log=print) -> list[list[float]]:
@@ -31,19 +39,32 @@ def embed(texts: list[str], log=print) -> list[list[float]]:
     todo = [(k, t) for k, t in zip(keys, texts) if k not in store]
     for i in range(0, len(todo), 40):
         chunk = todo[i:i + 40]
-        for attempt in range(5):
+        tries = int(os.getenv("PROMO_EMBED_TRIES", "5"))
+        for attempt in range(tries):
             try:
-                r = litellm.embedding(model=EMBED_MODEL, input=[t for _, t in chunk])
-                for (k, _), d in zip(chunk, r.data):
-                    store[k] = d["embedding"]
+                if litellm is None:
+                    vecs = rest_llm.embed(EMBED_MODEL, [t for _, t in chunk])
+                else:
+                    vecs = [d["embedding"] for d in litellm.embedding(model=EMBED_MODEL, input=[t for _, t in chunk]).data]
+                for (k, _), v in zip(chunk, vecs):
+                    store[k] = v
                 _EMB_CACHE.write_text(json.dumps(store))
                 break
             except Exception as e:
-                log(f"  [embed] {type(e).__name__} -> wait 60s")
-                time.sleep(60)
+                if attempt == tries - 1:
+                    log(f"  [embed] unavailable ({type(e).__name__}); using local word vectors")
+                    for k, t in chunk:
+                        store[k] = _local_vec(t)
+                    break
+                wait = float(os.getenv("PROMO_EMBED_WAIT", "60"))
+                log(f"  [embed] {type(e).__name__} -> wait {wait:.0f}s")
+                time.sleep(wait)
         if i + 40 < len(todo):
             time.sleep(25)
-    return [store[k] for k in keys]
+    out = [store[k] for k in keys]
+    if len({len(v) for v in out}) > 1:          # mixed API + fallback vectors can't be compared
+        out = [_local_vec(t) for t in texts]
+    return out
 
 
 def clip_text(p, idx) -> str:

@@ -22,7 +22,8 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 load_dotenv(ROOT / ".env")
-from promo.models import BeatIndex, Promo, clip_script  # noqa: E402
+from promo.export import bundle as export_bundle  # noqa: E402
+from promo.models import BeatIndex  # noqa: E402
 from promo.parser import parse_show  # noqa: E402
 
 WEB = ROOT / "web"
@@ -33,23 +34,7 @@ ITER = 310_000
 def bundle(run: Path, show: Path, titles: dict | None = None) -> dict:
     meta = json.loads((run / "meta.json").read_text())
     promos = json.loads((run / "promos.json").read_text())["promos"]
-    idx = BeatIndex(parse_show(show))
-    out = []
-    for p in promos:
-        q = Promo(**p)
-        j = p.get("judge") or {}
-        out.append({"rank": p["rank"], "id": p["id"], "kind": p["kind"], "duration": p["duration"],
-                    "title": (titles or {}).get(p["id"], ""),
-                    "segments": [{"episode": s["episode"], "start": s["start"], "end": s["end"]} for s in p["segments"]],
-                    "hook": p["hook"], "cliffhanger": p["cliffhanger"], "why": p["why"], "record": p.get("record", ""),
-                    "bt": p.get("bt"), "screen": p.get("screen_score"),
-                    "scores": {k: j.get(k) for k in ("hook", "cliffhanger", "standalone", "intensity", "spoiler_risk")},
-                    "script": clip_script(q, idx)})
-    keep = ["candidates", "rule_violations", "story_duplicates_removed", "ranked", "shortlist_size", "pairwise",
-            "posting_plan", "episodes", "judge", "generated"]
-    m = {k: meta.get(k) for k in keep}
-    m["jev_cost_usd"] = (meta.get("jev_usage") or {}).get("cost_usd")
-    return {"meta": m, "promos": out}
+    return export_bundle(meta, promos, BeatIndex(parse_show(show)), titles)
 
 
 def encrypt(obj: dict, passphrase: str) -> dict:
@@ -61,6 +46,13 @@ def encrypt(obj: dict, passphrase: str) -> dict:
 
 
 (WEB / "data" / "links.json").write_text((ROOT / "links.json").read_text())
+samples = WEB / "data" / "samples"
+samples.mkdir(exist_ok=True)
+names = []
+for f in sorted((ROOT / "tests" / "fixtures" / "new_show").glob("*.txt")):
+    (samples / f.name).write_text(f.read_text())
+    names.append(f.name)
+(samples / "index.json").write_text(json.dumps(names))
 demo = bundle(ROOT / "runs" / "new_show_test", ROOT / "tests" / "fixtures" / "new_show")
 demo["meta"]["label"] = "Synthetic demo show (AI-written, different script format)"
 (WEB / "data" / "demo.json").write_text(json.dumps(demo, separators=(",", ":")))

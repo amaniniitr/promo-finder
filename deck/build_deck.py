@@ -11,7 +11,7 @@ meta = json.loads((RUN / "meta.json").read_text())
 P = json.loads((RUN / "promos.json").read_text())["promos"]
 DIAG = json.loads((RUN / "diagnostics.json").read_text())
 TITLES = json.loads((OUT / "titles.json").read_text()) if (OUT / "titles.json").exists() else {}  # short labels (quote the show, so not in git)
-NAME = "Aman Kumar · 22322004"
+NAME = "Aman Kumar · 22322004"  # branch appended from links.json if set
 
 
 import sys  # noqa: E402
@@ -44,6 +44,7 @@ def fmt(t):
 
 _L = json.loads((ROOT / "links.json").read_text()) if (ROOT / "links.json").exists() else {}
 _short = lambda u: e(u.replace("https://", "").replace("http://", "").rstrip("/"))  # noqa: E731
+NAME = NAME + (f" · {e(_L['branch'])}" if _L.get("branch") else "")
 LINKS = "  ·  ".join(x for x in [
     f"live: {_short(_L['site'])}" if _L.get("site") else "",
     f"code: {_short(_L['repo'])}" if _L.get("repo") else "",

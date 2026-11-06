@@ -16,17 +16,39 @@ import threading
 import time
 from pathlib import Path
 
-import litellm
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+except ImportError:          # serverless: keys come from the platform's environment variables
+    pass
 
-load_dotenv(Path(__file__).resolve().parent.parent / ".env")
-litellm.suppress_debug_info = True
-import logging  # noqa: E402
+# LiteLLM routes any provider; it is optional. Without it (the Vercel function) a small REST
+# client handles gemini/ and vertex/ models. PROMO_BACKEND=rest forces the REST path.
+try:
+    if os.getenv("PROMO_BACKEND") == "rest":
+        raise ImportError
+    import litellm
+    litellm.suppress_debug_info = True
+    import logging
+    logging.getLogger("LiteLLM").setLevel(logging.ERROR)
+except ImportError:
+    litellm = None
+from . import rest_llm  # noqa: E402
 
-logging.getLogger("LiteLLM").setLevel(logging.ERROR)
 
-CACHE_DIR = Path(os.getenv("PROMO_CACHE", Path(__file__).resolve().parent.parent / ".cache"))
-CACHE_DIR.mkdir(parents=True, exist_ok=True)
+def _cache_dir() -> Path:
+    d = Path(os.getenv("PROMO_CACHE", Path(__file__).resolve().parent.parent / ".cache"))
+    try:
+        d.mkdir(parents=True, exist_ok=True)
+        (d / ".w").touch()
+        return d
+    except OSError:          # read-only filesystem (serverless): use /tmp
+        d = Path("/tmp/promo-cache")
+        d.mkdir(parents=True, exist_ok=True)
+        return d
+
+
+CACHE_DIR = _cache_dir()
 
 
 # Role-based model cascade. Cheap models do high-volume, easy work; the strongest
@@ -164,18 +186,22 @@ def call_json(system: str, user: str, role: str = "picker", temperature: float =
             _throttle(model, (len(system) + len(user)) // 4)
             # Some models (gemma-4-31b on AI Studio) 500 on JSON mode; for them we rely on the prompt + parser.
             kw = {} if any(k in model for k in NO_JSON_MODE) else {"response_format": {"type": "json_object"}}
-            target, extra = _route(model)
-            r = litellm.completion(
-                model=target, temperature=temperature,
-                messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
-                timeout=300, **kw, **extra,
-            )
-            u = getattr(r, "usage", None)
-            if u:
-                TOKENS.setdefault(model, [0, 0])
-                TOKENS[model][0] += u.prompt_tokens or 0
-                TOKENS[model][1] += u.completion_tokens or 0
-            data = _extract_json(r.choices[0].message.content or "")
+            if litellm is None:
+                text, tin, tout = rest_llm.complete(model, system, user, temperature, json_mode=bool(kw))
+            else:
+                target, extra = _route(model)
+                r = litellm.completion(
+                    model=target, temperature=temperature,
+                    messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
+                    timeout=300, **kw, **extra,
+                )
+                u = getattr(r, "usage", None)
+                text, tin, tout = r.choices[0].message.content or "", (u.prompt_tokens or 0) if u else 0, \
+                    (u.completion_tokens or 0) if u else 0
+            TOKENS.setdefault(model, [0, 0])
+            TOKENS[model][0] += tin
+            TOKENS[model][1] += tout
+            data = _extract_json(text)
             if model != primary:
                 log(f"  [llm] used fallback {model} (primary {primary} unavailable)")
             cache_file.write_text(json.dumps({"model": model, "data": data}, indent=1))

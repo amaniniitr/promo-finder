@@ -7,7 +7,7 @@ Reads a folder of timestamped microdrama screenplays and returns ranked 20-60 s 
 ## Run
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+python3 -m venv .venv && .venv/bin/pip install -r requirements-local.txt   # full toolkit (requirements.txt = minimal, used by Vercel)
 cp .env.example .env        # add keys (see below)
 
 .venv/bin/python run.py "<show folder>" --out runs/latest      # full pipeline
@@ -15,6 +15,7 @@ cp .env.example .env        # add keys (see below)
 .venv/bin/python demo.py runs/new_show_test                     # no keys needed: view a saved run
 .venv/bin/streamlit run app.py                                  # editor review UI (approve / reject)
 .venv/bin/python tests/test_parser.py                           # parser format tests (no keys)
+.venv/bin/python scripts/dev_server.py                          # the Vercel site + live-run API on localhost:3000
 ```
 
 **Keys.** `GEMINI_API_KEY` (free, AI Studio) is enough to run everything with fallbacks. `VERTEX_API_KEY` moves tagging and notes to Vertex `gemini-3.5-flash`. `TYPESAFE_API_KEY` uses TypeSafe Jev for scoring and ranking; without it, LLM judges are used. Any LiteLLM model string can be set per role, e.g. `PROMO_TAG_MODEL=openai/gpt-5-mini`, `PROMO_RANK_MODEL=...`.

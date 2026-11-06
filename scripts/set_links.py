@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ap = argparse.ArgumentParser()
-for k in ("repo", "site", "video", "outputs"):
+for k in ("repo", "site", "video", "outputs", "branch"):
     ap.add_argument(f"--{k}")
 a = ap.parse_args()
 L = json.loads((ROOT / "links.json").read_text())

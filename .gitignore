@@ -14,3 +14,5 @@ deck/*.pdf
 deck/*.html
 deck/*.png
 deck/*.json
+.vercel
+ASIDE_TASK.local.md

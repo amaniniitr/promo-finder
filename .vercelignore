@@ -1,0 +1,15 @@
+.venv
+.cache
+.env
+runs
+experiments
+deck
+tests
+app.py
+demo.py
+qa.py
+experiment.py
+run_v1.py
+requirements-local.txt
+*.md
+!web/**

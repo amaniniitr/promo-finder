@@ -28,7 +28,7 @@ comparisons). For each, you get its record, rubric scores (0-10) and a one-line 
 {rows}
 
 Write a posting plan for the first week: which 5 to post first and in what order, one sentence each on why.
-Hold back anything with spoiler_risk >= 5 until later and say so. Don't post two clips of the same scene on
+Hold back anything with spoiler_risk >= 5 until later and say so, unless that would leave fewer than 3 to post: then post the lowest-risk ones and mention the risk in the reason. Don't post two clips of the same scene on
 consecutive days. Return JSON {{"plan": [{{"id": "...", "day": n, "reason": "..."}}], "hold": [{{"id": "...", "reason": "..."}}]}}"""
 
 

@@ -1,73 +1,58 @@
-# Promo Finder
+# Promo Finder (Kuku AI Generalist assignment, Problem 1)
 
-Reads a folder of microdrama screenplays and returns ranked 20-60s promo clips. Each promo has an episode, start/end timestamps for every segment, the hook, the cliffhanger, and the evidence behind its rank.
+Reads a folder of timestamped microdrama screenplays and returns ranked 20-60 s promos. Each promo has episode and start/end times for every segment, the hook, the cliffhanger, one line on why it works, and a week-1 posting plan.
 
 ## Run
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-cp .env.example .env                  # add GEMINI_API_KEY (free key from aistudio.google.com)
+cp .env.example .env        # add keys (see below)
 
-.venv/bin/python run.py "<show folder>" --out runs/v2_jev    # v2, Jev judge if TYPESAFE_API_KEY is set
-.venv/bin/python run.py "<show folder>" --judge llm --out runs/v2_llm  # v2, LLM judges only
-.venv/bin/python run.py "<show folder>" --episodes 1,2,3 --out t # quick test
-.venv/bin/python experiment.py --audit                              # measure v1 vs v2 -> experiments/RESULTS.md
-.venv/bin/python experiments/jev_experiment.py                      # measure Jev vs LLM judges -> JEV_RESULTS.md
-.venv/bin/streamlit run app.py                                      # editor review UI
-.venv/bin/python run_v1.py "<show folder>" --out runs/v1               # v1 baseline, kept for comparison
+.venv/bin/python run.py "<show folder>" --out runs/latest      # full pipeline
+.venv/bin/python run.py "<show folder>" --episodes 1,2,3        # quick test
+.venv/bin/python demo.py runs/new_show_test                     # no keys needed: view a saved run
+.venv/bin/streamlit run app.py                                  # editor review UI (approve / reject)
+.venv/bin/python tests/test_parser.py                           # parser format tests (no keys)
 ```
 
-Input: one `.txt` per episode, in the pack's format (`EPISODE NUMBER`, `EPISODE LOGLINE`, `SCENE nn`, and `**LABEL:**` blocks with `Start: (mm:ss.ss) | End: (mm:ss.ss)`).
+**Keys.** `GEMINI_API_KEY` (free, AI Studio) is enough to run everything with fallbacks. `VERTEX_API_KEY` moves tagging and notes to Vertex `gemini-3.5-flash`. `TYPESAFE_API_KEY` uses TypeSafe Jev for scoring and ranking; without it, LLM judges are used. Any LiteLLM model string can be set per role, e.g. `PROMO_TAG_MODEL=openai/gpt-5-mini`, `PROMO_RANK_MODEL=...`.
 
-## How v2 works
+**Input.** One file per episode (`.txt`/`.md`/`.fountain`). The parser accepts `**LABEL:**` or `LABEL:` blocks, `NAME (Emotion):` dialogue, times as `Start: (mm:ss.ff) | End: (...)`, `[mm:ss.ff - mm:ss.ff]`, `mm:ss,ff --> mm:ss,ff`, `h:mm:ss` or `1.0s - 4.8s`, on the label line or the next line, `SCENE n` markers or `INT./EXT.` sluglines, and episode numbers from the header or the file name. If it finds nothing usable it raises a clear error instead of returning an empty run. `tests/fixtures/new_show/` is a 4-episode show in a different format (bracket times, no bold, no header fields) used to prove a fresh show runs end to end.
+
+## Pipeline
 
 ```
-parser.py      screenplay -> 3,727 beats with IDs and times                          [code]
-moments.py     LLM labels HOOK and CLIFF beats by ID (cheap model, 1 call/episode)   [LLM]
-               code builds every hook->cliff window: 20-60s single, or a 2-part
-               teaser + run-up for 60-240s gaps; non-max suppression, 4 per episode  [code]
-jev.py         Jev rubric screen, levels asked in both orders, averaged         [Jev]
-  (or rerank.py: LLM pointwise screen x4 with different shuffles, if no Jev key)    [LLM]
-diversity.py   dedupe: same footage (>50% overlap) or same story (embedding >= .90)  [code]
-               MMR shortlist of 20 (quality vs similarity)
-jev.py         ALL pairs on the shortlist, both orders, soft Bradley-Terry;     [Jev]
-               order-dependent pairs = ties, or --escalate them to the LLM ranker
-  (or rerank.py: LLM Swiss tournament, both orders, if no Jev key)                  [LLM]
-app.py         editor approves/rejects; decisions saved as labels                     [human]
+parser      screenplay -> beats with IDs and times                                   code
+tag         LLM marks HOOK and CLIFF beats by ID, 1 call per episode                 LLM
+windows     every hook->cliff pair becomes a 20-60s clip (or 2-part teaser + run-up),
+            plus cross-episode promos (hook from ep A, cliff from a later ep B)      code
+screen      rubric scores per clip, asked with levels in both orders                 Jev / LLM
+dedupe      same footage or same story (embeddings) -> keep the better one;
+            MMR shortlist of 20                                                      code
+rank        every shortlist pair, both orders, Bradley-Terry on P(a beats b)         Jev / LLM
+notes       hook / cliffhanger / why + week-1 posting plan, written after ranking    LLM
+review      editor approves / rejects in app.py; decisions saved as labels           human
 ```
 
-Why each step exists, with before/after numbers: `experiments/ANALYSIS.md`.
+The LLM never writes a timestamp or picks a length. Rule compliance (20-60 s, hook in the first 3 s) holds by construction.
 
-### Models (swap with env vars, no code change)
+## Layout
 
-| role | env var | default | calls per show |
-|---|---|---|---|
-| tag | `PROMO_TAG_MODEL` | gemini-3.1-flash-lite | 50 |
-| screen | `PROMO_SCREEN_MODEL` | gemini-3.5-flash-lite | ~72 |
-| rank | `PROMO_RANK_MODEL` | gemini-3.5-flash → 3-flash → 2.5-flash → gemma-4-26b | ~30 (LLM judge) |
-| screen + rank (Jev) | `TYPESAFE_API_KEY`, `PROMO_JEV_MODEL` | jev-1.14.0 (pinned) | 276 screen + 380 pairwise, ~$0.03 per show |
-| audit (experiments only) | `PROMO_AUDIT_MODEL` | gemini-3-flash-preview | ~6 |
-
-With `VERTEX_API_KEY` set, model strings `vertex/<model>` route to Vertex AI (express mode). Defaults then become: tag and notes `vertex/gemini-3.5-flash`, audit `vertex/gemini-3.8-flash`. `PROMO_<ROLE>_FALLBACKS` takes a comma list. Any LiteLLM model string works (`openai/...`, `anthropic/...`). The strongest model belongs on `rank`, since it only sees the 20-clip shortlist. Every response is cached in `.cache/`, and every call records which model answered (`runs/v2_llm/meta.json`).
-
-## Outputs
-
-| path | content |
+| path | what |
 |---|---|
-| `runs/v2_llm/report.md`, `promos.csv`, `promos.json` | ranked promos, with pairwise record, BT strength and screen samples |
-| `runs/v2_llm/diagnostics.json` | tags, every candidate window, per-sample scores, every pairwise verdict, dropped duplicates, every LLM call |
-| `experiments/BASELINE_v1.md` | v1 problems, measured |
-| `experiments/RESULTS.md` | v1 vs v2, generated by `experiment.py` |
-| `runs/v3_final/` | current: Vertex tagger + cross-episode promos + notes + posting plan, Jev judge |
-| `runs/v2_jev/` | v2 with the Jev judge |
-| `experiments/JEV_RESULTS.md`, `AUDIT_*.md` | Jev vs LLM judges; blind 3-way audit |
-| `experiments/ANALYSIS.md` | what went wrong, what changed, what the numbers say, what's still wrong |
-| `runs/v1/`, `runs/v1_altjudge/` | v1 runs (baseline) |
+| `run.py`, `promo/pipeline_v2.py` | final pipeline |
+| `promo/` | parser, moments (windows), jev, rerank, diversity, explain, llm (model routing + cache) |
+| `run_v1.py`, `promo/pipeline.py` | v1 baseline, kept only for the before/after comparison |
+| `runs/v3_final/` | full-pack output (**confidential, not in git; shared separately**) |
+| `runs/new_show_test/` | output on the synthetic new show (in git) |
+| `experiments/` | baseline, v1-vs-v2, Jev, blind audits, real-life tests, critical review |
+| `tests/` | parser tests and the synthetic show |
+
+## Evidence (details in `experiments/`)
+- Picking: raw compliance 84% (v1, LLM picks boundaries) -> 100% (LLM tags, code builds clips). 0 invented beat IDs in 500 tags.
+- Real-life tests (`REALWORLD_RESULTS*.md`, ground truth not from an LLM): 90% of planted shocking lines tagged as hooks, 0/29 neutral decoys; writers' episode-ending cliffhangers found in 82-94% of episodes vs 18-26% by chance.
+- Ranking: shortlist order reproducible at split-half Spearman 0.75-0.90 with Jev vs 0.44 with the free LLM ranker; full judging ~20 s and ~$0.05 per show.
+- Not proven: that people prefer these promos. Independent AI judges agree only at Spearman 0.26-0.49, and blind audits give conflicting verdicts. Editor labels from `app.py` are the next step.
 
 ## Prior work used
-- Score + hook + reason output: [AI-Youtube-Shorts-Generator](https://github.com/SamurAIGPT/AI-Youtube-Shorts-Generator). Reviewer + second opinion: [deepclip](https://github.com/paulablaza/deepclip).
-- Select candidates, compute times in code: constrained candidate selection (arXiv 2606.20890) and segment-range selection (Seahawk, BioNLP 2026).
-- Pairwise ranking asked in both orders: PRP (Qin et al. 2023, arXiv 2306.17563; [avnlp/prp](https://github.com/avnlp/prp)). Bradley-Terry via the MM algorithm (Hunter 2004).
-- Multiple trials + randomized order against judge noise: "The Coin Flip Judge" (arXiv 2606.13685).
-- Decision-only judge with calibrated probabilities: TypeSafe Jev ([docs](https://docs.typesafe.ai)); accept/escalate cascade from "JEV-as-a-Judge" (arXiv 2609.26550).
-- Diversity: MMR (Carbonell & Goldstein 1998). Model routing: [LiteLLM](https://github.com/BerriAI/litellm).
+AI-Youtube-Shorts-Generator and deepclip (score + hook + reason; reviewer + second opinion), constrained candidate selection for timestamps (arXiv 2606.20890), Pairwise Ranking Prompting (Qin et al. 2023), "Coin Flip Judge" (arXiv 2606.13685), JEV-as-a-Judge (arXiv 2609.26550), MMR, LiteLLM.

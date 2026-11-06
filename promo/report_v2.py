@@ -57,7 +57,7 @@ def write_v2(res: dict, out_dir: str | Path) -> Path:
                         j.verdict if j else "", j.issues if j else "", j.spoiler_risk if j else "",
                         p.picker_model, p.judge_model])
 
-    md = [f"# Promo report (v2): {len(ranked)} promos, top {len(short)} ordered by pairwise tournament", "",
+    md = [f"# Promo report: {len(ranked)} promos, top {len(short)} ordered by pairwise tournament", "",
           (f"Judge: TypeSafe {res['jev_usage']['model']} (screen + all-pairs rank), "
            f"{res['jev_usage']['requests']} requests, ${res['jev_usage']['cost_usd']:.4f} | tag "
            f"{meta['models_actually_used']['tag']}" if res.get("judge") == "jev" else

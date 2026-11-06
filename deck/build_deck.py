@@ -10,7 +10,7 @@ RUN = ROOT / "runs" / "v3_final"
 meta = json.loads((RUN / "meta.json").read_text())
 P = json.loads((RUN / "promos.json").read_text())["promos"]
 DIAG = json.loads((RUN / "diagnostics.json").read_text())
-TITLES = json.loads((OUT / "titles.json").read_text())
+TITLES = json.loads((OUT / "titles.json").read_text()) if (OUT / "titles.json").exists() else {}  # short labels (quote the show, so not in git)
 NAME = "Your Name · Roll no. · Branch"            # <- fill in
 LINKS = "github.com/&lt;you&gt;/promo-finder  ·  outputs: drive (restricted)  ·  video: loom"
 

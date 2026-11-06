@@ -1,5 +1,7 @@
 # Promo Finder (Kuku AI Generalist assignment, Problem 1)
 
+Aman Kumar · 22322004 · **Live site:** see `links.json` (Vercel; full results unlock with the passphrase from the submission form) · **Deploy steps:** `DEPLOY.md`
+
 Reads a folder of timestamped microdrama screenplays and returns ranked 20-60 s promos. Each promo has episode and start/end times for every segment, the hook, the cliffhanger, one line on why it works, and a week-1 posting plan.
 
 ## Run
@@ -47,6 +49,9 @@ The LLM never writes a timestamp or picks a length. Rule compliance (20-60 s, ho
 | `runs/new_show_test/` | output on the synthetic new show (in git) |
 | `experiments/` | baseline, v1-vs-v2, Jev, blind audits, real-life tests, critical review |
 | `tests/` | parser tests and the synthetic show |
+| `web/` | static Vercel site (demo public; full-pack results AES-encrypted) built by `scripts/build_site.py` |
+| `deck/build_deck.py` | builds the 2-page solution PDF from the run files |
+| `scripts/check_secrets.py` | pre-push guard: blocks keys, `.env`, passphrase, plaintext script text |
 
 ## Evidence (details in `experiments/`)
 - Picking: raw compliance 84% (v1, LLM picks boundaries) -> 100% (LLM tags, code builds clips). 0 invented beat IDs in 500 tags.

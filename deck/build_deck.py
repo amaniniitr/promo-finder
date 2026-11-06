@@ -11,8 +11,8 @@ meta = json.loads((RUN / "meta.json").read_text())
 P = json.loads((RUN / "promos.json").read_text())["promos"]
 DIAG = json.loads((RUN / "diagnostics.json").read_text())
 TITLES = json.loads((OUT / "titles.json").read_text()) if (OUT / "titles.json").exists() else {}  # short labels (quote the show, so not in git)
-NAME = "Your Name · Roll no. · Branch"            # <- fill in
-LINKS = "github.com/&lt;you&gt;/promo-finder  ·  outputs: drive (restricted)  ·  video: loom"
+NAME = "Aman Kumar · 22322004"
+
 
 import sys  # noqa: E402
 sys.path.insert(0, str(ROOT))
@@ -40,6 +40,14 @@ def e(s):
 def fmt(t):
     m, s = divmod(t, 60)
     return f"{int(m)}:{int(s):02d}"
+
+
+_L = json.loads((ROOT / "links.json").read_text()) if (ROOT / "links.json").exists() else {}
+_short = lambda u: e(u.replace("https://", "").replace("http://", "").rstrip("/"))  # noqa: E731
+LINKS = "  ·  ".join(x for x in [
+    f"live: {_short(_L['site'])}" if _L.get("site") else "",
+    f"code: {_short(_L['repo'])}" if _L.get("repo") else "",
+    f"video: {_short(_L['video'])}" if _L.get("video") else ""] if x) or "links: see submission form"
 
 
 def title(pid):

@@ -79,7 +79,7 @@ step and explicitly excluded.)
 - **#1 E32-W1** hook "Silence! Silence!" → verbatim at `episode-032…txt:376`. Open cliff (eye-branding
   unresolved). ✓
 - **#2 E15-W1** thug shoves Juliana / club in garden → matches logline + action lines 2,20,24,28. ✓
-- **#4 E16-W1** "catches the weapon mid-air in his bare hand" + "Gerald Harrington paid us" →
+- **#4 E16-W1** (catch of the weapon + the confession, both verbatim in the script) →
   verbatim `episode-016…txt:68,188`. Cliff = reaction to confession, open. ✓
 - **#5 E03-W2** "Guards! Remove her!" → verbatim `episode-003…txt:207`. Open cliff. ✓
 - **#7 E23-W1** "Someone is poisoning her." → verbatim `episode-023…txt:172`. Open cliff (who's at the

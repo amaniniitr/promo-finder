@@ -137,7 +137,11 @@ def posters():
     out = []
     for k, x in enumerate(PLAN):
         p = by[x["id"]]
-        out.append(f'<div class="pos" style="background:{GRADS[k % 5]}"><div class="pday">DAY {x["day"]}</div>'
+        c1, c2 = re.findall(r"#[0-9A-Fa-f]{6}", GRADS[k % 5])[:2]
+        bg = (f'<svg class="pbg" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="pg{k}" x1="0" y1="0" x2="0.45" y2="1">'
+              f'<stop offset="0" stop-color="{c1}"/><stop offset=".55" stop-color="{c2}"/><stop offset="1" stop-color="#0B0B0D"/></linearGradient></defs>'
+              f'<rect width="100" height="100" fill="url(#pg{k})"/></svg>')
+        out.append(f'<div class="pos">{bg}<div class="pday">DAY {x["day"]}</div>'
                    f'<div class="pt">{e(title(p["id"]))}</div><div class="pm">Ep {p["segments"][0]["episode"]} · {p["duration"]:.0f} s · #{p["rank"]}</div>'
                    f'<div class="pplay">{icon("film", 12, "#fff")}</div></div>')
     return "".join(out)
@@ -202,7 +206,7 @@ body { font-family: Figtree, -apple-system, Arial, sans-serif; color:#fff; font-
 .top { display:flex; align-items:center; gap:12px; height:30px; margin-bottom:12px }
 .top svg { height:20px; width:auto } .top .pr { font-weight:700; font-size:12.5px; color:var(--tx2); padding-left:12px; border-left:1px solid rgba(255,255,255,.18) }
 .top .me { margin-left:auto; display:flex; gap:16px; align-items:center; font-size:11px; color:var(--tx2) } .top .me b { color:#fff; font-size:12px }
-.top .dot { width:6px; height:6px; border-radius:50%; background:var(--red); display:inline-block; margin-right:6px; box-shadow:0 0 8px var(--red) }
+.top .dot { width:6px; height:6px; border-radius:50%; background:var(--red); display:inline-block; margin-right:6px }
 .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 14px; position:relative }
 .k { font-size:9px; font-weight:800; letter-spacing:1.6px; color:var(--mut); text-transform:uppercase; margin-bottom:8px; display:flex; align-items:center; gap:6px }
 .k em { color:var(--red2); font-style:normal } .k svg { flex:none }
@@ -222,7 +226,7 @@ h1 { font-size:35px; line-height:1.02; font-weight:800; letter-spacing:-1.3px } 
 .rule .rh { display:flex; align-items:center; gap:6px; font-size:9px; font-weight:800; letter-spacing:1.3px; color:rgba(255,255,255,.8) }
 .rule b { display:block; font-size:22px; font-weight:800; letter-spacing:-.6px; line-height:1.05; margin:4px 0 3px } .rule span { font-size:10px; color:rgba(255,255,255,.88); line-height:1.3; display:block }
 .rule svg.mini { margin-top:4px }
-.phone { width:180px; height:318px; flex:none; border-radius:32px; background:#050505; padding:8px; box-shadow:0 0 0 2px #2A2A2E, 0 30px 60px -20px rgba(236,28,36,.35); position:relative }
+.phone { width:180px; height:318px; flex:none; border-radius:32px; background:#050505; padding:8px; box-shadow:0 0 0 2px #2A2A2E; position:relative }
 .phone::before { content:""; position:absolute; top:16px; left:50%; width:60px; height:16px; margin-left:-30px; background:#000; border-radius:9px; z-index:2 }
 .scr { height:100%; border-radius:25px; overflow:hidden; position:relative; padding:38px 12px 12px; display:flex; flex-direction:column;
   background: radial-gradient(ellipse 120% 70% at 50% 25%, #3A1013 0%, #120709 55%, #050505 100%) }
@@ -250,8 +254,8 @@ h1 { font-size:35px; line-height:1.02; font-weight:800; letter-spacing:-1.3px } 
 .stv { font-size:10.5px; color:var(--mut); margin:4px 0 2px } .stv b { font-size:21px; font-weight:800; color:#fff; letter-spacing:-.6px; margin-right:5px }
 .stt { font-size:9.6px; color:var(--mut); line-height:1.3 } .sta { align-self:center; color:var(--red); font-size:22px; font-weight:800 }
 .posters { display:grid; grid-template-columns:repeat(5,1fr); gap:9px; flex:1 }
-.pos { border-radius:14px; padding:10px 11px; position:relative; display:flex; flex-direction:column; border:1px solid rgba(255,255,255,.08); overflow:hidden }
-.pos::after { content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); pointer-events:none }
+.pbg { position:absolute; inset:0; width:100%; height:100%; z-index:0 } .pos > :not(.pbg) { position:relative; z-index:1 } .pos > .pplay { position:absolute }
+.pos { background:#0B0B0D; border-radius:14px; padding:10px 11px; position:relative; display:flex; flex-direction:column; border:1px solid rgba(255,255,255,.08); overflow:hidden }
 .pday { font-size:8.5px; font-weight:800; letter-spacing:1.4px; color:#FF8A8E } .pt { font-size:14px; font-weight:800; line-height:1.14; margin-top:auto; letter-spacing:-.2px }
 .pm { font-size:9px; color:rgba(255,255,255,.65); margin-top:4px } .pplay { position:absolute; right:9px; top:8px; width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,.14); display:flex; align-items:center; justify-content:center }
 .note { font-size:10px; color:var(--mut); line-height:1.35 } .note b { color:#fff }

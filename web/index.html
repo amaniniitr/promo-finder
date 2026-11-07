@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#000000">
-<title>promo finder · Aman Kumar · 22322004</title>
+<title>Promo Finder · Aman Kumar · 22322004</title>
 <style>
 @font-face { font-family: Figtree; src: url("fonts/Figtree.ttf") format("truetype"); font-weight: 300 900; font-display: swap }
 :root { --red:#EC1C24; --red2:#FF4D52; --bg:#000; --card:#0E0E10; --card2:#151518; --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
@@ -30,10 +30,11 @@ header { position:sticky; top:0; z-index:60; background:rgba(0,0,0,.72); backdro
 @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(236,28,36,.6) } 50% { box-shadow:0 0 0 6px rgba(236,28,36,0) } }
 
 /* hero */
-.hero { text-align:center; padding:92px 0 40px }
-.hero h1 { font-size:clamp(40px, 6.2vw, 78px); line-height:1.04; font-weight:800; letter-spacing:-2px }
+.hero { text-align:center; padding:110px 0 70px }
+.hero h1 { font-size:clamp(38px, 5.6vw, 72px); line-height:1.04; font-weight:800; letter-spacing:-2px }
 .hero h1 .r { color:var(--red); display:block }
-.hero p { max-width:720px; margin:24px auto 0; font-size:19px; color:var(--tx2) } .hero p b { color:#fff }
+.hero p { max-width:640px; margin:22px auto 0; font-size:19px; color:var(--tx2) }
+.eyebrow { display:inline-block; font-size:13px; font-weight:700; color:var(--tx2); border:1px solid var(--line2); border-radius:999px; padding:5px 14px; margin-bottom:26px }
 .cta { display:flex; gap:12px; justify-content:center; margin-top:30px; flex-wrap:wrap }
 .btn { display:inline-flex; align-items:center; gap:8px; border:0; border-radius:999px; padding:14px 26px; font:inherit; font-weight:700; font-size:15.5px; cursor:pointer; text-decoration:none;
        background:var(--red); color:#fff; transition:transform .2s, box-shadow .2s, background .2s }
@@ -96,12 +97,24 @@ section { padding:70px 0 10px }
 .stg .n { width:26px; height:26px; border-radius:50%; background:var(--red); font-weight:800; font-size:13px; display:inline-flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px #000 }
 .stg .w { float:right; font-size:11px; font-weight:800; letter-spacing:1.2px; padding:3px 9px; border-radius:999px; border:1px solid var(--line2); color:var(--tx2) }
 .stg .w.ai { color:var(--red2); border-color:rgba(236,28,36,.5) }
-.stg h3 { font-size:21px; font-weight:800; margin:16px 0 4px; text-transform:lowercase } .stg p { font-size:14px; color:var(--mut) }
+.stg h3 { font-size:21px; font-weight:800; margin:16px 0 4px } .stg p { font-size:14px; color:var(--mut) }
 .principle { text-align:center; margin:26px auto 0; max-width:820px; font-size:16.5px; color:var(--tx2) } .principle b { color:#fff }
 .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:38px }
 .stat { background:var(--card); border:1px solid var(--line); border-radius:22px; padding:22px; transition:transform .25s, border-color .25s, box-shadow .25s }
 .stat b { display:block; font-size:44px; font-weight:800; letter-spacing:-1.4px; line-height:1 } .stat b s { font-size:20px; color:var(--mut); margin-right:8px; font-weight:700 }
 .stat b em { color:var(--red); font-style:normal } .stat span { display:block; margin-top:10px; color:var(--mut); font-size:14px }
+
+/* scroll-driven steps */
+.how { height:250vh; padding:0 }
+.howsticky { position:sticky; top:72px; height:calc(100vh - 72px); display:flex; flex-direction:column; justify-content:center }
+.rail { height:3px; background:rgba(255,255,255,.1); border-radius:2px; margin:40px 0 0 }
+.rail .fill { height:100%; width:0; background:linear-gradient(90deg, var(--red), var(--red2)); border-radius:2px; box-shadow:0 0 14px rgba(236,28,36,.8) }
+.how .pipe::before { display:none } .how .pipe { margin-top:0; padding-top:18px }
+.how .stg { opacity:.28; transform:translateY(16px) scale(.98); transition:opacity .45s, transform .45s, border-color .45s, box-shadow .45s }
+.how .stg.done { opacity:.75; transform:none }
+.how .stg.on { opacity:1; transform:translateY(-6px); border-color:rgba(236,28,36,.7); box-shadow:0 22px 50px -22px rgba(236,28,36,.75) }
+.stg .big { font-size:14px; color:var(--mut); margin:2px 0 8px } .stg .big b { font-size:34px; font-weight:800; color:#fff; letter-spacing:-.8px; margin-right:7px; font-variant-numeric:tabular-nums }
+.how .stg.on .big b { color:var(--red2) }
 
 /* studio */
 .studio { padding:80px 0 20px }
@@ -118,16 +131,16 @@ section { padding:70px 0 10px }
 .days { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px }
 .day { background:var(--card2); border:1px solid var(--line); border-top:3px solid var(--red); border-radius:16px; padding:14px; cursor:pointer; transition:transform .2s, border-color .2s }
 .day:hover { transform:translateY(-3px); border-color:rgba(236,28,36,.6) } .day .dd { font-size:11.5px; font-weight:800; color:var(--red2); letter-spacing:1.4px }
-.day .dt { font-weight:800; font-size:16px; margin:4px 0; text-transform:lowercase } .day .dm { font-size:12.5px; color:var(--mut); font-family:var(--mono) } .day .dr { font-size:13px; color:var(--tx2); margin-top:8px }
+.day .dt { font-weight:800; font-size:16px; margin:4px 0 } .day .dm { font-size:12.5px; color:var(--mut); font-family:var(--mono) } .day .dr { font-size:13px; color:var(--tx2); margin-top:8px }
 .grid { display:grid; grid-template-columns:1.1fr 1fr; gap:18px; align-items:start }
 table { width:100%; border-collapse:collapse; font-size:14px }
 th { text-align:left; font-size:11.5px; font-weight:800; letter-spacing:1.2px; color:var(--mut); text-transform:uppercase; padding:9px 8px; border-bottom:1px solid var(--line) }
 td { padding:11px 8px; border-bottom:1px solid rgba(255,255,255,.05); vertical-align:top } tr.row { cursor:pointer; transition:background .15s } tr.row:hover { background:rgba(255,255,255,.04) }
-tr.sel { background:rgba(236,28,36,.14) !important } td.rk { font-weight:800; color:var(--red2) } td b { text-transform:lowercase }
+tr.sel { background:rgba(236,28,36,.14) !important } td.rk { font-weight:800; color:var(--red2) }
 .mono { font-family:var(--mono); font-size:12.5px } td.mono { white-space:nowrap; color:var(--tx2) } .mut { color:var(--mut) }
 .kind { font-size:11px; font-weight:700; border-radius:999px; padding:1px 8px; background:rgba(255,255,255,.07); color:var(--tx2) }
 .side { position:sticky; top:150px; max-height:calc(100vh - 166px); overflow:auto }
-.det h3 { font-size:24px; font-weight:800; letter-spacing:-.4px; margin:2px 0 6px; text-transform:lowercase }
+.det h3 { font-size:24px; font-weight:800; letter-spacing:-.4px; margin:2px 0 6px }
 .lbl { font-size:11.5px; font-weight:800; letter-spacing:1.5px; margin:16px 0 4px }
 pre { white-space:pre-wrap; background:#070708; border:1px solid var(--line); border-radius:14px; padding:14px; font-family:var(--mono); font-size:12.5px; color:var(--tx2); max-height:340px; overflow:auto }
 .bars div { display:flex; align-items:center; gap:10px; font-size:14px; margin:7px 0 } .bars i { display:block; height:8px; border-radius:4px; background:linear-gradient(90deg, var(--red), var(--red2)) }
@@ -141,8 +154,8 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
 
 /* motion */
 .rv { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease } .rv.in { opacity:1; transform:none }
-@media (prefers-reduced-motion: reduce) { .rv { opacity:1; transform:none; transition:none } .nav .dot { animation:none } * { scroll-behavior:auto } }
-@media (max-width:980px) {
+@media (prefers-reduced-motion: reduce) { .how { height:auto; padding:70px 0 10px } .howsticky { position:static; height:auto } .how .stg { opacity:1; transform:none } .rv { opacity:1; transform:none; transition:none } .nav .dot { animation:none } * { scroll-behavior:auto } }
+@media (max-width:980px) { .how { height:auto; padding:60px 0 10px } .howsticky { position:static; height:auto } .how .stg { opacity:1; transform:none }
   .show { grid-template-columns:1fr; padding:30px 24px } .phone { justify-self:center } .rules { flex-wrap:wrap; gap:14px } .rule { padding:0 14px }
   .pipe, .stats { grid-template-columns:1fr 1fr } .pipe::before { display:none } .grid { grid-template-columns:1fr } .kpis { grid-template-columns:repeat(2,1fr) }
   .side { position:static; max-height:none } .nav .prod { display:none } .hero { padding-top:56px }
@@ -152,33 +165,33 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
 <body>
 <header><div class="wrap nav">
  <a href="https://kuku.app/" target="_blank" rel="noopener"><img src="kuku-logo-white.svg" alt="kuku"></a>
- <span class="prod">promo finder</span>
+ <span class="prod">Promo Finder</span>
  <div class="me"><span><span class="dot"></span>Aman Kumar · 22322004</span><span id="links"></span></div>
 </div></header>
 
 <div class="wrap">
  <div class="hero">
-  <h1>every show hides its best promo<span class="r">we find it in the script.</span></h1>
-  <p>Today an editor watches <b>~103 minutes</b> of every new microdrama to pick promo moments, and a new show ships every week.
-   Promo Finder reads the timestamped screenplay and returns <b>ranked, post-ready 20–60 s promos</b> with a week-1 posting plan, in about <b>7 minutes</b>.</p>
-  <div class="cta"><button class="btn" onclick="go('live')">▶ try it live</button><button class="btn ghost" onclick="go('kuku')">🔒 see the 50-episode results</button></div>
+  <div class="eyebrow">Kuku AI Generalist · Problem 1</div>
+  <h1>every show hides its best promo.<span class="r">we find it in the script.</span></h1>
+  <p>Screenplay in, ranked 20–60 s promos out, in about 7 minutes.</p>
+  <div class="cta"><button class="btn" onclick="go('live')">▶ Try it live</button><button class="btn ghost" onclick="go('kuku')">See the 50-episode results</button></div>
  </div>
 
  <div class="show rv">
   <div style="position:relative;z-index:1">
-   <div class="kick">the anatomy of a promo · press play or drag the scrubber</div>
+   <div class="kick">The anatomy of a promo · drag the scrubber or tap a step</div>
    <h2>three rules every clip must pass</h2>
    <div class="rules">
-    <div class="rule"><b>20–60 s</b><span>one stretch, or moments joined across episodes</span></div>
-    <div class="rule"><b>≤ 3 s</b><span>to the hook that stops the scroll</span></div>
-    <div class="rule"><b>cut</b><span>before the answer, so they need the next episode</span></div>
+    <div class="rule"><b>20–60 s</b><span>One stretch, or moments joined across episodes</span></div>
+    <div class="rule"><b>≤ 3 s</b><span>To the hook that stops the scroll</span></div>
+    <div class="rule"><b>Cut</b><span>Before the answer, so they need the next episode</span></div>
    </div>
    <div class="phases" id="phases"></div>
   </div>
   <div>
    <div class="phone"><div class="scr" id="scr">
     <div class="grain"></div>
-    <div class="top"><span id="ptitle">promo #1</span><span class="chip" id="pchip">HOOK</span></div>
+    <div class="top"><span id="ptitle">Promo #1</span><span class="chip" id="pchip">HOOK</span></div>
     <div class="feed" id="pfeed"></div>
     <div class="scrub"><div class="track" id="track"><div class="play" id="pplay"></div><div class="hook" id="phook"></div><div class="cut" id="pcut"></div><div class="knob" id="pknob"></div></div>
      <div class="lab"><span id="pt">0.0 s</span><span id="pdur"></span></div></div>
@@ -187,15 +200,19 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
   </div>
  </div>
 
- <section class="rv"><div class="h2">how it works <span class="r">in four steps</span></div>
-  <div class="sub">Code handles every timestamp and duration, so no clip can break a rule. The AI only makes judgement calls about drama.</div>
-  <div class="pipe">
-   <div class="stg"><span class="n">1</span><span class="w">CODE</span><h3>parse</h3><p>Every line, action and sound in the script, with its exact start and end time.</p></div>
-   <div class="stg"><span class="n">2</span><span class="w ai">AI</span><h3>tag</h3><p>Gemini marks the hook lines and cliffhanger beats by ID. It never writes a timestamp.</p></div>
-   <div class="stg"><span class="n">3</span><span class="w">CODE</span><h3>assemble</h3><p>Every hook → cliff window that fits 20–60 s, including clips that join two episodes.</p></div>
-   <div class="stg"><span class="n">4</span><span class="w ai">AI</span><h3>rank</h3><p>TypeSafe Jev compares clips head to head, in both orders. Repeats are removed and a week-1 plan is written.</p></div>
+ <section class="how" id="how">
+  <div class="howsticky">
+   <div class="h2">how it works <span class="r">in four steps</span></div>
+   <div class="sub">The 50-episode show, from script to week-1 posts. Keep scrolling to follow it.</div>
+   <div class="rail"><div class="fill" id="howfill"></div></div>
+   <div class="pipe">
+    <div class="stg" data-n="3727"><span class="n">1</span><span class="w">CODE</span><h3>Parse</h3><div class="big"><b>0</b>timed beats</div><p>Every line, action and sound in the script, with its exact start and end time.</p></div>
+    <div class="stg" data-n="500"><span class="n">2</span><span class="w ai">AI</span><h3>Tag</h3><div class="big"><b>0</b>moments</div><p>Gemini marks hook lines and cliffhanger beats by ID. It never writes a timestamp.</p></div>
+    <div class="stg" data-n="176"><span class="n">3</span><span class="w">CODE</span><h3>Assemble</h3><div class="big"><b>0</b>clips</div><p>Every hook → cliff window that fits 20–60 s, including clips that join two episodes.</p></div>
+    <div class="stg" data-n="20"><span class="n">4</span><span class="w ai">AI</span><h3>Rank</h3><div class="big"><b>0</b>shortlisted</div><p>TypeSafe Jev compares clips head to head, in both orders, then plans week 1.</p></div>
+   </div>
+   <div class="principle">Code handles every timestamp and duration, so <b>0 of 176 clips break a rule</b>. The AI only judges drama.</div>
   </div>
-  <div class="principle">On the 50-episode show: <b>3,727 beats → 500 tagged moments → 176 clips → 93 unique promos → top 20 → 5 posts</b>, with 0 rule violations.</div>
  </section>
 
  <section class="rv"><div class="h2">built to beat <span class="r">the editing bottleneck</span></div>
@@ -213,12 +230,12 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
 
 <div class="tabsbar"><div class="wrap tabs">
  <div class="tab on" data-t="kuku">🔒 50-episode show</div>
- <div class="tab" data-t="live">▶ try it live</div>
- <div class="tab" data-t="demo">🎬 public demo</div>
- <div class="tab" data-t="run">💻 run locally</div>
+ <div class="tab" data-t="live">▶ Try it live</div>
+ <div class="tab" data-t="demo">🎬 Public demo</div>
+ <div class="tab" data-t="run">💻 Run locally</div>
 </div></div>
 <div class="wrap"><div id="view"></div></div>
-<footer><div class="wrap">built by Aman Kumar (22322004) for the Kuku AI Generalist assignment · Gemini on Vertex AI · TypeSafe Jev · the 50-episode results are AES-256 encrypted and unlock with the passphrase from the submission form</div></footer>
+<footer><div class="wrap">Built by Aman Kumar (22322004) for the Kuku AI Generalist assignment · Gemini on Vertex AI · TypeSafe Jev · the 50-episode results are AES-256 encrypted and unlock with the passphrase from the submission form</div></footer>
 
 <script>
 let LINKS = {};
@@ -255,13 +272,13 @@ function loadPlayer(p, label) {
   const dl = P_.beats.filter(x => x.type === "dialogue");
   const mid = dl.length ? dl.reduce((a, x) => Math.abs(x.t - P_.D * .45) < Math.abs(a.t - P_.D * .45) ? x : a, dl[0]) : null;
   const hook = P_.beats.find(x => x.t <= 3 && x.type === "dialogue") || P_.beats.find(x => x.t <= 3) || P_.beats[0];
-  $("#ptitle").textContent = `promo #${p.rank} · ${(p.title || kindName(p.kind)).toLowerCase()}`;
+  $("#ptitle").textContent = `Promo #${p.rank} · ${p.title || kindName(p.kind)}`;
   $("#pdur").textContent = `${P_.D.toFixed(0)} s`; $("#psrc").textContent = label + " · " + segs(p);
   $("#phook").style.width = (100 * 3 / P_.D) + "%"; $("#pcut").style.left = (100 * P_.cutAt / P_.D) + "%";
   const q = x => !x ? "" : esc(x.type === "dialogue" ? `“${x.text}”` : x.text).slice(0, 120);
   const last = P_.beats[P_.beats.length - 1];
-  const ph = [[hook ? hook.t : 0, 3, "HOOK", "0–3 s", q(hook)], [mid ? Math.max(mid.t, 3.05) : 3.05, P_.cutAt, "TENSION BUILD", `3–${P_.cutAt.toFixed(0)} s`, q(mid)],
-              [last ? last.t : P_.cutAt, P_.D, "UNRESOLVED CUT", `${P_.cutAt.toFixed(0)}–${P_.D.toFixed(0)} s`, q(last)]];
+  const ph = [[hook ? hook.t : 0, 3, "Hook", "0–3 s", q(hook)], [mid ? Math.max(mid.t, 3.05) : 3.05, P_.cutAt, "Tension build", `3–${P_.cutAt.toFixed(0)} s`, q(mid)],
+              [last ? last.t : P_.cutAt, P_.D, "Unresolved cut", `${P_.cutAt.toFixed(0)}–${P_.D.toFixed(0)} s`, q(last)]];
   P_.ph = ph;
   $("#phases").innerHTML = ph.map((x, i) => `<div class="ph" id="ph${i}" onclick="P_.playing=false;seek(${x[0] + .01});setTimeout(()=>P_.playing=true,3000)"><div class="t">${x[3]}</div><div><b>${x[2]}</b><span>${x[4]}</span></div></div>`).join("");
   draw(true);
@@ -297,14 +314,14 @@ function tick() { if (P_.playing) { P_.t += 0.1; if (P_.t > P_.D + 1.5) P_.t = 0
 function lockView() {
   $("#view").innerHTML = `<div class="card lock"><h2>Kuku's confidential input pack</h2>
    <div class="note" style="margin-bottom:18px">All 50 episodes of <i>I Married a Broken Soldier. He was a Duke</i>. The results quote Kuku's scripts, so they are encrypted (AES-256) and unlock in your browser with the passphrase from the submission form.</div>
-   <input id="pw" type="password" placeholder="passphrase" autocomplete="off"><div class="err" id="err" style="margin:10px 0"></div>
-   <button class="btn" id="go">unlock results</button> <button class="btn ghost" onclick="show('demo')">public demo instead</button></div>`;
+   <input id="pw" type="password" placeholder="Passphrase" autocomplete="off"><div class="err" id="err" style="margin:10px 0"></div>
+   <button class="btn" id="go">Unlock results</button> <button class="btn ghost" onclick="show('demo')">See the public demo</button></div>`;
   const unlock = async () => {
-    $("#err").textContent = "decrypting…";
+    $("#err").textContent = "Decrypting…";
     try {
       DATA.kuku = await decrypt(await (await fetch("data/kuku.enc.json")).json(), $("#pw").value.trim());
       sessionStorage.setItem("pf_pw", $("#pw").value.trim()); render();
-    } catch (e) { $("#err").textContent = "wrong passphrase"; }
+    } catch (e) { $("#err").textContent = "Wrong passphrase."; }
   };
   $("#go").onclick = unlock; $("#pw").onkeydown = e => e.key === "Enter" && unlock();
 }
@@ -322,7 +339,7 @@ function render() {
   $("#view").innerHTML = `
    <div class="note" style="margin-bottom:16px"><b>${esc(m.label)}</b> · generated ${esc((m.generated || "").replace("T", " "))}
     ${TAB === "live" ? ` · ran in <b>${m.run_seconds} s</b> · tagger <code>${esc(m.models.tag)}</code> · judge <code>${esc(m.models.judge)}</code>
-      <button class="btn ghost sm" style="margin-left:8px" onclick="DATA.live=null;render()">run again</button>` : ""}</div>
+      <button class="btn ghost sm" style="margin-left:8px" onclick="DATA.live=null;render()">Run again</button>` : ""}</div>
    <div class="kpis">
     <div class="kpi"><b>${m.ranked}</b><span>ranked promos, from ${m.candidates} candidate clips</span></div>
     <div class="kpi"><b>${m.rule_violations}</b><span>rule violations (20–60 s, hook ≤ 3 s)</span></div>
@@ -330,20 +347,20 @@ function render() {
     <div class="kpi"><b>${pw.verdicts || 0}</b><span>head-to-head verdicts, ${Math.round((pw.position_consistency || 0) * 100)}% the same in both orders</span></div>
     <div class="kpi"><b>$${(m.jev_cost_usd || 0).toFixed(3)}</b><span>ranking cost (TypeSafe Jev)</span></div>
    </div>
-   ${plan.length ? `<div class="card"><h2>post first · week-1 plan</h2><div class="days">${plan.map(x => { const p = by[x.id] || {};
+   ${plan.length ? `<div class="card"><h2>Post first · week-1 plan</h2><div class="days">${plan.map(x => { const p = by[x.id] || {};
       return `<div class="day" onclick="pick('${x.id}')"><div class="dd">DAY ${x.day}</div><div class="dt">${esc(p.title || x.id)}</div>
       <div class="dm">${esc(x.id)} · ${Math.round(p.duration || 0)} s · #${p.rank}</div><div class="dr">${esc(x.reason)}</div></div>` }).join("")}</div>
-      ${hold.length ? `<div class="note" style="margin-top:14px"><b>Held back for later weeks (spoilers):</b> ${hold.map(h => esc((by[h.id] && by[h.id].title) || h.id).toLowerCase()).join(" · ")}</div>` : ""}</div>` : ""}
+      ${hold.length ? `<div class="note" style="margin-top:14px"><b>Held back for later weeks (spoilers):</b> ${hold.map(h => esc((by[h.id] && by[h.id].title) || h.id)).join(" · ")}</div>` : ""}</div>` : ""}
    <div class="grid">
-    <div class="card"><h2>all ${P.length} promos · click one to play it on the phone</h2>
+    <div class="card"><h2>All ${P.length} promos · click one, then play it on the phone</h2>
      <table><tr><th>#</th><th>Promo</th><th>Where</th><th>Len</th><th>W-L-T</th></tr>
      ${P.map(p => `<tr class="row" id="r-${p.id}" onclick="pick('${p.id}')"><td class="rk">${p.rank}</td>
        <td><b>${esc(p.title || p.id)}</b><br><span class="mut mono">${esc(p.id)}</span> <span class="kind">${kindName(p.kind)}</span></td>
        <td class="mono">${segs(p).replace(" + ", "<br>")}</td><td>${Math.round(p.duration)}s</td><td class="mono">${p.record || "–"}</td></tr>`).join("")}</table></div>
     <div class="side">
-     ${D.deck_pdf_b64 ? `<div class="card" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:16px 20px"><b style="margin-right:auto">downloads</b><button class="btn sm" onclick="dl('pdf')">solution.pdf</button><button class="btn ghost sm" onclick="dl('csv')">promos.csv</button></div>` : ""}
+     ${D.deck_pdf_b64 ? `<div class="card" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:16px 20px"><b style="margin-right:auto">Downloads</b><button class="btn sm" onclick="dl('pdf')">solution.pdf</button><button class="btn ghost sm" onclick="dl('csv')">promos.csv</button></div>` : ""}
      <div class="card det" id="det"></div>
-     ${top.length ? `<div class="card"><h2>shortlist strength · bradley-terry</h2><div class="bars">${top.slice(0, 12).map(p =>
+     ${top.length ? `<div class="card"><h2>Shortlist strength · Bradley-Terry</h2><div class="bars">${top.slice(0, 12).map(p =>
        `<div><span style="width:24px;color:var(--red2);font-weight:800">${p.rank}</span><span style="width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.title || p.id)}</span>
         <i style="width:${10 + 150 * (p.bt - lo) / ((hi - lo) || 1)}px"></i><span class="mono mut">${p.record}</span></div>`).join("")}</div></div>` : ""}
     </div></div>`;
@@ -355,9 +372,9 @@ function pick(id, quiet) {
   document.querySelectorAll("tr.sel").forEach(r => r.classList.remove("sel"));
   const r = document.getElementById("r-" + id); r && r.classList.add("sel");
   const sc = p.scores || {}, f = v => (+v || 0).toFixed(1);
-  $("#det").innerHTML = `<h2>promo #${p.rank} · ${esc(p.id)}</h2><h3>${esc(p.title || p.id)}</h3>
+  $("#det").innerHTML = `<h2>Promo #${p.rank} · ${esc(p.id)}</h2><h3>${esc(p.title || p.id)}</h3>
    <div class="mono mut">${esc(segs(p))} · ${p.duration.toFixed(1)} s · W-L-T ${p.record || "–"}</div>
-   <div style="margin-top:12px"><button class="btn sm" onclick="playOnPhone('${p.id}')">▶ play on the phone</button></div>
+   <div style="margin-top:12px"><button class="btn sm" onclick="playOnPhone('${p.id}')">▶ Play on the phone</button></div>
    <div class="lbl" style="color:var(--red2)">HOOK · FIRST 3 SECONDS</div><div>${esc(p.hook)}</div>
    <div class="lbl" style="color:#fff">CLIFFHANGER · CUT POINT</div><div>${esc(p.cliffhanger)}</div>
    <div class="lbl" style="color:var(--good)">WHY IT WORKS</div><div style="color:var(--tx2)">${esc(p.why)}</div>
@@ -382,7 +399,7 @@ async function liveForm() {
   try { health = await (await fetch("api/run")).json(); } catch (e) {}
   try { samples = await (await fetch("data/samples/index.json")).json(); } catch (e) {}
   const lim = health.limits || { files: 5, chars_per_file: 30000 };
-  $("#view").innerHTML = `<div class="card"><h2>run the real pipeline</h2>
+  $("#view").innerHTML = `<div class="card"><h2>Run the real pipeline</h2>
    <div class="note">Parse → tag → assemble → rank → notes and a posting plan, running on Vercel. About 30–90 s for up to ${lim.files} episodes.
    ${health.live_runs_enabled ? `Tagger <code>${esc((health.models || {}).tag)}</code>, judge <code>${esc((health.models || {}).judge)}</code>.` :
      `<b style="color:var(--red2)">Live runs aren't enabled on this deployment.</b>`}</div>
@@ -393,17 +410,17 @@ async function liveForm() {
      <input type="file" id="up" accept=".txt,.md,.fountain" multiple style="margin:10px 0">
      <div class="note">Uploads replace the sample. Any timestamped format works, e.g. <code>**ACTION:**</code> + <code>Start: (00:01.00) | End: (00:04.80)</code> or <code>NAME (Emotion): [00:01.0 - 00:04.8] "line"</code>.</div></div></div>
    <div style="display:flex;gap:12px;align-items:center;margin-top:22px;flex-wrap:wrap">
-    <input id="rpw" type="password" placeholder="passphrase (from the submission form)" style="flex:1;min-width:240px" value="${esc(sessionStorage.getItem("pf_pw") || "")}">
-    <button class="btn" id="runbtn" ${health.live_runs_enabled ? "" : "disabled"}>▶ run pipeline</button></div>
+    <input id="rpw" type="password" placeholder="Passphrase (from the submission form)" style="flex:1;min-width:240px" value="${esc(sessionStorage.getItem("pf_pw") || "")}">
+    <button class="btn" id="runbtn" ${health.live_runs_enabled ? "" : "disabled"}>▶ Run pipeline</button></div>
    <div class="err" id="rerr" style="margin-top:12px"></div></div>`;
   $("#runbtn").onclick = async () => {
     const up = [...$("#up").files];
     const files = up.length ? await Promise.all(up.map(async f => ({ name: f.name, text: await f.text() })))
       : await Promise.all([...document.querySelectorAll(".smp:checked")].map(async c => ({ name: c.value, text: await (await fetch("data/samples/" + encodeURIComponent(c.value))).text() })));
-    if (!files.length) return $("#rerr").textContent = "pick at least one episode";
-    if (files.length > lim.files) return $("#rerr").textContent = `at most ${lim.files} episodes per run`;
+    if (!files.length) return $("#rerr").textContent = "Pick at least one episode.";
+    if (files.length > lim.files) return $("#rerr").textContent = `At most ${lim.files} episodes per run.`;
     const t0 = Date.now(); $("#runbtn").disabled = true;
-    const tick2 = setInterval(() => $("#rerr").textContent = `running on ${files.length} episode(s)… ${((Date.now() - t0) / 1000) | 0} s`, 500);
+    const tick2 = setInterval(() => $("#rerr").textContent = `Running on ${files.length} episode(s)… ${((Date.now() - t0) / 1000) | 0} s`, 500);
     try {
       const r = await fetch("api/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ passphrase: $("#rpw").value.trim(), files }) });
       const d = await r.json().catch(() => ({ error: `HTTP ${r.status}` }));
@@ -411,13 +428,13 @@ async function liveForm() {
       if (!r.ok) { $("#rerr").textContent = d.error || `HTTP ${r.status}`; $("#runbtn").disabled = false; return; }
       sessionStorage.setItem("pf_pw", $("#rpw").value.trim()); DATA.live = d; render();
       d.promos[0] && loadPlayer(d.promos[0], "from your live run");
-    } catch (e) { clearInterval(tick2); $("#rerr").textContent = "request failed: " + e; $("#runbtn").disabled = false; }
+    } catch (e) { clearInterval(tick2); $("#rerr").textContent = "Request failed: " + e; $("#runbtn").disabled = false; }
   };
 }
 
 function runView() {
-  $("#view").innerHTML = `<div class="card"><h2>run it on any show</h2><div class="note" style="margin-bottom:14px">
-  “try it live” handles up to 5 episodes on Vercel, with keys kept server-side. A full 50-episode show takes ~7 minutes, longer than a serverless call allows, so run that locally:</div>
+  $("#view").innerHTML = `<div class="card"><h2>Run it on any show</h2><div class="note" style="margin-bottom:14px">
+  “Try it live” handles up to 5 episodes on Vercel, with keys kept server-side. A full 50-episode show takes ~7 minutes, longer than a serverless call allows, so run that locally:</div>
   <pre>git clone ${esc(LINKS.repo || "<repo url>")} && cd promo-finder
 python3 -m venv .venv && .venv/bin/pip install -r requirements-local.txt
 cp .env.example .env          # add GEMINI_API_KEY (free); optional VERTEX_API_KEY, TYPESAFE_API_KEY
@@ -431,14 +448,31 @@ cp .env.example .env          # add GEMINI_API_KEY (free); optional VERTEX_API_K
 function show(t) { TAB = t; document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x.dataset.t === t)); render(); }
 function go(t) { show(t); $("#studio").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" }); }
 document.querySelectorAll(".tab").forEach(x => x.onclick = () => show(x.dataset.t));
+/* scroll-driven walkthrough of the 4 steps */
+(() => {
+  const sec = $("#how"), cards = [...sec.querySelectorAll(".stg")], fill = $("#howfill"), shown = cards.map(() => 0);
+  const count = (el, to) => { const b = el.querySelector(".big b"); const t0 = performance.now(), d = 800;
+    const f = now => { const k = Math.min(1, (now - t0) / d); b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))).toLocaleString("en-US"); if (k < 1) requestAnimationFrame(f); };
+    requestAnimationFrame(f); };
+  const flat = () => matchMedia("(max-width:980px)").matches || REDUCED;
+  const update = () => {
+    if (flat()) { cards.forEach((c, i) => { c.classList.add("done"); if (!shown[i]) { shown[i] = 1; count(c, +c.dataset.n); } }); fill.style.width = "100%"; return; }
+    const r = sec.getBoundingClientRect(), span = sec.offsetHeight - innerHeight;
+    const p = Math.max(0, Math.min(1, -r.top / span)); fill.style.width = (p * 100).toFixed(1) + "%";
+    const active = r.top > innerHeight * .4 ? -1 : Math.min(3, Math.floor(p * 4.2));
+    cards.forEach((c, i) => { c.classList.toggle("on", i === active); c.classList.toggle("done", i < active);
+      if (i <= active && !shown[i]) { shown[i] = 1; count(c, +c.dataset.n); } });
+  };
+  addEventListener("scroll", () => requestAnimationFrame(update), { passive: true }); addEventListener("resize", update); update();
+})();
 const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add("in")), { threshold: .12 });
 document.querySelectorAll(".rv").forEach(el => io.observe(el));
 setTimeout(() => document.querySelectorAll(".rv").forEach(el => el.classList.add("in")), 2500);  // never leave content hidden
 (async () => {
   try { LINKS = await (await fetch("data/links.json")).json(); } catch (e) {}
   const safe = u => /^https:\/\//.test(u || "") ? u : "";
-  $("#links").innerHTML = [safe(LINKS.repo) && `<a href="${esc(LINKS.repo)}" target="_blank" rel="noopener">github ↗</a>`,
-                           safe(LINKS.video) && `<a href="${esc(LINKS.video)}" target="_blank" rel="noopener">video ↗</a>`].filter(Boolean).join("");
+  $("#links").innerHTML = [safe(LINKS.repo) && `<a href="${esc(LINKS.repo)}" target="_blank" rel="noopener">GitHub ↗</a>`,
+                           safe(LINKS.video) && `<a href="${esc(LINKS.video)}" target="_blank" rel="noopener">Video ↗</a>`].filter(Boolean).join("");
   DATA.demo = await (await fetch("data/demo.json")).json();
   loadPlayer(DATA.demo.promos[0], "from the public demo show");
   const saved = sessionStorage.getItem("pf_pw");

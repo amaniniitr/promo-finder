@@ -413,7 +413,7 @@ function lockView() {
       sessionStorage.setItem("pf_pw", $("#pw").value.trim()); render();
     } catch (e) { $("#err").textContent = "Wrong passphrase."; }
   };
-  $("#go").onclick = unlock; $("#pw").onkeydown = e => e.key === "Enter" && unlock();
+  $("#go").onclick = unlock; $("#pw").addEventListener("keydown", e => { if (e.key === "Enter") unlock(); });
 }
 
 function render() {

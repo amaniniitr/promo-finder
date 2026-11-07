@@ -216,7 +216,7 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
 <header><div class="wrap nav">
  <a href="https://kuku.app/" target="_blank" rel="noopener"><img src="kuku-logo-white.svg" alt="kuku"></a>
  <span class="prod">Promo Finder</span>
- <div class="me"><span class="who"><span class="dot"></span>Aman Kumar · 22322004</span><a class="navdl" href="data/promo-finder-solution-aman-kumar.pdf" download>⬇ <span class="lg">Solution deck</span><span class="sm">Deck</span></a><a class="navdl ghost" href="data/promos.csv" download>⬇ Promos CSV</a><span id="links"></span></div>
+ <div class="me"><span class="who"><span class="dot"></span>Aman Kumar · 22322004</span><a class="navdl" href="data/promo-finder-solution-aman-kumar.pdf" download><span class="lg">Solution deck</span><span class="sm">Deck</span></a><a class="navdl ghost" href="data/promos.csv" download>Promos CSV</a><span id="links"></span></div>
 </div></header>
 
 <div class="wrap">
@@ -430,7 +430,7 @@ function render() {
     ${TAB === "live" ? ` · ran in <b>${m.run_seconds} s</b> · tagger <code>${esc(m.models.tag)}</code> · judge <code>${esc(m.models.judge)}</code>
       <button class="btn ghost sm" style="margin-left:8px" onclick="DATA.live=null;render()">Run again</button>` : ""}</div>
    ${D.deck_pdf_b64 ? `<div class="card dlbar"><div><b>Downloads</b><span>The 2-page solution deck and every ranked promo as a CSV (segments, hook, cliffhanger, why, head-to-head record).</span></div>
-    <button class="btn" onclick="dl('pdf')">⬇ Solution deck (PDF)</button><button class="btn ghost" onclick="dl('csv')">⬇ All ${P.length} promos (CSV)</button></div>` : ""}
+    <button class="btn" onclick="dl('pdf')">Solution deck (PDF)</button><button class="btn ghost" onclick="dl('csv')">All ${P.length} promos (CSV)</button></div>` : ""}
    <div class="kpis">
     <div class="kpi"><b>${m.ranked}</b><span>ranked promos, from ${m.candidates} candidate clips</span></div>
     <div class="kpi"><b>${m.rule_violations}</b><span>rule violations (20–60 s, hook ≤ 3 s)</span></div>

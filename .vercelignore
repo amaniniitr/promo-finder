@@ -13,3 +13,5 @@ run_v1.py
 requirements-local.txt
 *.md
 !web/**
+.env.local
+.vercel

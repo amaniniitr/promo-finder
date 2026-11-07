@@ -16,3 +16,4 @@ deck/*.png
 deck/*.json
 .vercel
 ASIDE_TASK.local.md
+.env*

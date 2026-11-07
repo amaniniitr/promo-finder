@@ -462,7 +462,7 @@ page2 = f"""<div class="page p2">{TOP}
   <div class="infra">
    <div>{icon("git-compare-arrows", 12, "#C9CBD1")}<span><b>Model layer.</b> LiteLLM with one env var per role (<code>PROMO_TAG_MODEL</code>, <code>PROMO_RANK_MODEL</code>…) and fallback chains. Every call logs which model answered.</span></div>
    <div>{icon("zap", 12, "#C9CBD1")}<span><b>Serving.</b> Vercel: static site plus a Python function (<code>api/run.py</code>) for passphrase-gated live runs. Keys live in Vercel env, never in code.</span></div>
-   <div>{icon("shield-check", 12, "#C9CBD1")}<span><b>Confidential pack.</b> Results are AES-256-GCM encrypted (PBKDF2, 310k rounds) and decrypted in the browser. Scripts never enter the repo.</span></div>
+   <div>{icon("shield-check", 12, "#C9CBD1")}<span><b>Safe by default.</b> A pre-push check blocks keys, <code>.env</code> and script text from the repo. Live runs need a passphrase because they call paid APIs.</span></div>
   </div>
  </div>
 

@@ -17,3 +17,4 @@ deck/*.json
 .vercel
 .env*
 DESIGN_BRIEF*.md
+web/data/kuku.json

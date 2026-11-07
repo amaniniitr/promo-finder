@@ -46,7 +46,7 @@ h1 {{ font-size:42px; font-weight:800; letter-spacing:-1.8px; line-height:1; mar
 .btn.g {{ background:#1C1C20; border:1px solid #333 }}
 .url {{ font-size:12px; color:#8A8D96; margin-top:6px; word-break:break-all }}
 .pass {{ margin-top:10px; background:#000; border:1px dashed rgba(255,255,255,.35); border-radius:12px; padding:10px 14px }}
-.pass span {{ font-size:10px; font-weight:800; letter-spacing:1.4px; color:#8A8D96 }} .pass code {{ display:block; font-family:Menlo,monospace; font-size:20px; font-weight:700; margin-top:3px; color:#fff }}
+.pass em {{ display:block; font-style:normal; font-size:11px; color:#8A8D96; margin-top:4px; line-height:1.35 }} .pass span {{ font-size:10px; font-weight:800; letter-spacing:1.4px; color:#8A8D96 }} .pass code {{ display:block; font-family:Menlo,monospace; font-size:20px; font-weight:700; margin-top:3px; color:#fff }}
 ol {{ margin:10px 0 0 18px; padding:0; font-size:12px; color:#C9CBD1; line-height:1.45 }} ol b {{ color:#fff }}
 .thumbs {{ margin-top:auto; position:relative; height:235px }} .thumbs img {{ position:absolute; width:80%; border-radius:8px; border:1px solid #2A2A2E; box-shadow:0 0 0 4px #0E0E10 }} .thumbs img:first-child {{ left:0; top:0 }} .thumbs img:last-child {{ right:0; bottom:0 }}
 .term {{ margin-top:auto; background:#000; border:1px solid #2A2A2E; border-radius:12px; padding:11px 13px; font-family:Menlo,monospace; font-size:10.5px; line-height:1.6; color:#E6E6EA }} .term span {{ display:block; color:#6E717A }}
@@ -65,11 +65,12 @@ ol {{ margin:10px 0 0 18px; padding:0; font-size:12px; color:#C9CBD1; line-heigh
   <div class="thumbs"><img src="{(ROOT / 'deck' / 'page-1.png').as_uri()}"><img src="{(ROOT / 'deck' / 'page-2.png').as_uri()}"></div></div>
  <div class="st main"><div class="n">2</div><h2>Try the live prototype</h2><div class="t">no login, any browser · 5 min</div>
   <a class="btn" href="{SITE}">Open promo-finder-five.vercel.app ↗</a><div class="url">{SITE}</div>
-  <div class="pass"><span>PASSPHRASE</span><code>{PASS}</code></div>
-  <ol><li>Scroll to the studio and open the <b>🔒 50-episode show</b> tab. Paste the passphrase and press <b>Unlock results</b>.</li>
+  
+  <ol><li>Scroll to <b>the studio</b>. The <b>50-episode show</b> results are open, no key needed.</li>
+   <li>Use the <b>Downloads</b> bar at the top for the deck PDF and the CSV of all 93 promos.</li>
    <li>Click any promo to <b>play it on the phone</b> with its script lines, hook, cliffhanger and why it works.</li>
-   <li>See the <b>week-1 posting plan</b>, the ranking strength chart, and download the <b>CSV</b> or the deck.</li>
-   <li>Optional: <b>▶ Try it live</b> runs the real pipeline on a sample show or your own episodes (same passphrase, 30–90 s).</li></ol></div>
+   <li>See the <b>week-1 posting plan</b> and the ranking strength chart.</li></ol>
+  <div class="pass"><span>OPTIONAL · ▶ TRY IT LIVE · PASSPHRASE</span><code>{PASS}</code><em>Runs the real pipeline on a sample show or your own episodes in 30–90 s. It calls paid LLM APIs, so it is gated.</em></div></div>
  <div class="st"><div class="n">3</div><h2>Read the code</h2><div class="t">GitHub · 2 min</div>
   <a class="btn g" href="{REPO}">Open the GitHub repo ↗</a><div class="url">{REPO}</div>
   <p>The README explains the architecture, each step, the v1 → v3 evidence and how to run it with one command.</p>

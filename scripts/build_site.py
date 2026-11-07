@@ -3,9 +3,8 @@
   .venv/bin/python scripts/build_site.py
 
 web/data/demo.json        synthetic show (tests/fixtures/new_show): public
-web/data/kuku.enc.json    full-pack run + solution deck, AES-256-GCM encrypted with SITE_PASSPHRASE
-                          from .env (PBKDF2-SHA256, 310k iterations). Decrypted in the browser.
-No API key is read or written here except SITE_PASSPHRASE, which is never written to web/.
+web/data/kuku.json        full 50-episode run + solution deck + CSV. Served openly by the site, git-ignored.
+No API key is read or written here.
 """
 import base64
 import json
@@ -58,9 +57,8 @@ demo["meta"]["label"] = "Synthetic demo show (AI-written, different script forma
 (WEB / "data" / "demo.json").write_text(json.dumps(demo, separators=(",", ":")))
 print(f"web/data/demo.json: {len(demo['promos'])} promos (public)")
 
-pw = os.getenv("SITE_PASSPHRASE")
 final = ROOT / "runs" / "v3_final"
-if pw and final.exists():
+if final.exists():
     from promo.config import DEFAULT_SHOW
     tfile = ROOT / "deck" / "titles.json"
     kuku = bundle(final, DEFAULT_SHOW, json.loads(tfile.read_text()) if tfile.exists() else None)
@@ -69,7 +67,8 @@ if pw and final.exists():
     if pdf.exists():
         kuku["deck_pdf_b64"] = base64.b64encode(pdf.read_bytes()).decode()
     kuku["csv"] = (final / "promos.csv").read_text()
-    (WEB / "data" / "kuku.enc.json").write_text(json.dumps(encrypt(kuku, pw)))
-    print(f"web/data/kuku.enc.json: {len(kuku['promos'])} promos + deck, encrypted")
+    # Published openly on the site (the show is public). Git-ignored, so the repo itself stays free of script text.
+    (WEB / "data" / "kuku.json").write_text(json.dumps(kuku, separators=(",", ":")))
+    print(f"web/data/kuku.json: {len(kuku['promos'])} promos + deck (public on the site, not in git)")
 else:
-    print("SITE_PASSPHRASE or runs/v3_final missing: confidential bundle not built")
+    print("runs/v3_final missing: 50-episode bundle not built")

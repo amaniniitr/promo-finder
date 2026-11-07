@@ -7,7 +7,7 @@ The site is a static folder (`web/`) plus one Python function (`api/run.py`) on 
 | Place | Contains | Never contains |
 |---|---|---|
 | GitHub | Code, tests, experiment write-ups, the synthetic demo run, `web/`, `docs/` images | `.env`, the licensed scripts, runs on them, the deck PDF |
-| Vercel site | `web/`. The 50-episode results and the deck are inside `web/data/kuku.enc.json` (file name kept for the site code), AES-256-GCM encrypted (PBKDF2-SHA256, 310k rounds) and decrypted in the browser with the passphrase | Keys, plaintext scripts |
+| Vercel site | `web/`, including `web/data/kuku.json` (the 50-episode results, deck and CSV, served openly; git-ignored) | Keys |
 | Vercel env vars | `VERTEX_API_KEY`, `GEMINI_API_KEY`, `TYPESAFE_API_KEY`, `RUN_PASSPHRASE` | |
 
 `scripts/check_secrets.py` blocks a push if any file git would publish contains a key, the `.env` file, the passphrase or an 8-word run of text from the confidential scripts.
@@ -23,7 +23,7 @@ The site is a static folder (`web/`) plus one Python function (`api/run.py`) on 
 ```bash
 .venv/bin/python deck/build_deck.py             # deck/solution.pdf from runs/v3_final
 .venv/bin/python scripts/build_docs.py          # README images in docs/
-.venv/bin/python scripts/build_site.py          # re-encrypts results + deck into web/data/
+.venv/bin/python scripts/build_site.py          # writes results + deck into web/data/
 .venv/bin/python scripts/check_secrets.py       # must print OK
 git add -A && git commit -m "Update results" && git push
 sh scripts/vercel_env.sh                        # first time only: copy the 4 secrets from .env to Vercel

@@ -317,17 +317,17 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
  </section>
 
  <div class="studio" id="studio"><div class="h2">the studio <span class="r">see it work</span></div>
-  <div class="sub">Unlock the full results for Kuku's show, run the pipeline yourself, or browse the public demo.</div></div>
+  <div class="sub">Browse the full results on a real 50-episode show, run the pipeline yourself, or try the demo show.</div></div>
 </div>
 
 <div class="tabsbar"><div class="wrap tabs">
- <div class="tab on" data-t="kuku">🔒 50-episode show</div>
+ <div class="tab on" data-t="kuku">🎞 50-episode show</div>
  <div class="tab" data-t="live">▶ Try it live</div>
  <div class="tab" data-t="demo">🎬 Public demo</div>
  <div class="tab" data-t="run">💻 Run locally</div>
 </div></div>
 <div class="wrap"><div id="view"></div></div>
-<footer><div class="wrap">Built by Aman Kumar (22322004) for the Kuku AI Generalist assignment · Gemini on Vertex AI · TypeSafe Jev · the 50-episode results are AES-256 encrypted and unlock with the passphrase from the submission form</div></footer>
+<footer><div class="wrap">Built by Aman Kumar (22322004) for the Kuku AI Generalist assignment · Gemini on Vertex AI · TypeSafe Jev · live runs are passphrase-gated so the API keys stay safe</div></footer>
 
 <script>
 let LINKS = {};
@@ -404,18 +404,9 @@ function tick() { if (P_.playing) { P_.t += 0.1; if (P_.t > P_.D + 1.5) P_.t = 0
 
 /* ---------------- studio views ---------------- */
 function lockView() {
-  $("#view").innerHTML = `<div class="card lock"><h2>Kuku's confidential input pack</h2>
-   <div class="note" style="margin-bottom:18px">All 50 episodes of <i>I Married a Broken Soldier. He was a Duke</i>. The results quote Kuku's scripts, so they are encrypted (AES-256) and unlock in your browser with the passphrase from the submission form.</div>
-   <input id="pw" type="password" placeholder="Passphrase" autocomplete="off"><div class="err" id="err" style="margin:10px 0"></div>
-   <button class="btn" id="go">Unlock results</button> <button class="btn ghost" onclick="show('demo')">See the public demo</button></div>`;
-  const unlock = async () => {
-    $("#err").textContent = "Decrypting…";
-    try {
-      DATA.kuku = await decrypt(await (await fetch("data/kuku.enc.json")).json(), $("#pw").value.trim());
-      sessionStorage.setItem("pf_pw", $("#pw").value.trim()); render();
-    } catch (e) { $("#err").textContent = "Wrong passphrase."; }
-  };
-  $("#go").onclick = unlock; $("#pw").addEventListener("keydown", e => { if (e.key === "Enter") unlock(); });
+  $("#view").innerHTML = `<div class="card lock"><h2>Loading the 50-episode results…</h2>
+   <div class="note">If this doesn't load, refresh the page, or <a href="#" onclick="show('demo');return false" style="color:var(--red2)">see the demo show</a>.</div></div>`;
+  fetch("data/kuku.json").then(r => r.json()).then(d => { DATA.kuku = d; if (TAB === "kuku") render(); }).catch(() => {});
 }
 
 function render() {
@@ -503,7 +494,7 @@ async function liveForm() {
      <input type="file" id="up" accept=".txt,.md,.fountain" multiple style="margin:10px 0">
      <div class="note">Uploads replace the sample. Any timestamped format works, e.g. <code>**ACTION:**</code> + <code>Start: (00:01.00) | End: (00:04.80)</code> or <code>NAME (Emotion): [00:01.0 - 00:04.8] "line"</code>.</div></div></div>
    <div style="display:flex;gap:12px;align-items:center;margin-top:22px;flex-wrap:wrap">
-    <input id="rpw" type="password" placeholder="Passphrase (from the submission form)" style="flex:1;min-width:240px" value="${esc(sessionStorage.getItem("pf_pw") || "")}">
+    <input id="rpw" type="password" placeholder="Passphrase for live runs" style="flex:1;min-width:240px" value="${esc(sessionStorage.getItem("pf_pw") || "")}">
     <button class="btn" id="runbtn" ${health.live_runs_enabled ? "" : "disabled"}>▶ Run pipeline</button></div>
    <div class="err" id="rerr" style="margin-top:12px"></div></div>`;
   $("#runbtn").onclick = async () => {
@@ -581,8 +572,7 @@ setTimeout(() => document.querySelectorAll(".rv").forEach(el => el.classList.add
                            safe(LINKS.video) && `<a href="${esc(LINKS.video)}" target="_blank" rel="noopener">Video ↗</a>`].filter(Boolean).join("");
   DATA.demo = await (await fetch("data/demo.json")).json();
   loadPlayer(DATA.demo.promos[0], "from the public demo show");
-  const saved = sessionStorage.getItem("pf_pw");
-  if (saved) { try { DATA.kuku = await decrypt(await (await fetch("data/kuku.enc.json")).json(), saved); } catch (e) {} }
+  try { DATA.kuku = await (await fetch("data/kuku.json")).json(); } catch (e) {}
   render();
 })();
 </script>

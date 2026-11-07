@@ -27,12 +27,12 @@ On a real 50-episode show it produced 93 ranked promos in about 7 minutes, for a
 
 | Tab | What it shows |
 |---|---|
-| 🔒 50-episode show | The full run on a real, licensed 50-episode show. Unlocks with a passphrase (ask me). Phone player for each promo with its script lines in sync, hook / cliff / why notes, head-to-head record, week-1 plan, CSV and deck download. |
-| ▶ Try it live | Runs the real pipeline on Vercel, on a 4-episode sample show or up to 5 episodes you upload. Passphrase-gated; keys stay on the server. About 30–90 s. |
+| 🎞 50-episode show | The full run on a real 50-episode show, open to everyone. Phone player for each promo with its script lines in sync, hook / cliff / why notes, head-to-head record, week-1 plan, CSV and deck download. |
+| ▶ Try it live | Runs the real pipeline on Vercel, on a 4-episode sample show or up to 5 episodes you upload. It calls paid LLM APIs, so it needs a passphrase (ask me); keys stay on the server. About 30–90 s. |
 | 🎬 Public demo | The same views on an AI-written 4-episode sample show, open to everyone. |
 | 💻 Run locally | The commands below. |
 
-The licensed scripts never enter this repo or the site in plain text. The 50-episode results are AES-256-GCM encrypted and decrypted in your browser.
+The site shows the 50-episode results openly. The scripts themselves are not stored in this repo.
 
 ## The three rules every clip must pass
 

@@ -205,6 +205,7 @@ body { font-family: Figtree, -apple-system, Arial, sans-serif; color:#fff; font-
   background: radial-gradient(ellipse 60% 50% at 30% 0%, rgba(236,28,36,.20), transparent 70%), linear-gradient(90deg, #000 55%, #1C0204 100%), #000 }
 .top { display:flex; align-items:center; gap:12px; height:30px; margin-bottom:12px }
 .top svg { height:20px; width:auto } .top .pr { font-weight:700; font-size:12.5px; color:var(--tx2); padding-left:12px; border-left:1px solid rgba(255,255,255,.18) }
+.top .me a { color:inherit; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.25) }
 .top .me { margin-left:auto; display:flex; gap:16px; align-items:center; font-size:11px; color:var(--tx2) } .top .me b { color:#fff; font-size:12px }
 .top .dot { width:6px; height:6px; border-radius:50%; background:var(--red); display:inline-block; margin-right:6px }
 .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 14px; position:relative }
@@ -310,7 +311,7 @@ h2 { font-size:30px; font-weight:800; letter-spacing:-.9px; line-height:1 } h2 s
 code { font-family:Menlo,monospace; font-size:9px; background:rgba(255,255,255,.08); color:#FFB3B5; border-radius:5px; padding:1px 5px }
 """.replace("__FONT__", FONT)
 
-links = " · ".join(x for x in [short(_L["site"]) if _L.get("site") else "", short(_L["repo"]) if _L.get("repo") else ""] if x)
+links = " · ".join(f'<a href="{_L[k]}">{short(_L[k])}</a>' for k in ("site", "repo") if _L.get(k))
 TOP = (f'<div class="top">{LOGO}<span class="pr">Promo Finder</span>'
        f'<div class="me"><span><span class="dot"></span><b>{NAME}</b></span><span>{links}</span></div></div>')
 X3 = lambda t: 4 + 132 * t / 90  # noqa: E731

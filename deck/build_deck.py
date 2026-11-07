@@ -29,8 +29,10 @@ SHOW_USD = tok[0] * 1.5e-6 + tok[1] * 9e-6 + jev["cost_usd"]       # list prices
 WATCH_MIN = sum(e.duration for e in EPS) / 60
 REVIEW_MIN = sum(p["duration"] for p in P[:20]) / 60
 N_TAGS = sum(len(t["hooks"]) + len(t["cliffs"]) for t in DIAG["tags"].values())
-C = {"code": "#1F9D6B", "llm": "#2D6CDF", "jev": "#7B3FBF", "human": "#E4572E", "ink": "#14213D", "mut": "#6B7280",
-     "bad": "#C2412D", "good": "#1F9D6B", "line": "#E5E7EB", "soft": "#F4F5F7", "acc": "#E4572E"}
+C = {"code": "#10B981", "llm": "#0EA5E9", "jev": "#8B5CF6", "human": "#EC1C24", "ink": "#090A0F", "mut": "#64748B",
+     "bad": "#EF4444", "good": "#10B981", "line": "#E2E8F0", "soft": "#F8FAFC", "acc": "#EC1C24"}
+
+KUKU_LOGO_SVG = '''<svg xmlns="http://www.w3.org/2000/svg" width="56" height="20" viewBox="0 0 162 56" fill="none" style="vertical-align:middle;display:inline-block"><path d="M105.97 49.5001C106.835 50.8576 109.367 51.4747 109.367 53.2642V53.511C109.367 54.2514 108.811 54.6834 107.947 54.6834L95.0354 54.6834C94.1706 54.6834 93.6146 54.1897 93.6146 53.4493V53.2025C93.6146 51.4747 95.9003 51.0428 94.9119 49.5001L89.5992 41.2316C88.549 41.4167 87.4988 41.5401 86.3251 41.5401L86.3251 47.8958C86.3251 50.7342 89.105 51.4747 89.105 53.2642V53.511C89.105 54.2514 88.4872 54.6834 87.6224 54.6834L74.2171 54.6834C73.3522 54.6834 72.7344 54.2514 72.7344 53.511V53.2642C72.7344 51.4747 75.2055 50.7342 75.2055 47.8958L75.2055 11.7786C75.2055 8.87841 72.2402 8.07623 72.2402 6.5336V6.28678C72.2402 5.60802 72.7962 5.29949 73.6611 4.86755L83.5452 0.301343C85.2749 -0.500829 86.3251 0.424752 86.3251 1.59716L86.3251 37.159C96.9505 36.2334 92.5644 24.5094 100.101 24.5094C103.437 24.5094 104.92 26.5457 104.92 29.0756C104.92 31.9141 102.634 35.5547 98.2478 38.208L105.97 49.5001Z" fill="#090A0F"></path><path d="M139.726 47.7283C139.726 52.7379 142.385 50.3259 142.385 52.8616C142.385 54.5315 139.973 54.9026 136.015 54.9026C132.18 54.9026 130.51 53.9749 130.201 51.3154C128.593 53.7893 125.686 55.15 121.481 55.15C115.234 55.15 109.915 50.8825 109.915 42.9661L109.915 32.6376C109.915 29.7308 107.441 28.9886 107.441 27.4425V27.1951C107.441 26.5148 107.998 25.8963 108.864 25.7726L118.079 24.5357C119.873 24.2883 120.986 24.6594 120.986 25.7726L120.8 44.0793C120.739 49.1508 122.037 51.068 124.759 51.068C127.047 51.068 128.84 48.656 128.84 44.8833L128.84 32.6376C128.84 29.7308 126.367 28.9886 126.367 27.4425V27.1951C126.367 26.5148 126.923 25.8963 127.789 25.7726L137.004 24.5357C138.798 24.2883 139.726 24.6594 139.726 25.7726L139.726 47.7283Z" fill="#090A0F"></path><path d="M33.7295 49.5001C34.5944 50.8576 37.1272 51.4747 37.1272 53.2642V53.511C37.1272 54.2514 36.5712 54.6834 35.7063 54.6834L22.7952 54.6834C21.9303 54.6834 21.3744 54.1897 21.3744 53.4493V53.2025C21.3744 51.4747 23.6601 51.0428 22.6717 49.5001L17.3589 41.2316C16.3088 41.4167 15.2586 41.5401 14.0848 41.5401L14.0848 47.8958C14.0848 50.7342 16.8647 51.4747 16.8647 53.2642V53.511C16.8647 54.2514 16.247 54.6834 15.3821 54.6834L1.97682 54.6834C1.11196 54.6834 0.494203 54.2514 0.494203 53.511L0.494203 53.2642C0.494203 51.4747 2.96523 50.7342 2.96523 47.8958L2.96523 11.7786C2.96523 8.87841 0 8.07623 0 6.5336L0 6.28678C0 5.60802 0.555974 5.29949 1.42083 4.86755L11.3049 0.301343C13.0347 -0.500829 14.0848 0.424752 14.0848 1.59716L14.0848 37.159C24.7102 36.2334 20.3242 24.5094 27.8608 24.5094C31.1967 24.5094 32.6793 26.5457 32.6793 29.0756C32.6793 31.9141 30.3936 35.5547 26.0075 38.208L33.7295 49.5001Z" fill="#090A0F"></path><path d="M67.4892 47.7283C67.4892 52.7379 70.1487 50.3259 70.1487 52.8616C70.1487 54.5315 67.7366 54.9026 63.7784 54.9026C59.9439 54.9026 58.274 53.9749 57.9648 51.3154C56.3568 53.7893 53.45 55.15 49.2444 55.15C42.9978 55.15 37.679 50.8825 37.679 42.9661L37.679 32.6376C37.679 29.7308 35.2051 28.9886 35.2051 27.4425V27.1951C35.2051 26.5148 35.7617 25.8963 36.6276 25.7726L45.8428 24.5357C47.6363 24.2883 48.7496 24.6594 48.7496 25.7726L48.564 44.0793C48.5022 49.1508 49.801 51.068 52.5223 51.068C54.8106 51.068 56.6042 48.656 56.6042 44.8833L56.6042 32.6376C56.6042 29.7308 54.1303 28.9886 54.1303 27.4425V27.1951C54.1303 26.5148 54.6869 25.8963 55.5528 25.7726L64.768 24.5357C66.5615 24.2883 67.4892 24.6594 67.4892 25.7726L67.4892 47.7283Z" fill="#090A0F"></path><ellipse cx="152.759" cy="46.1512" rx="8.72992" ry="8.72986" fill="#EC1C24"></ellipse></svg>'''
 
 
 def e(s):
@@ -243,24 +245,25 @@ cells, n_top_eps = heat()
 cross = [p for p in P[:20] if p["kind"] == "cross"]
 
 CSS = f"""
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;600&display=swap');
 @page {{ size: 13.333in 7.5in; margin: 0 }}
 * {{ box-sizing: border-box; margin: 0; padding: 0 }}
-body {{ font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; color: {C['ink']}; font-size: 9pt; line-height: 1.25 }}
+body {{ font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: {C['ink']}; font-size: 9pt; line-height: 1.25 }}
 .page {{ width: 13.333in; height: 7.5in; padding: 22px 28px 16px; position: relative; overflow: hidden; page-break-after: always }}
 .hdr {{ display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px }}
-.hdr h1 {{ font-size: 25pt; font-weight: 800; letter-spacing: -.6px; line-height: 1 }}
+.hdr h1 {{ font-size: 24pt; font-weight: 800; letter-spacing: -.6px; line-height: 1 }}
 .hdr h1 em {{ font-style: normal; color: {C['acc']} }}
 .hdr .s {{ font-size: 10.5pt; color: {C['mut']}; margin-top: 4px }}
 .hdr .r {{ text-align: right; font-size: 7.6pt; color: {C['mut']}; line-height: 1.5 }}
 .hdr .r b {{ color: {C['ink']}; font-size: 8.6pt }}
-.band {{ display: flex; gap: 8px; align-items: center; background: {C['ink']}; color: #fff; border-radius: 10px; padding: 8px 12px; margin-bottom: 10px; font-size: 8.6pt }}
-.band b {{ color: #FFB59E }} .band .sep {{ width: 1px; align-self: stretch; background: #3B4A6B }}
-.pill {{ background: #24345A; border-radius: 20px; padding: 3px 9px; white-space: nowrap }}
+.band {{ display: flex; gap: 8px; align-items: center; background: #090A0F; color: #fff; border-radius: 10px; padding: 7px 12px; margin-bottom: 9px; font-size: 8.5pt; border-left: 3.5px solid {C['acc']} }}
+.band b {{ color: #FFA29E }} .band .sep {{ width: 1px; align-self: stretch; background: #262936 }}
+.pill {{ background: #181922; border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 2.5px 9px; white-space: nowrap }}
 .row {{ display: flex; gap: 12px; margin-bottom: 10px }}
-.box {{ background: #fff; border: 1px solid {C['line']}; border-radius: 12px; padding: 10px 12px; position: relative }}
-.box h3 {{ font-size: 8pt; letter-spacing: 1.2px; text-transform: uppercase; color: {C['mut']}; margin-bottom: 6px; font-weight: 700 }}
-.box h3 span {{ color: {C['ink']}; text-transform: none; letter-spacing: 0; font-size: 11pt; margin-left: 4px }}
-.chip {{ color: #fff; font-size: 6.6pt; font-weight: 700; border-radius: 8px; padding: 1px 6px; letter-spacing: .4px }}
+.box {{ background: #fff; border: 1px solid {C['line']}; border-radius: 12px; padding: 9px 12px; position: relative }}
+.box h3 {{ font-size: 8pt; letter-spacing: 1.1px; text-transform: uppercase; color: {C['mut']}; margin-bottom: 5px; font-weight: 700 }}
+.box h3 span {{ color: {C['ink']}; text-transform: none; letter-spacing: 0; font-size: 10.5pt; margin-left: 4px; font-weight: 700 }}
+.chip {{ color: #fff; font-size: 6.6pt; font-weight: 700; border-radius: 6px; padding: 1.5px 6px; letter-spacing: .4px }}
 svg text {{ font-family: inherit }}
 .fnum {{ font-size: 22px; font-weight: 800 }} .flab {{ font-size: 9px; fill: #4B5563 }} .fstep {{ font-size: 11px; font-weight: 700; fill: {C['ink']} }}
 .fchip {{ font-size: 7.5px; font-weight: 700; fill: #fff }}
@@ -271,13 +274,13 @@ svg text {{ font-family: inherit }}
 .lb {{ display: flex; align-items: center; gap: 7px; height: 20.5px; border-bottom: 1px solid #F1F2F4 }}
 .lb .rk {{ width: 16px; font-weight: 800; color: {C['acc']}; font-size: 10pt; text-align: right }}
 .lbt {{ width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 8.6pt }}
-.bar {{ height: 9px; border-radius: 5px; opacity: .85 }} .wlt {{ font-family: Menlo, monospace; font-size: 7.6pt; color: {C['mut']}; white-space: nowrap; margin-left: auto }}
+.bar {{ height: 9px; border-radius: 5px; opacity: .85 }} .wlt {{ font-family: 'JetBrains Mono', Menlo, monospace; font-size: 7.6pt; color: {C['mut']}; white-space: nowrap; margin-left: auto }}
 .mut {{ color: {C['mut']} }}
 .days {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px }}
-.day {{ background: {C['soft']}; border-radius: 10px; padding: 7px 8px 6px; border-top: 4px solid {C['acc']}; min-height: 118px }}
+.day {{ background: {C['soft']}; border-radius: 10px; padding: 6px 8px 5px; border: 1px solid {C['line']}; border-top: 3.5px solid {C['acc']}; min-height: 116px }}
 .dn {{ font-size: 7.5pt; font-weight: 800; color: {C['acc']}; letter-spacing: 1px }}
 .dt {{ font-size: 9.6pt; font-weight: 800; line-height: 1.15; margin: 3px 0 4px }}
-.dm {{ font-size: 7.6pt; color: {C['mut']}; font-family: Menlo, monospace }}
+.dm {{ font-size: 7.6pt; color: {C['mut']}; font-family: 'JetBrains Mono', Menlo, monospace }}
 .dq {{ font-size: 8.2pt; font-style: italic; color: #374151; margin-top: 6px; border-left: 2px solid {C['line']}; padding-left: 5px }}
 .hold {{ display: inline-block; font-size: 7.6pt; background: #FDECE7; color: {C['bad']}; border-radius: 10px; padding: 2px 8px; margin: 3px 4px 0 0 }}
 .grid50 {{ display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px }}
@@ -289,22 +292,25 @@ svg text {{ font-family: inherit }}
 .cv {{ font-size: 10px; font-weight: 800; fill: {C['ink']} }} .cn {{ font-size: 8.5px; fill: {C['mut']} }} .cg {{ font-size: 9.5px; font-weight: 700; fill: {C['ink']} }}
 .mv {{ font-size: 12px; font-weight: 800 }}
 .lim {{ display: flex; gap: 8px; align-items: flex-start; margin-bottom: 5px }}
-.lim .ic {{ flex: none; width: 22px; height: 22px; border-radius: 6px; background: #FDECE7; color: {C['bad']}; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 10pt }}
+.lim .ic {{ flex: none; width: 22px; height: 22px; border-radius: 6px; background: #FEE2E2; color: {C['bad']}; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 10pt }}
 .lim b {{ display: block; font-size: 9pt }} .lim span {{ font-size: 8pt; color: {C['mut']} }}
-.stat {{ background: {C['soft']}; border-radius: 10px; padding: 8px 10px }}
+.stat {{ background: {C['soft']}; border: 1px solid {C['line']}; border-radius: 10px; padding: 8px 10px }}
 .stat .k {{ font-size: 7.4pt; color: {C['mut']}; text-transform: uppercase; letter-spacing: .8px; font-weight: 700 }}
 .stat .v {{ font-size: 18pt; font-weight: 800; line-height: 1.1 }} .stat .n {{ font-size: 7.8pt; color: {C['mut']} }}
-.wrong {{ background: {C['soft']}; border-radius: 10px; padding: 7px 9px; font-size: 8.4pt }}
+.wrong {{ background: {C['soft']}; border: 1px solid {C['line']}; border-radius: 10px; padding: 7px 9px; font-size: 8.4pt }}
 .wrong .a {{ color: {C['bad']}; font-weight: 700 }} .wrong .f {{ color: {C['good']}; font-weight: 700 }}
-code {{ font-family: Menlo, monospace; font-size: 7.8pt; background: {C['ink']}; color: #FFB59E; border-radius: 5px; padding: 2px 6px }}
+code {{ font-family: 'JetBrains Mono', Menlo, monospace; font-size: 7.8pt; background: #090A0F; color: #FFA29E; border-radius: 5px; padding: 2px 6px }}
 .tool {{ display: inline-block; border: 1px solid {C['line']}; border-radius: 14px; padding: 1px 7px; font-size: 7.4pt; margin: 0 3px 3px 0; background: #fff }}
 .foot {{ position: absolute; bottom: 7px; left: 28px; right: 28px; font-size: 6.8pt; color: #9CA3AF; display: flex; justify-content: space-between }}
 """
 
 page1 = f"""
 <div class="page">
- <div class="hdr"><div><h1>Promo Finder <em>·</em> screenplay in, post-ready promos out</h1>
-   <div class="s">Kuku AI Generalist · Problem 1 · run on all 50 episodes of <i>I Married a Broken Soldier. He was a Duke</i></div></div>
+ <div class="hdr"><div style="display:flex;align-items:center;gap:14px">
+   {KUKU_LOGO_SVG}
+   <div style="width:1px;height:34px;background:#CBD5E1"></div>
+   <div><h1>Promo Finder <em>·</em> screenplay in, post-ready promos out</h1>
+   <div class="s">Kuku AI Generalist · Problem 1 · run on all 50 episodes of <i>I Married a Broken Soldier. He was a Duke</i></div></div></div>
    <div class="r"><b>{NAME}</b><br>{LINKS}</div></div>
 
  <div class="band"><span>Today an editor watches <b>{WATCH_MIN:.0f} min</b> of every show to pick promos, and a new show ships weekly.</span>
@@ -336,8 +342,11 @@ page1 = f"""
 
 page2 = f"""
 <div class="page">
- <div class="hdr"><div><h1>Does it work? <em>·</em> measured, not asserted</h1>
-   <div class="s">Each fix came after measuring the failure, and was measured again after</div></div>
+ <div class="hdr"><div style="display:flex;align-items:center;gap:14px">
+   {KUKU_LOGO_SVG}
+   <div style="width:1px;height:34px;background:#CBD5E1"></div>
+   <div><h1>Does it work? <em>·</em> measured, not asserted</h1>
+   <div class="s">Each fix came after measuring the failure, and was measured again after</div></div></div>
    <div class="r"><b>{NAME}</b></div></div>
 
  <div class="row">

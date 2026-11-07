@@ -4,50 +4,598 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Promo Finder · Aman Kumar (22322004, BS-MS Economics)</title>
+<title>Promo Finder · Aman Kumar (22322004, BS-MS Economics) · Kuku AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root { --ink:#14213D; --mut:#6B7280; --acc:#E4572E; --code:#1F9D6B; --llm:#2D6CDF; --jev:#7B3FBF; --line:#E5E7EB; --soft:#F4F5F7; --bad:#C2412D }
-* { box-sizing: border-box } body { margin:0; font-family:-apple-system,'Helvetica Neue',Arial,sans-serif; color:var(--ink); background:#FAFAFB }
-header { background:var(--ink); color:#fff; padding:22px 32px 18px }
-header h1 { margin:0; font-size:26px; letter-spacing:-.5px } header h1 em { color:var(--acc); font-style:normal }
-header .sub { color:#AAB4C8; margin-top:4px; font-size:14px } header .who { float:right; text-align:right; font-size:13px; color:#D6DBE6 }
-header a { color:#FFB59E }
-main { max-width:1260px; margin:0 auto; padding:20px 28px 60px }
-.tabs { display:flex; gap:8px; margin:4px 0 16px; flex-wrap:wrap }
-.tab { border:1px solid var(--line); background:#fff; border-radius:20px; padding:7px 14px; cursor:pointer; font-size:14px }
-.tab.on { background:var(--ink); color:#fff; border-color:var(--ink) }
-.flow { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px }
-.st { background:#fff; border:1px solid var(--line); border-radius:10px; padding:8px 12px; font-size:13px }
-.st b { display:block } .chip { font-size:10px; font-weight:700; color:#fff; border-radius:8px; padding:1px 6px; margin-right:4px }
-.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:16px }
-.kpi { background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 14px }
-.kpi b { font-size:26px; display:block } .kpi span { color:var(--mut); font-size:12.5px }
-.grid { display:grid; grid-template-columns: 1.15fr 1fr; gap:16px } @media (max-width:980px){ .grid { grid-template-columns:1fr } }
-.card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin-bottom:16px }
-.card h2 { font-size:12px; letter-spacing:1.2px; text-transform:uppercase; color:var(--mut); margin:0 0 10px }
-table { width:100%; border-collapse:collapse; font-size:13px }
-th { text-align:left; color:var(--mut); font-weight:600; font-size:12px; border-bottom:1px solid var(--line); padding:6px }
-td { padding:7px 6px; border-bottom:1px solid #F1F2F4; vertical-align:top } tr.row { cursor:pointer } tr.row:hover, tr.sel { background:#FFF4F0 }
-td.rk { font-weight:800; color:var(--acc) } .mono { font-family:Menlo,monospace; font-size:12px } .mut { color:var(--mut) }
-.kind { font-size:11px; border-radius:8px; padding:1px 7px; background:var(--soft) }
-.det { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: auto }
-td.mono { white-space: nowrap } .det h3 { margin:0 0 4px; font-size:19px } .lbl { font-size:11px; font-weight:800; letter-spacing:.8px; margin-top:10px }
-pre { white-space:pre-wrap; background:var(--soft); border-radius:8px; padding:10px; font-size:12px; max-height:340px; overflow:auto }
-.bars div { display:flex; align-items:center; gap:8px; font-size:12.5px; margin:3px 0 } .bars i { display:block; height:8px; border-radius:4px; background:var(--jev) }
-.days { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px }
-.day { background:var(--soft); border-top:4px solid var(--acc); border-radius:10px; padding:8px 10px; font-size:13px; cursor:pointer }
-.day b { color:var(--acc); font-size:11px; letter-spacing:1px }
-.lock { max-width:440px; margin:30px auto; text-align:center } .lock input { width:100%; padding:11px; border-radius:10px; border:1px solid #CBD5E1; font-size:15px; margin:10px 0 }
-button { background:var(--acc); color:#fff; border:0; border-radius:10px; padding:10px 18px; font-size:14px; cursor:pointer }
-button.sec { background:var(--ink) } .err { color:var(--bad); font-size:13px; min-height:18px }
-.note { font-size:13px; color:var(--mut); line-height:1.5 } code { background:var(--soft); border-radius:5px; padding:1px 5px; font-size:12.5px }
+:root {
+  --bg: #070709;
+  --surface: #111116;
+  --surface-card: #15151B;
+  --surface-hover: #1D1D26;
+  --surface-active: #242430;
+  --ink: #FFFFFF;
+  --mut: #9496A1;
+  --dim: #636573;
+  --kuku-red: #EC1C24;
+  --kuku-red-glow: rgba(236, 28, 36, 0.4);
+  --kuku-red-subtle: rgba(236, 28, 36, 0.12);
+  --kuku-coral: #FF5A43;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.15);
+  --code: #10B981;
+  --llm: #0EA5E9;
+  --jev: #A855F7;
+  --bad: #EF4444;
+  --font-main: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  background-image: 
+    radial-gradient(circle at 50% -100px, rgba(236, 28, 36, 0.18) 0%, transparent 60%),
+    radial-gradient(circle at 100% 400px, rgba(236, 28, 36, 0.05) 0%, transparent 40%);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #262632; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #383848; }
+
+/* Navigation Bar */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(9, 9, 12, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 32px;
+}
+.header-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.kuku-logo-svg {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+.brand-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--line-strong);
+}
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--kuku-red-subtle);
+  border: 1px solid rgba(236, 28, 36, 0.28);
+  color: #FFA29E;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--kuku-red);
+  box-shadow: 0 0 8px var(--kuku-red);
+  animation: pulse 2s infinite ease-in-out;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.title-area h1 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.title-area h1 em {
+  color: var(--kuku-red);
+  font-style: normal;
+}
+.title-area .sub {
+  color: var(--mut);
+  font-size: 12.5px;
+  margin-top: 1px;
+}
+
+.candidate-box {
+  text-align: right;
+  font-size: 12.5px;
+}
+.candidate-box .cand-name {
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.2px;
+}
+.candidate-box .cand-meta {
+  color: var(--mut);
+  font-size: 11.5px;
+  display: block;
+}
+.candidate-box #links {
+  margin-top: 3px;
+  display: inline-flex;
+  gap: 8px;
+}
+.candidate-box #links a {
+  color: #fff;
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  transition: all 0.2s;
+}
+.candidate-box #links a:hover {
+  border-color: var(--kuku-red);
+  color: var(--kuku-coral);
+  box-shadow: 0 0 10px rgba(236, 28, 36, 0.2);
+}
+
+/* Layout Container */
+main {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 28px 80px;
+  animation: fadeIn 0.4s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Pipeline Flow Ribbon */
+.flow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 8px;
+}
+.st {
+  flex: 1;
+  min-width: 130px;
+  background: var(--surface-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--mut);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.st:hover {
+  background: var(--surface-hover);
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+.st b {
+  display: block;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 3px;
+}
+.chip {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2px 7px;
+}
+
+/* Tabs Bar */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 22px;
+  flex-wrap: wrap;
+}
+.tab {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--mut);
+  border-radius: 9999px;
+  padding: 9px 18px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.tab:hover {
+  background: var(--surface-hover);
+  color: #fff;
+  border-color: var(--line-strong);
+}
+.tab.on {
+  background: var(--kuku-red);
+  background-image: linear-gradient(135deg, #EC1C24 0%, #FF3D3D 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 18px var(--kuku-red-glow);
+}
+
+/* Cards & Content */
+.card {
+  background: var(--surface-card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.card h2 {
+  font-size: 11.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-weight: 800;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h2::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--kuku-red);
+}
+
+/* KPIs */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.kpi {
+  background: var(--surface-card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 18px;
+  transition: all 0.2s;
+}
+.kpi:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-hover);
+}
+.kpi b {
+  font-size: 28px;
+  font-weight: 800;
+  display: block;
+  letter-spacing: -0.6px;
+  color: #fff;
+}
+.kpi span {
+  color: var(--mut);
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+  line-height: 1.4;
+}
+
+/* Posting Plan Days */
+.days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+.day {
+  background: #111116;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--kuku-red);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.day:hover {
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+  border-color: var(--line-strong);
+  border-top-color: var(--kuku-red);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+.day b {
+  color: var(--kuku-red);
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 4px;
+}
+.day strong {
+  color: #fff;
+  font-size: 13px;
+}
+
+/* Grid & Tables */
+.grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+th {
+  text-align: left;
+  color: var(--dim);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line);
+  padding: 10px 8px;
+}
+td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: top;
+  color: var(--mut);
+}
+tr.row {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+tr.row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+tr.sel {
+  background: rgba(236, 28, 36, 0.08) !important;
+}
+tr.sel td:first-child {
+  position: relative;
+}
+tr.sel td:first-child::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background: var(--kuku-red);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--kuku-red);
+}
+td.rk {
+  font-weight: 800;
+  color: var(--kuku-red);
+  font-size: 14px;
+}
+td b { color: #fff; }
+.mono { font-family: var(--font-mono); font-size: 11.5px; }
+.mut { color: var(--mut); }
+.kind {
+  font-size: 10.5px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 1px 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #E4E4E7;
+  border: 1px solid var(--line);
+}
+
+/* Detail Panel */
+.det {
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.det h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.4px;
+}
+.lbl {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-top: 14px;
+  margin-bottom: 4px;
+}
+pre {
+  white-space: pre-wrap;
+  background: #0D0D12;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: #E4E4E7;
+  max-height: 320px;
+  overflow: auto;
+  line-height: 1.5;
+}
+
+/* Bars & Downloads */
+.bars div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  margin: 6px 0;
+}
+.bars i {
+  display: block;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #A855F7 0%, var(--kuku-red) 100%);
+}
+
+/* Buttons & Inputs */
+button {
+  background: var(--kuku-red);
+  background-image: linear-gradient(135deg, #EC1C24 0%, #FF3D3D 100%);
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 22px;
+  font-family: var(--font-main);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(236, 28, 36, 0.3);
+}
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(236, 28, 36, 0.5);
+  filter: brightness(1.08);
+}
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+button.sec {
+  background: rgba(255, 255, 255, 0.08);
+  background-image: none;
+  border: 1px solid var(--line-strong);
+  color: #fff;
+  box-shadow: none;
+}
+button.sec:hover {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+input[type="text"], input[type="password"], input[type="file"] {
+  background: #0D0D12;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-family: var(--font-main);
+  color: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+  outline: none;
+  border-color: var(--kuku-red);
+  box-shadow: 0 0 12px rgba(236, 28, 36, 0.3);
+}
+
+.lock {
+  max-width: 460px;
+  margin: 40px auto;
+  text-align: center;
+  padding: 32px 28px;
+}
+.lock h2 {
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.lock input {
+  width: 100%;
+  margin: 16px 0 10px;
+}
+
+.note {
+  font-size: 13px;
+  color: var(--mut);
+  line-height: 1.55;
+}
+.note b { color: #fff; }
+code {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line);
+  color: #FF8F89;
+  border-radius: 5px;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.err {
+  color: var(--bad);
+  font-size: 13px;
+  min-height: 18px;
+  font-weight: 500;
+}
 </style>
 </head>
 <body>
 <header>
- <div class="who">Aman Kumar · 22322004 · BS-MS Economics<br><span id="links"></span></div>
- <h1>Promo Finder <em>·</em> screenplay in, post-ready promos out</h1>
- <div class="sub">Kuku AI Generalist assignment · Problem 1 · finds 20–60s promos with a hook in the first 3s and a cliffhanger ending</div>
+ <div class="header-inner">
+  <div class="brand-group">
+   <a href="https://kuku.app/" target="_blank" rel="noopener" aria-label="Kuku Technologies" style="display:flex;align-items:center;text-decoration:none">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 162 56" fill="none" class="kuku-logo-svg" role="img" aria-label="Kuku">
+     <path d="M105.97 49.5001C106.835 50.8576 109.367 51.4747 109.367 53.2642V53.511C109.367 54.2514 108.811 54.6834 107.947 54.6834L95.0354 54.6834C94.1706 54.6834 93.6146 54.1897 93.6146 53.4493V53.2025C93.6146 51.4747 95.9003 51.0428 94.9119 49.5001L89.5992 41.2316C88.549 41.4167 87.4988 41.5401 86.3251 41.5401L86.3251 47.8958C86.3251 50.7342 89.105 51.4747 89.105 53.2642V53.511C89.105 54.2514 88.4872 54.6834 87.6224 54.6834L74.2171 54.6834C73.3522 54.6834 72.7344 54.2514 72.7344 53.511V53.2642C72.7344 51.4747 75.2055 50.7342 75.2055 47.8958L75.2055 11.7786C75.2055 8.87841 72.2402 8.07623 72.2402 6.5336V6.28678C72.2402 5.60802 72.7962 5.29949 73.6611 4.86755L83.5452 0.301343C85.2749 -0.500829 86.3251 0.424752 86.3251 1.59716L86.3251 37.159C96.9505 36.2334 92.5644 24.5094 100.101 24.5094C103.437 24.5094 104.92 26.5457 104.92 29.0756C104.92 31.9141 102.634 35.5547 98.2478 38.208L105.97 49.5001Z" fill="#FFFFFF"></path>
+     <path d="M139.726 47.7283C139.726 52.7379 142.385 50.3259 142.385 52.8616C142.385 54.5315 139.973 54.9026 136.015 54.9026C132.18 54.9026 130.51 53.9749 130.201 51.3154C128.593 53.7893 125.686 55.15 121.481 55.15C115.234 55.15 109.915 50.8825 109.915 42.9661L109.915 32.6376C109.915 29.7308 107.441 28.9886 107.441 27.4425V27.1951C107.441 26.5148 107.998 25.8963 108.864 25.7726L118.079 24.5357C119.873 24.2883 120.986 24.6594 120.986 25.7726L120.8 44.0793C120.739 49.1508 122.037 51.068 124.759 51.068C127.047 51.068 128.84 48.656 128.84 44.8833L128.84 32.6376C128.84 29.7308 126.367 28.9886 126.367 27.4425V27.1951C126.367 26.5148 126.923 25.8963 127.789 25.7726L137.004 24.5357C138.798 24.2883 139.726 24.6594 139.726 25.7726L139.726 47.7283Z" fill="#FFFFFF"></path>
+     <path d="M33.7295 49.5001C34.5944 50.8576 37.1272 51.4747 37.1272 53.2642V53.511C37.1272 54.2514 36.5712 54.6834 35.7063 54.6834L22.7952 54.6834C21.9303 54.6834 21.3744 54.1897 21.3744 53.4493V53.2025C21.3744 51.4747 23.6601 51.0428 22.6717 49.5001L17.3589 41.2316C16.3088 41.4167 15.2586 41.5401 14.0848 41.5401L14.0848 47.8958C14.0848 50.7342 16.8647 51.4747 16.8647 53.2642V53.511C16.8647 54.2514 16.247 54.6834 15.3821 54.6834L1.97682 54.6834C1.11196 54.6834 0.494203 54.2514 0.494203 53.511L0.494203 53.2642C0.494203 51.4747 2.96523 50.7342 2.96523 47.8958L2.96523 11.7786C2.96523 8.87841 0 8.07623 0 6.5336L0 6.28678C0 5.60802 0.555974 5.29949 1.42083 4.86755L11.3049 0.301343C13.0347 -0.500829 14.0848 0.424752 14.0848 1.59716L14.0848 37.159C24.7102 36.2334 20.3242 24.5094 27.8608 24.5094C31.1967 24.5094 32.6793 26.5457 32.6793 29.0756C32.6793 31.9141 30.3936 35.5547 26.0075 38.208L33.7295 49.5001Z" fill="#FFFFFF"></path>
+     <path d="M67.4892 47.7283C67.4892 52.7379 70.1487 50.3259 70.1487 52.8616C70.1487 54.5315 67.7366 54.9026 63.7784 54.9026C59.9439 54.9026 58.274 53.9749 57.9648 51.3154C56.3568 53.7893 53.45 55.15 49.2444 55.15C42.9978 55.15 37.679 50.8825 37.679 42.9661L37.679 32.6376C37.679 29.7308 35.2051 28.9886 35.2051 27.4425V27.1951C35.2051 26.5148 35.7617 25.8963 36.6276 25.7726L45.8428 24.5357C47.6363 24.2883 48.7496 24.6594 48.7496 25.7726L48.564 44.0793C48.5022 49.1508 49.801 51.068 52.5223 51.068C54.8106 51.068 56.6042 48.656 56.6042 44.8833L56.6042 32.6376C56.6042 29.7308 54.1303 28.9886 54.1303 27.4425V27.1951C54.1303 26.5148 54.6869 25.8963 55.5528 25.7726L64.768 24.5357C66.5615 24.2883 67.4892 24.6594 67.4892 25.7726L67.4892 47.7283Z" fill="#FFFFFF"></path>
+     <ellipse cx="152.759" cy="46.1512" rx="8.72992" ry="8.72986" fill="#EC1C24"></ellipse>
+    </svg>
+   </a>
+   <div class="brand-divider"></div>
+   <span class="brand-badge"><span class="pulse-dot"></span>PROMO FINDER · AI STUDIO</span>
+  </div>
+  <div class="title-area">
+   <h1>Promo Finder <em>·</em> screenplay in, post-ready promos out</h1>
+   <div class="sub">Kuku AI Generalist assignment · Problem 1 · finds 20–60s promos with hook in ≤3s & cliffhanger ending</div>
+  </div>
+  <div class="candidate-box">
+   <span class="cand-name">Aman Kumar · 22322004</span>
+   <span class="cand-meta">BS-MS Economics</span>
+   <div id="links"></div>
+  </div>
+ </div>
 </header>
 <main>
  <div class="flow">
@@ -57,10 +605,10 @@ button.sec { background:var(--ink) } .err { color:var(--bad); font-size:13px; mi
   <div class="st"><span class="chip" style="background:var(--jev)">JEV</span><b>Score</b>rubric, both orders</div>
   <div class="st"><span class="chip" style="background:var(--code)">CODE</span><b>Dedupe</b>same footage / story</div>
   <div class="st"><span class="chip" style="background:var(--jev)">JEV</span><b>Rank</b>all pairs, both orders</div>
-  <div class="st"><span class="chip" style="background:var(--acc)">EDITOR</span><b>Review</b>notes + posting plan</div>
+  <div class="st"><span class="chip" style="background:var(--kuku-red)">EDITOR</span><b>Review</b>notes + posting plan</div>
  </div>
  <div class="tabs">
-  <div class="tab on" data-t="kuku">Kuku show · 50 episodes (locked)</div>
+  <div class="tab on" data-t="kuku">🔒 Kuku show · 50 episodes (locked)</div>
   <div class="tab" data-t="live">▶ Try it live</div>
   <div class="tab" data-t="demo">Synthetic demo show (public)</div>
   <div class="tab" data-t="run">Run it yourself</div>
@@ -110,7 +658,7 @@ function render() {
   const by = Object.fromEntries(P.map(p => [p.id, p]));
   const top = P.filter(p => p.bt !== null && p.bt !== undefined), lo = Math.min(...top.map(p => p.bt)), hi = Math.max(...top.map(p => p.bt));
   $("#view").innerHTML = `
-   <div class="note" style="margin-bottom:10px"><b>${esc(m.label)}</b> · generated ${esc(m.generated || "")}
+   <div class="note" style="margin-bottom:12px"><b>${esc(m.label)}</b> · generated ${esc(m.generated || "")}
     ${TAB === "live" ? ` · ran in <b>${m.run_seconds}s</b> · tag <code>${esc(m.models.tag)}</code> · judge <code>${esc(m.models.judge)}</code>
       <button class="sec" style="margin-left:8px;padding:5px 12px" onclick="DATA.live=null;render()">Run again</button>` : ""}</div>
    <div class="kpis">
@@ -122,8 +670,8 @@ function render() {
    </div>
    ${plan.length ? `<div class="card"><h2>Post first · week-1 plan</h2><div class="days">${plan.map(x => { const p = by[x.id] || {};
       return `<div class="day" onclick="pick('${x.id}')"><b>DAY ${x.day}</b><div><strong>${esc(p.title || x.id)}</strong></div>
-      <div class="mut mono">${esc(x.id)} · ${Math.round(p.duration || 0)}s · #${p.rank}</div><div class="note">${esc(x.reason)}</div></div>` }).join("")}</div>
-      ${hold.length ? `<div class="note" style="margin-top:8px"><b>Held back:</b> ${hold.map(h => `${esc(h.id)} (${esc(h.reason)})`).join(" · ")}</div>` : ""}</div>` : ""}
+      <div class="mut mono">${esc(x.id)} · ${Math.round(p.duration || 0)}s · #${p.rank}</div><div class="note" style="margin-top:6px">${esc(x.reason)}</div></div>` }).join("")}</div>
+      ${hold.length ? `<div class="note" style="margin-top:10px"><b>Held back:</b> ${hold.map(h => `${esc(h.id)} (${esc(h.reason)})`).join(" · ")}</div>` : ""}</div>` : ""}
    <div class="grid">
     <div class="card"><h2>All promos (click one)</h2>
      <table><tr><th>#</th><th>Promo</th><th>Segments</th><th>Len</th><th>W-L-T</th></tr>
@@ -132,7 +680,7 @@ function render() {
        <td class="mono">${segs(p)}</td><td>${Math.round(p.duration)}s</td><td class="mono">${p.record || "–"}</td></tr>`).join("")}</table></div>
     <div><div class="card det" id="det"></div>
      <div class="card"><h2>Shortlist strength (Bradley-Terry)</h2><div class="bars">${top.slice(0, 12).map(p =>
-       `<div><span style="width:22px;color:var(--acc);font-weight:800">${p.rank}</span><span style="width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.title || p.id)}</span>
+       `<div><span style="width:24px;color:var(--kuku-red);font-weight:800">${p.rank}</span><span style="width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff">${esc(p.title || p.id)}</span>
         <i style="width:${10 + 150 * (p.bt - lo) / ((hi - lo) || 1)}px"></i><span class="mono mut">${p.record}</span></div>`).join("")}</div></div>
      ${D.deck_pdf_b64 ? `<div class="card"><h2>Downloads</h2><button onclick="dl('pdf')">Solution deck (PDF)</button> <button class="sec" onclick="dl('csv')">All promos (CSV)</button></div>` : ""}
     </div></div>`;
@@ -146,10 +694,10 @@ function pick(id) {
   const sc = p.scores || {};
   $("#det").innerHTML = `<h2>Promo #${p.rank} · ${esc(p.id)}</h2><h3>${esc(p.title || p.id)}</h3>
    <div class="mono mut">${segs(p)} · ${p.duration.toFixed(1)}s · ${p.kind} · W-L-T ${p.record || "–"}</div>
-   <div class="lbl" style="color:var(--acc)">HOOK (first 3s)</div><div>${esc(p.hook)}</div>
-   <div class="lbl" style="color:var(--jev)">CLIFFHANGER (cut point)</div><div>${esc(p.cliffhanger)}</div>
-   <div class="lbl" style="color:var(--code)">WHY IT WORKS</div><div>${esc(p.why)}</div>
-   <div class="lbl mut">RUBRIC (0–10)</div><div class="mono">hook ${(+sc.hook || 0).toFixed(1)} · cliff ${(+sc.cliffhanger || 0).toFixed(1)} · standalone ${(+sc.standalone || 0).toFixed(1)} · intensity ${(+sc.intensity || 0).toFixed(1)} · spoiler ${(+sc.spoiler_risk || 0).toFixed(1)}</div>
+   <div class="lbl" style="color:var(--kuku-red)">HOOK (first 3s)</div><div style="color:#fff">${esc(p.hook)}</div>
+   <div class="lbl" style="color:var(--jev)">CLIFFHANGER (cut point)</div><div style="color:#fff">${esc(p.cliffhanger)}</div>
+   <div class="lbl" style="color:var(--code)">WHY IT WORKS</div><div style="color:#E4E4E7">${esc(p.why)}</div>
+   <div class="lbl mut">RUBRIC (0–10)</div><div class="mono" style="color:#D4D4D8">hook ${(+sc.hook || 0).toFixed(1)} · cliff ${(+sc.cliffhanger || 0).toFixed(1)} · standalone ${(+sc.standalone || 0).toFixed(1)} · intensity ${(+sc.intensity || 0).toFixed(1)} · spoiler ${(+sc.spoiler_risk || 0).toFixed(1)}</div>
    <div class="lbl mut">CLIP SCRIPT (seconds from clip start)</div><pre>${esc(p.script)}</pre>`;
 }
 
@@ -169,17 +717,17 @@ async function liveForm() {
    <div class="note">Runs on Vercel: parse → tag (Gemini) → build clips → score + rank (Jev) → notes and posting plan. Takes about 30–90 s for up to ${lim.files} episodes.
    ${health.live_runs_enabled ? `Configured: tag <code>${esc((health.models || {}).tag)}</code>, judge <code>${esc((health.models || {}).judge)}</code>.` :
      `<b style="color:var(--bad)">Live runs are not enabled on this deployment (no API key or RUN_PASSPHRASE set).</b>`}</div>
-   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px">
-    <div><div class="lbl">A. SAMPLE SHOW (AI-written, 4 episodes, different script format)</div>
-     ${samples.map((n, i) => `<label style="display:block;font-size:14px;margin:4px 0"><input type="checkbox" class="smp" value="${esc(n)}" checked> ${esc(n)}</label>`).join("")}
-     <div class="note">Open one: ${samples.map(n => `<a href="data/samples/${encodeURIComponent(n)}" target="_blank">${esc(n)}</a>`).join(" · ")}</div></div>
-    <div><div class="lbl">B. OR UPLOAD YOUR OWN EPISODES (.txt, up to ${lim.files}, ${(lim.chars_per_file / 1000) | 0}k chars each)</div>
-     <input type="file" id="up" accept=".txt,.md,.fountain" multiple style="margin:8px 0">
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px">
+    <div><div class="lbl" style="color:#fff">A. SAMPLE SHOW (AI-written, 4 episodes, different script format)</div>
+     ${samples.map((n, i) => `<label style="display:flex;align-items:center;gap:8px;font-size:13.5px;margin:6px 0;color:#E4E4E7;cursor:pointer"><input type="checkbox" class="smp" value="${esc(n)}" checked style="accent-color:var(--kuku-red)"> ${esc(n)}</label>`).join("")}
+     <div class="note" style="margin-top:6px">Open one: ${samples.map(n => `<a href="data/samples/${encodeURIComponent(n)}" target="_blank" style="color:var(--kuku-coral)">${esc(n)}</a>`).join(" · ")}</div></div>
+    <div><div class="lbl" style="color:#fff">B. OR UPLOAD YOUR OWN EPISODES (.txt, up to ${lim.files}, ${(lim.chars_per_file / 1000) | 0}k chars each)</div>
+     <input type="file" id="up" accept=".txt,.md,.fountain" multiple style="margin:10px 0;width:100%">
      <div class="note">Uploaded files replace the sample. Any timestamped format works: <code>**ACTION:**</code> + <code>Start: (00:01.00) | End: (00:04.80)</code>, <code>NAME (Emotion): [00:01.0 - 00:04.8] "line"</code>, SRT-style times…</div></div></div>
-   <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
-    <input id="rpw" type="password" placeholder="passphrase (from the submission form)" style="flex:1;padding:10px;border-radius:10px;border:1px solid #CBD5E1;font-size:14px" value="${esc(sessionStorage.getItem("pf_pw") || "")}">
-    <button id="runbtn" ${health.live_runs_enabled ? "" : "disabled"}>Run pipeline</button></div>
-   <div class="err" id="rerr" style="margin-top:8px"></div></div>`;
+   <div style="display:flex;gap:12px;align-items:center;margin-top:18px">
+    <input id="rpw" type="password" placeholder="passphrase (from the submission form)" style="flex:1;padding:12px 14px" value="${esc(sessionStorage.getItem("pf_pw") || "")}">
+    <button id="runbtn" ${health.live_runs_enabled ? "" : "disabled"}>▶ Run pipeline</button></div>
+   <div class="err" id="rerr" style="margin-top:10px"></div></div>`;
   $("#runbtn").onclick = async () => {
     const up = [...$("#up").files];
     let files;
@@ -189,7 +737,7 @@ async function liveForm() {
     if (!files.length) return $("#rerr").textContent = "Pick at least one episode.";
     if (files.length > lim.files) return $("#rerr").textContent = `At most ${lim.files} episodes per run.`;
     const t0 = Date.now(); $("#runbtn").disabled = true;
-    const tick = setInterval(() => $("#rerr").textContent = `Running on ${files.length} episode(s)… ${((Date.now() - t0) / 1000) | 0}s`, 500);
+    const tick = setInterval(() => $("#rerr").textContent = `Running pipeline on ${files.length} episode(s)… ${((Date.now() - t0) / 1000) | 0}s`, 500);
     try {
       const r = await fetch("api/run", { method: "POST", headers: { "Content-Type": "application/json" },
                                           body: JSON.stringify({ passphrase: $("#rpw").value.trim(), files }) });
@@ -212,7 +760,7 @@ cp .env.example .env          # add GEMINI_API_KEY (free); optional VERTEX_API_K
 .venv/bin/python demo.py runs/latest          # print top promos + posting plan
 .venv/bin/streamlit run app.py               # editor review UI (approve / reject)
 .venv/bin/python tests/test_parser.py        # 10 script-format tests, no keys</pre>
-  <div class="note">Swap any model with one env var, e.g. <code>PROMO_RANK_MODEL=openai/gpt-5</code> or <code>PROMO_TAG_MODEL=anthropic/claude-sonnet-4-5</code> (any LiteLLM model string).</div></div>`;
+  <div class="note" style="margin-top:10px">Swap any model with one env var, e.g. <code>PROMO_RANK_MODEL=openai/gpt-5</code> or <code>PROMO_TAG_MODEL=anthropic/claude-sonnet-4-5</code> (any LiteLLM model string).</div></div>`;
 }
 
 function show(t) { TAB = t; document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x.dataset.t === t)); render(); }
@@ -220,8 +768,8 @@ document.querySelectorAll(".tab").forEach(x => x.onclick = () => show(x.dataset.
 (async () => {
   try { LINKS = await (await fetch("data/links.json")).json(); } catch (e) {}
   const safe = u => /^https:\/\//.test(u || "") ? u : "";
-  $("#links").innerHTML = [safe(LINKS.repo) && `<a href="${esc(LINKS.repo)}" rel="noopener">GitHub</a>`,
-                           safe(LINKS.video) && `<a href="${esc(LINKS.video)}" rel="noopener">Video</a>`].filter(Boolean).join(" · ");
+  $("#links").innerHTML = [safe(LINKS.repo) && `<a href="${esc(LINKS.repo)}" target="_blank" rel="noopener">GitHub</a>`,
+                           safe(LINKS.video) && `<a href="${esc(LINKS.video)}" target="_blank" rel="noopener">Video</a>`].filter(Boolean).join("");
   DATA.demo = await (await fetch("data/demo.json")).json();
   const saved = sessionStorage.getItem("pf_pw");
   if (saved) { try { DATA.kuku = await decrypt(await (await fetch("data/kuku.enc.json")).json(), saved); } catch (e) {} }

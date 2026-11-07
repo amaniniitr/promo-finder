@@ -202,6 +202,8 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
   .pipe, .stats { grid-template-columns:1fr 1fr } .pipe::before { display:none } .grid { grid-template-columns:1fr } .kpis { grid-template-columns:repeat(2,1fr) }
   .side { position:static; max-height:none } .nav .prod { display:none } .hero { padding-top:56px }
   .nav .me { gap:12px; font-size:13px } .nav .me #links { display:none } .wrap { padding:0 18px } .phone { width:280px; height:570px } }
+.dlbar { display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:18px 22px; margin-bottom:18px; border-color:rgba(236,28,36,.45); background:linear-gradient(120deg,#1A0507,var(--card) 55%) }
+.dlbar > div { flex:1; min-width:240px } .dlbar b { display:block; font-size:17px } .dlbar span { font-size:13px; color:var(--tx2) }
 </style>
 </head>
 <body>
@@ -430,6 +432,8 @@ function render() {
    <div class="note" style="margin-bottom:16px"><b>${esc(m.label)}</b> · generated ${esc((m.generated || "").replace("T", " "))}
     ${TAB === "live" ? ` · ran in <b>${m.run_seconds} s</b> · tagger <code>${esc(m.models.tag)}</code> · judge <code>${esc(m.models.judge)}</code>
       <button class="btn ghost sm" style="margin-left:8px" onclick="DATA.live=null;render()">Run again</button>` : ""}</div>
+   ${D.deck_pdf_b64 ? `<div class="card dlbar"><div><b>Downloads</b><span>The 2-page solution deck and every ranked promo as a CSV (segments, hook, cliffhanger, why, head-to-head record).</span></div>
+    <button class="btn" onclick="dl('pdf')">⬇ Solution deck (PDF)</button><button class="btn ghost" onclick="dl('csv')">⬇ All ${P.length} promos (CSV)</button></div>` : ""}
    <div class="kpis">
     <div class="kpi"><b>${m.ranked}</b><span>ranked promos, from ${m.candidates} candidate clips</span></div>
     <div class="kpi"><b>${m.rule_violations}</b><span>rule violations (20–60 s, hook ≤ 3 s)</span></div>
@@ -448,7 +452,6 @@ function render() {
        <td><b>${esc(p.title || p.id)}</b><br><span class="mut mono">${esc(p.id)}</span> <span class="kind">${kindName(p.kind)}</span></td>
        <td class="mono">${segs(p).replace(" + ", "<br>")}</td><td>${Math.round(p.duration)}s</td><td class="mono">${p.record || "–"}</td></tr>`).join("")}</table></div>
     <div class="side">
-     ${D.deck_pdf_b64 ? `<div class="card" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:16px 20px"><b style="margin-right:auto">Downloads</b><button class="btn sm" onclick="dl('pdf')">solution.pdf</button><button class="btn ghost sm" onclick="dl('csv')">promos.csv</button></div>` : ""}
      <div class="card det" id="det"></div>
      ${top.length ? `<div class="card"><h2>Shortlist strength · Bradley-Terry</h2><div class="bars">${top.slice(0, 12).map(p =>
        `<div><span style="width:24px;color:var(--red2);font-weight:800">${p.rank}</span><span style="width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.title || p.id)}</span>
@@ -479,7 +482,7 @@ function playOnPhone(id) {
 
 function dl(kind) {
   const D = DATA.kuku; let blob, name;
-  if (kind === "pdf") { blob = new Blob([Uint8Array.from(atob(D.deck_pdf_b64), c => c.charCodeAt(0))], { type: "application/pdf" }); name = "promo-finder-aman-kumar-22322004.pdf"; }
+  if (kind === "pdf") { blob = new Blob([Uint8Array.from(atob(D.deck_pdf_b64), c => c.charCodeAt(0))], { type: "application/pdf" }); name = "promo-finder-solution-aman-kumar.pdf"; }
   else { blob = new Blob([D.csv], { type: "text/csv" }); name = "promos.csv"; }
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.click();
 }

@@ -73,9 +73,9 @@ Every call records which model answered. Point `PROMO_RANK_MODEL` at the stronge
 **Still wrong today:** quota pushed the rank role down to gemma. The pairwise numbers above are a lower bound. Rerun `run.py` and `experiment.py --audit` with a strong ranker to measure the gain.
 
 ## Spot check of the v2 top 5 (I read the clip scripts)
-- **#1 E31-W1 and #3 E32-W1:** "Enough!" / "Silence!", then a branding iron stopping inches from her eye. Strong hooks, open endings. But they're the same scene told twice (see §2).
+- **#1 E31-W1 and #3 E32-W1:** a shouted order, then a branding iron stopping inches from her eye. Strong hooks, open endings. But they're the same scene told twice (see §2).
 - **#2 E24-W1:** the riding-crop strike is a good hook. The ending (a calm vow to return) is resolve rather than an open question, so the cliffhanger is weak.
-- **#4 E01-W1 (two-part):** "Because he is marrying me." followed by her fury rising. This is the clean version of the v1 altar promo, built inside 60s with no trimming.
+- **#4 E01-W1 (two-part):** the sister's gloating line at the altar, followed by the heroine's fury rising. This is the clean version of the v1 altar promo, built inside 60s with no trimming.
 - **#5 E13-W1:** opens on the thorn needle. It ends when she *finds* the ring, which resolves the tension. The tagger labelled a resolution as a cliff. Tag quality is now the main limit on picking.
 
 ## 5. Jev (TypeSafe System One) as the judge
@@ -108,7 +108,7 @@ Every call records which model answered. Point `PROMO_RANK_MODEL` at the stronge
 
 Using half the pairs reproduces the all-pairs order (Spearman 0.99, same top 5). A quarter gives 0.94 and keeps the top 5 98% of the time. So the cost could be halved without losing the order.
 
-**Blind audit of quality** (`experiments/AUDIT_outputs_outputs_v2_runs/v2_jev.md`). gemma-4-31b judged the top 20 of v1, v2-LLM and v2-Jev: 53 distinct clips, mixed, unlabeled, each batch scored twice. Auditor test-retest was 0.88.
+**Blind audit of quality** (`experiments/AUDIT_v1_v2_v2jev_gemma.md`). gemma-4-31b judged the top 20 of v1, v2-LLM and v2-Jev: 53 distinct clips, mixed, unlabeled, each batch scored twice. Auditor test-retest was 0.88.
 
 | | v1 | v2, LLM judge | v2, Jev judge |
 |---|---|---|---|

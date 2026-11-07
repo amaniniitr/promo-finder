@@ -299,6 +299,9 @@ h2 { font-size:30px; font-weight:800; letter-spacing:-.9px; line-height:1 } h2 s
 .p2 .ts { padding:5px 0 } .p2 .tsh { margin-bottom:4px } .p2 .tsh b { font-size:18px; white-space:nowrap } .p2 .tsh span { font-size:10px } .p2 .tsh .ic { width:26px; height:26px }
 .p2b .lim { padding:4px 0; gap:8px } .p2b .lim .ic { width:24px; height:24px } .p2b .lim b { font-size:11px } .p2b .lim span { font-size:9.3px } .p2b .card { padding:10px 12px }
 .p2b .wr { padding:6px 9px; margin-bottom:5px; font-size:9.6px } .p2 .card { padding:10px 12px } .p2 h2 { font-size:26px }
+.tst { display:grid; grid-template-columns:1fr 1fr; gap:14px } .tst > div { display:flex; flex-direction:column; gap:8px }
+.tsl b { display:block; font-size:11.5px; font-weight:800 } .tsl span { display:block; font-size:9.3px; color:var(--mut); line-height:1.3; margin-top:2px }
+.hm { flex:none } .hml { font-size:7.5px; color:var(--mut); margin-top:3px; display:flex; align-items:center; gap:4px } .hml i { width:7px; height:7px; border-radius:2px; display:inline-block }
 .lim .ic.g { background:rgba(43,212,154,.1) }
 code { font-family:Menlo,monospace; font-size:9px; background:rgba(255,255,255,.08); color:#FFB3B5; border-radius:5px; padding:1px 5px }
 """.replace("__FONT__", FONT)
@@ -375,6 +378,70 @@ def arch():
     return "".join(out)
 
 
+def h2h(cell=5.9):
+    ids = [x["id"] for x in P[:20]]
+    pr = {}
+    for c in DIAG["jev_comparisons"]:
+        pr[(c["a"], c["b"])] = c["p"]; pr[(c["b"], c["a"])] = 1 - c["p"]
+    L, T = 16, 12
+    out = [f'<svg width="{L + 20 * cell + 2}" height="{T + 20 * cell + 2}">']
+    for i, a in enumerate(ids):
+        for j, b in enumerate(ids):
+            x, y = L + j * cell, T + i * cell
+            if i == j:
+                out.append(f'<rect x="{x}" y="{y}" width="{cell - .8}" height="{cell - .8}" fill="#222"/>'); continue
+            v = pr.get((a, b))
+            if v is None:
+                col = "#1A1A1D"
+            elif v >= .5:
+                col = f"rgba(236,28,36,{.18 + 1.6 * (v - .5):.2f})"
+            else:
+                col = f"rgba(120,124,135,{.10 + .9 * (.5 - v):.2f})"
+            out.append(f'<rect x="{x}" y="{y}" width="{cell - .8}" height="{cell - .8}" rx="1" fill="{col}"/>')
+    for k in (1, 5, 10, 15, 20):
+        out.append(f'<text x="{L - 3}" y="{T + (k - .5) * cell + 2.5}" font-size="6.5" fill="#8A8D96" text-anchor="end">{k}</text>')
+        out.append(f'<text x="{L + (k - .5) * cell}" y="{T - 3}" font-size="6.5" fill="#8A8D96" text-anchor="middle">{k}</text>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def confusion():
+    c = 40
+    cells = [(0, 0, "26", "hit", "#2BD49A", .9), (1, 0, "3", "missed", "#55575F", .25), (0, 1, "0", "false alarm", "#FF4D52", .08), (1, 1, "29", "ignored", "#2BD49A", .9)]
+    L, T = 50, 14
+    o = [f'<svg width="{L + 2 * c + 2}" height="{T + 2 * c + 2}">',
+         f'<text x="{L + c / 2}" y="9" font-size="7.5" fill="#8A8D96" text-anchor="middle">tagged</text>',
+         f'<text x="{L + 1.5 * c}" y="9" font-size="7.5" fill="#8A8D96" text-anchor="middle">not tagged</text>',
+         f'<text x="{L - 5}" y="{T + c / 2 + 3}" font-size="7.5" fill="#8A8D96" text-anchor="end">planted hook</text>',
+         f'<text x="{L - 5}" y="{T + 1.5 * c + 3}" font-size="7.5" fill="#8A8D96" text-anchor="end">dull decoy</text>']
+    for cx, cy, n, lab, col, a in cells:
+        x, y = L + cx * c, T + cy * c
+        o.append(f'<rect x="{x}" y="{y}" width="{c - 3}" height="{c - 3}" rx="7" fill="{col}" fill-opacity="{a}"/>'
+                 f'<text x="{x + (c - 3) / 2}" y="{y + 19}" font-size="15" font-weight="800" fill="#fff" text-anchor="middle">{n}</text>'
+                 f'<text x="{x + (c - 3) / 2}" y="{y + 30}" font-size="6.5" fill="rgba(255,255,255,.75)" text-anchor="middle">{lab}</text>')
+    o.append("</svg>")
+    return "".join(o)
+
+
+def cliffbars(w=128):
+    rows = [("3.1 Flash Lite", 94, 84, 98, 18), ("3.5 Flash", 82, 69, 90, 26)]
+    o = [f'<svg width="{w + 30}" height="92">']
+    y = 4
+    for name, v, lo, hi, ch in rows:
+        o.append(f'<text x="0" y="{y + 7}" font-size="8" fill="#C9CBD1" font-weight="700">{name}</text>')
+        o.append(f'<rect x="0" y="{y + 11}" width="{w}" height="9" rx="4.5" fill="#1E1E22"/>'
+                 f'<rect x="0" y="{y + 11}" width="{w * v / 100}" height="9" rx="4.5" fill="#2BD49A"/>'
+                 f'<line x1="{w * lo / 100}" x2="{w * hi / 100}" y1="{y + 15.5}" y2="{y + 15.5}" stroke="#0B0B0D" stroke-width="1.6"/>'
+                 f'<text x="{w + 5}" y="{y + 19}" font-size="9" font-weight="800" fill="#2BD49A">{v}%</text>')
+        o.append(f'<rect x="0" y="{y + 24}" width="{w}" height="9" rx="4.5" fill="#1E1E22"/>'
+                 f'<rect x="0" y="{y + 24}" width="{w * ch / 100}" height="9" rx="4.5" fill="#55575F"/>'
+                 f'<text x="{w * ch / 100 + 4}" y="{y + 31.5}" font-size="7" fill="#8A8D96">chance {ch}%</text>')
+        y += 46
+    o.append("</svg>")
+    return "".join(o)
+
+
+
 def ver(tag, title, did, broke, nums):
     rows = "".join(f'<div class="vn">' + (f'<s>{b}</s><i>→</i>' if b else '') + f'<b>{c}</b><span>{l}</span></div>' for l, b, c in nums)
     return (f'<div class="vc"><div class="vh"><span class="vt">{tag}</span><b>{title}</b></div><div class="vd">{did}</div>'
@@ -408,22 +475,22 @@ page2 = f"""<div class="page p2">{TOP}
          [("same-story pairs, top 20", "4", "2"), ("cross-episode clips, top 20", "", "2"), ("cost per show", "", f"${SHOW_USD:.2f}")])}
    </div></div>
   <div class="card"><div class="k">{icon("target", 12, "#8A8D96")}tests with a known answer <em>· I wrote the key</em></div>
-   <div class="ts"><div class="tsh"><span class="ic" style="background:rgba(43,212,154,.1)">{icon("badge-check", 15, "#2BD49A")}</span><b>26 of 29</b><span>planted shocking lines tagged as hooks; random finds ~4</span></div>
-    {dots(29, 26, "#2BD49A", r=3.1, g=8.2)}</div>
-   <div class="ts"><div class="tsh"><span class="ic" style="background:rgba(236,28,36,.12)">{icon("ban", 15, "#FF4D52")}</span><b>0 of 29</b><span>dull decoy lines wrongly tagged</span></div>
-    {dots(29, 0, "#FF4D52", r=3.1, g=8.2)}</div>
-   <div class="ts"><div class="tsh"><span class="ic" style="background:rgba(43,212,154,.1)">{icon("clapperboard", 15, "#2BD49A")}</span><b>41–47 of 50</b><span>writers' own episode cliffhanger found; chance 18–26%</span></div>
-    {dots(50, 47, "#2BD49A", per=50, r=2.3, g=7.0)}</div>
+   <div class="tst">
+    <div><div class="tsl"><b>Hooks: 26 of 29 found</b><span>29 shocking lines and 29 dull decoys planted in real episodes.</span></div>{confusion()}</div>
+    <div><div class="tsl"><b>Cliffhangers: 41–47 of 50</b><span>The writers' own episode ending, found. Dark line = 95% CI.</span></div>{cliffbars()}</div>
+   </div>
   </div>
  </div>
 
  <div class="grid p2b" style="grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-top:8px">
-  <div class="card"><div class="k">{icon("brain-circuit", 12, "#8A8D96")}design choices, and why</div>
-   <div class="lim"><span class="ic g">{icon("scissors", 14, "#2BD49A")}</span><div><b>Select, don't generate</b><span>The model picks beat IDs; code does the maths. Rules can't break.</span></div></div>
-   <div class="lim"><span class="ic g">{icon("git-compare-arrows", 14, "#2BD49A")}</span><div><b>Ask every pair both ways</b><span>First-shown wins {FIRST}%, so order bias cancels. {PC}% of verdicts match.</span></div></div>
-   <div class="lim"><span class="ic g">{icon("timer", 14, "#2BD49A")}</span><div><b>Jev as the judge</b><span>Returns a probability in ~0.3 s. {pw['verdicts']} verdicts cost ${jev['cost_usd']:.3f}.</span></div></div>
-   <div class="lim"><span class="ic g">{icon("eye-off", 14, "#2BD49A")}</span><div><b>Judges see only the clip</b><span>Like a stranger scrolling, with no show context.</span></div></div>
-</div>
+  <div class="card"><div class="k">{icon("git-compare-arrows", 12, "#8A8D96")}how the top 20 are ordered</div>
+   <div style="display:flex; gap:10px; align-items:flex-start">
+    <div class="hm">{h2h()}<div class="hml"><i style="background:#EC1C24"></i>row wins <i style="background:#6E717A"></i>row loses</div></div>
+    <div style="flex:1">
+     <div class="lim"><div><b>Every pair, both orders</b><span>Jev gives P(row beats column) for all {pw['pairs_asked_both_ways']} pairs. First-shown wins {FIRST}%, so asking twice cancels order bias.</span></div></div>
+     <div class="lim"><div><b>Bradley-Terry fit</b><span>Turns {pw['verdicts']} verdicts into one strength per clip. The #1 clip beats all 19 others.</span></div></div>
+     <div class="lim"><div><b>Cheap enough to ask all</b><span>{pw['verdicts']} verdicts for ${jev['cost_usd']:.3f}, ~0.3 s each.</span></div></div>
+    </div></div></div>
   <div class="card"><div class="k">{icon("triangle-alert", 12, "#8A8D96")}what it can't do yet</div>
    <div class="lim"><span class="ic">{icon("brain-circuit", 14, "#FFB547")}</span><div><b>Prove its taste</b><span>AI judges agree weakly (ρ 0.26–0.49). Editor labels would settle it.</span></div></div>
    <div class="lim"><span class="ic">{icon("film", 14, "#FFB547")}</span><div><b>See the performance</b><span>It reads the script, not the actor's delivery.</span></div></div>

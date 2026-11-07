@@ -1,10 +1,11 @@
-"""2-page solution deck (16:9 PDF), built from runs/v3_final and experiments/*.
-python deck/build_deck.py  ->  deck/solution.pdf (+ page-1.png, page-2.png previews)
-
-Design rules: one idea per block, big type for the point and small type for the proof,
-Kuku red only for emphasis, every number generated from the run files."""
+"""2-page solution deck, dark Kuku studio look (matches the website). 16:9 PDF, 1280x720 CSS px per page.
+python deck/build_deck.py  ->  deck/solution.pdf (+ page-1.png, page-2.png)
+Checks after rendering: overflow (must be <= 0) and empty space (largest blank band + card slack).
+Every number comes from runs/v3_final and experiments/*. Icons: Lucide (ISC), deck/icons/."""
 import html
 import json
+import math
+import re
 import sys
 from pathlib import Path
 
@@ -27,7 +28,7 @@ IDX = BeatIndex(EPS)
 by = {p["id"]: p for p in P}
 jev, pw = meta["jev_usage"], meta["pairwise"]
 tok = meta["llm_tokens_by_model"]["vertex/gemini-3.5-flash"]
-SHOW_USD = tok[0] * 1.5e-6 + tok[1] * 9e-6 + jev["cost_usd"]      # list prices, Gemini 3.5 Flash $1.50/$9 per M (estimate)
+SHOW_USD = tok[0] * 1.5e-6 + tok[1] * 9e-6 + jev["cost_usd"]     # list-price estimate
 WATCH_MIN = sum(e.duration for e in EPS) / 60
 PLAN = meta["posting_plan"]["plan"]
 HOLD = meta["posting_plan"]["hold"]
@@ -36,7 +37,7 @@ TOP20_MIN = sum(p["duration"] for p in P[:20]) / 60
 N_TAGS = sum(len(t["hooks"]) + len(t["cliffs"]) for t in DIAG["tags"].values())
 N_BEATS = sum(len(e.beats) for e in EPS)
 FONT = (ROOT / "web" / "fonts" / "Figtree.ttf").as_uri()
-RED, INK, MUT, LINE, SOFT, GOOD = "#EC1C24", "#111318", "#6B7080", "#E6E7EB", "#F6F6F8", "#0E9F6E"
+LOGO = (ROOT / "web" / "kuku-logo-white.svg").read_text()
 
 
 def e(s):
@@ -56,307 +57,422 @@ def title(pid):
     return TITLES.get(pid, pid)
 
 
-LOGO = (ROOT / "web" / "kuku-logo.svg").read_text() if (ROOT / "web" / "kuku-logo.svg").exists() else ""
+def icon(name, size=18, color="currentColor", stroke=2):
+    s = (OUT / "icons" / f"{name}.svg").read_text()
+    s = re.sub(r"<!--.*?-->", "", s, flags=re.S)
+    s = re.sub(r"<svg[^>]*>", lambda m: re.sub(r'\s(class|width|height)="[^"]*"', "", m.group(0)), s, count=1)
+    s = s.replace('stroke-width="2"', f'stroke-width="{stroke}"').replace('stroke="currentColor"', f'stroke="{color}"')
+    return s.replace("<svg", f'<svg width="{size}" height="{size}"', 1).strip()
 
 
-# ------------------------------------------------------------------ visuals
-import math  # noqa: E402
-
-PURPLE = "#7A3FE0"
-
-
-def rule_icons():
-    """Three small pictograms: the length window, the 3-second hook, the open cut."""
-    W = 168
-    X = lambda t: 8 + (W - 16) * t / 90  # noqa: E731   axis 0-90 s
-    length = (f'<svg width="{W}" height="34"><line x1="8" y1="20" x2="{W - 8}" y2="20" stroke="{LINE}" stroke-width="6" stroke-linecap="round"/>'
-              f'<line x1="{X(20)}" y1="20" x2="{X(60)}" y2="20" stroke="{RED}" stroke-width="6" stroke-linecap="round"/>'
-              f'<text x="{X(20)}" y="10" class="ax" text-anchor="middle">20 s</text><text x="{X(60)}" y="10" class="ax" text-anchor="middle">60 s</text>'
-              f'<text x="{X(0)}" y="33" class="ax2">0</text><text x="{W - 8}" y="33" class="ax2" text-anchor="end">90 s</text></svg>')
-    Y = lambda t: 8 + (W - 16) * t / 35  # noqa: E731
-    hook = (f'<svg width="{W}" height="34"><rect x="8" y="15" width="{W - 16}" height="10" rx="5" fill="{LINE}"/>'
-            f'<rect x="8" y="15" width="{Y(3) - 8}" height="10" rx="5" fill="{RED}"/>'
-            f'<text x="{Y(3) + 4}" y="11" class="ax">first 3 s</text><text x="8" y="34" class="ax2">clip starts</text></svg>')
-    cut = (f'<svg width="{W}" height="34"><rect x="8" y="15" width="{W - 46}" height="10" rx="5" fill="{LINE}"/>'
-           f'<rect x="{W - 66}" y="15" width="28" height="10" rx="3" fill="{PURPLE}"/>'
-           f'<line x1="{W - 36}" y1="6" x2="{W - 36}" y2="32" stroke="{INK}" stroke-width="2" stroke-dasharray="3 2"/>'
-           f'<text x="{W - 28}" y="25" class="q2">?</text><text x="{W - 66}" y="11" class="ax">tension peaks</text><text x="{W - 32}" y="34" class="ax2">cut</text></svg>')
-    return length, hook, cut
+# ------------------------------------------------------------------ data for the #1 promo
+p1 = P[0]
+s1 = p1["segments"][0]
+ep1 = IDX.eps[s1["episode"]]
+beats1 = [b for b in ep1.beats if b.start >= s1["start"] - .01 and b.end <= s1["end"] + .01 and b.type != "camera"]
+lines1 = [b for b in beats1 if b.type == "dialogue"]
+HOOK = lines1[0]
+BUILD = min(lines1, key=lambda b: abs((b.start - s1["start"]) - p1["duration"] * .45))
+CUT = [b for b in beats1 if b.type in ("action", "dialogue")][-1]
+D1 = p1["duration"]
+rel = lambda b: b.start - s1["start"]  # noqa: E731
 
 
-def funnel():
-    stages = [(N_BEATS, "beats in 50 scripts", "parsed", "CODE"), (N_TAGS, "moments tagged", "hook or cliffhanger lines", "AI"),
-              (meta["candidates"], "candidate clips", "all 20–60 s, hook first", "CODE"),
-              (meta["ranked"], "after removing repeats", "same footage or same story", "CODE"),
-              (20, "shortlist", f"{pw['verdicts']} head-to-head judgements", "AI"), (len(PLAN), "posts for week 1", "editor approves", "EDITOR")]
-    lmax = math.log10(N_BEATS)
+def phone():
+    feed = [b for b in beats1 if rel(b) <= rel(CUT) + .01][-3:]
+    rows = []
+    for k, b in enumerate(feed):
+        now = k == len(feed) - 1
+        who = b.speaker or ("sound" if b.type == "sfx" else "action")
+        txt = f"“{b.text}”" if b.type == "dialogue" else b.text
+        rows.append(f'<div class="fi{" now" if now else ""}{" a" if b.type != "dialogue" else ""}"><b>{e(who)}</b>'
+                    f'<span>{e(txt[:96] + ("…" if len(txt) > 96 else ""))}</span></div>')
+    pct = lambda t: 100 * t / D1  # noqa: E731
+    marks = "".join(f'<i style="left:{pct(rel(b)):.1f}%;background:{c}"></i>' for b, c in ((HOOK, "#EC1C24"), (BUILD, "#fff"), (CUT, "#B48CFF")))
+    return f"""<div class="phone"><div class="scr">
+      <div class="ptop"><span>Promo #1 · {e(title(p1['id']))}</span><span class="chip">CUT</span></div>
+      <div class="feed">{''.join(rows)}</div>
+      <div class="pbar"><b style="width:{pct(3):.1f}%"></b><u style="width:{pct(rel(CUT)):.1f}%"></u>{marks}<em style="left:{pct(rel(CUT)):.1f}%"></em></div>
+      <div class="plab"><span>0 s</span><span>{D1:.0f} s</span></div></div></div>"""
+
+
+def callouts():
+    rows = [("HOOK", HOOK, "#EC1C24", "zap", "Opens on a scream. Stops the scroll."),
+            ("BUILD", BUILD, "#fff", "swords", "Stakes are clear with no back-story."),
+            ("CUT", CUT, "#B48CFF", "scissors", f"Cuts mid-threat. Episode {ep1.number + 1} answers it.")]
     out = []
-    for v, lab, sub, who in stages:
-        w = 18 + 230 * math.log10(v) / lmax
-        col = {"CODE": GOOD, "AI": RED, "EDITOR": INK}[who]
-        out.append(f'<div class="fr"><div class="ftrack"><div class="fbar" style="width:{w:.0f}px;background:{col}"></div></div><b>{v:,}</b>'
-                   f'<span class="fl">{lab}</span><span class="fs">{sub}</span><span class="fw2" style="color:{col}">{who}</span></div>')
+    for lab, b, col, ic, why in rows:
+        txt = f"“{b.text}”" if b.type == "dialogue" else b.text
+        out.append(f'<div class="co"><div class="coh" style="color:{col}">{icon(ic, 14, col)}{lab}<span>{rel(b):.0f} s</span></div>'
+                   f'<div class="coq">{e(txt[:92] + ("…" if len(txt) > 92 else ""))}</div><div class="cow">{why}</div></div>')
+    w, l_, t = p1["record"].split("-")
+    out.append(f'<div class="cowin">{icon("trophy", 16, "#FFB547")}<span>Won <b>{w} of {int(w) + int(l_) + int(t)}</b> head-to-heads. '
+               'The judge sees only the clip, like a stranger scrolling.</span></div>')
     return "".join(out)
 
 
-def featured():
-    p = P[0]
-    s = p["segments"][0]
-    ep = IDX.eps[s["episode"]]
-    beats = [b for b in ep.beats if b.start >= s["start"] - .01 and b.end <= s["end"] + .01]
-    lines = [b for b in beats if b.type == "dialogue"]
-    hook = lines[0]
-    build = min(lines, key=lambda b: abs((b.start - s["start"]) - p["duration"] * 0.45))
-    cliff = [b for b in beats if b.type in ("action", "dialogue")][-1]
-    D = p["duration"]
-    rows = [("0–3 s", hook, RED, "opening line"), ("middle", build, INK, "why she's in danger"),
-            ("last beat", cliff, PURPLE, f"the cut; episode {ep.number + 1} answers it")]
-    pct = lambda t: 100 * t / D  # noqa: E731
-    beats_html = ""
-    for lab, b, col, why in rows:
-        t = b.start - s["start"]
-        txt = f'“{b.text}”' if b.type == "dialogue" else b.text
-        beats_html += (f'<div class="fb"><div class="ft" style="color:{col}">{t:.0f} s<span>{why}</span></div>'
-                       f'<div class="fq">{e(txt[:112] + ("…" if len(txt) > 112 else ""))}</div></div>')
-    marks = "".join(f'<i style="left:{pct(b.start - s["start"]):.1f}%;background:{"#fff" if c == INK else c}"></i>' for _, b, c, _ in rows)
-    wins, losses, ties = p["record"].split("-")
-    return f"""
-    <div class="feat">
-     <div class="phone"><div class="scr">
-       <div class="ptag">#1 of {meta['ranked']} · {D:.0f} s</div>
-       <div class="pline">“{e(hook.text)}”</div>
-       <div class="pfoot">Episode {ep.number}, {fmt(s['start'])}–{fmt(s['end'])}</div>
-       <div class="pbar"><b style="width:{pct(3):.1f}%"></b>{marks}</div>
-       <div class="plab"><span>0 s</span><span>{D:.0f} s</span></div></div></div>
-     <div class="fbeats">{beats_html}
-      <div class="fmeta">It beat all {wins} clips it was compared with. The judge sees only the clip, never the rest of the show.</div></div>
-    </div>"""
+def pipeline():
+    steps = [("scroll-text", "parse", f"{N_BEATS:,}", "timed beats", "CODE", "Every line, action and sound with its exact start and end"),
+             ("sparkles", "tag", f"{N_TAGS}", "moments", "AI", "Gemini marks hook and cliffhanger lines by ID. It never writes a time"),
+             ("scissors", "assemble", f"{meta['candidates']}", "clips", "CODE", "Every hook → cliff window that fits 20–60 s, incl. cross-episode"),
+             ("git-compare-arrows", "rank", "20", "shortlisted", "AI", f"{pw['verdicts']} head-to-heads, each asked in both orders"),
+             ("calendar-days", "plan", f"{len(PLAN)}", "posts, week 1", "EDITOR", f"{len(HOLD)} spoiler-heavy clips held for later weeks")]
+    out = []
+    for i, (ic, name, num, unit, who, txt) in enumerate(steps):
+        col = {"CODE": "#2BD49A", "AI": "#EC1C24", "EDITOR": "#FFFFFF"}[who]
+        out.append(f'<div class="st"><div class="sth"><span class="sti" style="color:{col};border-color:{col}55;background:{col}14">{icon(ic, 17, col)}</span>'
+                   f'<span class="stn">{i + 1:02d} · {name}</span><span class="stw" style="color:{col}">{who}</span></div>'
+                   f'<div class="stv"><b>{num}</b>{unit}</div><div class="stt">{txt}</div></div>')
+        if i < len(steps) - 1:
+            out.append('<div class="sta">›</div>')
+    return "".join(out)
 
 
-def week():
-    cards = []
-    for x in PLAN:
+GRADS = ["linear-gradient(160deg,#7A0B10 0%,#2A0507 55%,#0B0B0D 100%)", "linear-gradient(160deg,#5B1E6E 0%,#1E0A26 55%,#0B0B0D 100%)",
+         "linear-gradient(160deg,#8A3B0B 0%,#2B1205 55%,#0B0B0D 100%)", "linear-gradient(160deg,#0E4F5C 0%,#071F24 55%,#0B0B0D 100%)",
+         "linear-gradient(160deg,#6E0E3A 0%,#260715 55%,#0B0B0D 100%)"]
+
+
+def posters():
+    out = []
+    for k, x in enumerate(PLAN):
         p = by[x["id"]]
-        cards.append(f'<div class="day"><div class="dd">DAY {x["day"]}</div><div class="dt">{e(title(p["id"]))}</div>'
-                     f'<div class="dm">Ep {p["segments"][0]["episode"]} · {p["duration"]:.0f} s · #{p["rank"]}</div></div>')
-    return "".join(cards)
+        out.append(f'<div class="pos" style="background:{GRADS[k % 5]}"><div class="pday">DAY {x["day"]}</div>'
+                   f'<div class="pt">{e(title(p["id"]))}</div><div class="pm">Ep {p["segments"][0]["episode"]} · {p["duration"]:.0f} s · #{p["rank"]}</div>'
+                   f'<div class="pplay">{icon("film", 12, "#fff")}</div></div>')
+    return "".join(out)
 
 
-def episode_strip():
-    """50 episodes left to right. Dots = top-20 clips taken from that episode; arcs = clips that join two episodes."""
-    W, cw = 560, 560 / 50
-    X = lambda n: (n - 0.5) * cw  # noqa: E731
-    count = {}
-    arcs = []
+def episode_map():
+    W, cw = 400, 400 / 50
+    X = lambda n: (n - .5) * cw  # noqa: E731
+    count, arcs = {}, []
     for p in P[:20]:
         eps = sorted({s["episode"] for s in p["segments"]})
         if len(eps) == 2:
             arcs.append((eps[0], eps[1], p["rank"]))
         for n in eps:
             count[n] = count.get(n, 0) + 1
-    o = [f'<svg width="{W}" height="84" viewBox="0 0 {W} 84">']
+    o = [f'<svg width="{W}" height="96" viewBox="0 0 {W} 96">']
     for a, b, r in arcs:
         x1, x2 = X(a), X(b)
-        o.append(f'<path d="M{x1} 52 Q{(x1 + x2) / 2} {52 - (x2 - x1) * 0.55} {x2} 52" fill="none" stroke="{PURPLE}" stroke-width="1.6"/>'
-                 f'<text x="{(x1 + x2) / 2}" y="{50 - (x2 - x1) * 0.28}" text-anchor="middle" class="ax" fill="{PURPLE}">#{r}</text>')
+        o.append(f'<path d="M{x1} 62 Q{(x1 + x2) / 2} {62 - (x2 - x1) * .75} {x2} 62" fill="none" stroke="#B48CFF" stroke-width="1.5"/>'
+                 f'<text x="{(x1 + x2) / 2}" y="{58 - (x2 - x1) * .38}" text-anchor="middle" class="ax" fill="#B48CFF">#{r}</text>')
     for n in range(1, 51):
-        o.append(f'<rect x="{X(n) - cw / 2 + 1}" y="56" width="{cw - 2}" height="10" rx="2" fill="{LINE}"/>')
+        o.append(f'<rect x="{X(n) - cw / 2 + .8}" y="66" width="{cw - 1.6}" height="9" rx="2" fill="#26262B"/>')
         for k in range(count.get(n, 0)):
-            col = RED if (n == P[0]["segments"][0]["episode"] and k == 0) else INK
-            o.append(f'<circle cx="{X(n)}" cy="{48 - k * 7}" r="2.8" fill="{col}"/>')
+            col = "#EC1C24" if (n == s1["episode"] and k == 0) else "#fff"
+            o.append(f'<circle cx="{X(n)}" cy="{59 - k * 6.5}" r="2.5" fill="{col}"/>')
     for n in (1, 10, 20, 30, 40, 50):
-        o.append(f'<text x="{X(n)}" y="80" text-anchor="middle" class="ax2">{n}</text>')
-    o.append("</svg>")
-    return "".join(o)
+        o.append(f'<text x="{X(n)}" y="90" text-anchor="middle" class="ax2">{n}</text>')
+    return "".join(o) + "</svg>"
 
 
-def dots(n_total, n_hit, color, per_row=29, r=3.6, gap=9.6):
-    rows = math.ceil(n_total / per_row)
-    o = [f'<svg width="{per_row * gap}" height="{rows * gap}">']
-    for i in range(n_total):
-        cx, cy = (i % per_row) * gap + gap / 2, (i // per_row) * gap + gap / 2
-        o.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{color if i < n_hit else LINE}"/>')
-    o.append("</svg>")
-    return "".join(o)
+def dots(n, hit, col, per=29, r=4.2, g=10.2):
+    rows = math.ceil(n / per)
+    o = [f'<svg width="{per * g}" height="{rows * g}">']
+    for i in range(n):
+        o.append(f'<circle cx="{(i % per) * g + g / 2}" cy="{(i // per) * g + g / 2}" r="{r}" fill="{col if i < hit else "#2A2A30"}"/>')
+    return "".join(o) + "</svg>"
 
 
-def before_after():
-    rows = [("Clips outside 20–60 s", 16, 0, "16%", "0%"), ("Clip endings cut short by code", 20, 0, "21 of 105", "0"),
-            ("Ranking scores that were tied", 81, 0, "81%", "0%"),
-            ("Top-20 order on a re-check (ρ)", 44, 83, "0.44", "0.75–0.90")]
-    o = []
-    for lab, a, b, ta, tb in rows:
-        o.append(f'<div class="ba"><div class="bal">{lab}</div><div class="bab">'
-                 f'<div class="bb"><div class="trk"><i style="width:{max(a, .8)}%;background:#C9CCD4"></i></div><em>{ta}</em></div>'
-                 f'<div class="bb"><div class="trk"><i style="width:{max(b, .8)}%;background:{GOOD}"></i></div><em style="color:{GOOD}">{tb}</em></div></div></div>')
-    return "".join(o)
+def evo():
+    rows = [("timer", "Clips outside 20–60 s", "16%", "0%", "the AI only tags; code builds clips"),
+            ("scissors", "Endings cut short by code", "21", "0", "clips end on a tagged cliff beat"),
+            ("git-compare-arrows", "Tied scores in the ranking", "81%", "0%", f"head-to-head, both orders; {pw['position_consistency'] * 100:.0f}% verdicts match"),
+            ("gauge", "Top-20 order on a re-check (ρ)", "0.44", "0.75–0.90", "every pair asked in both orders"),
+            ("split", "Same-story pairs in top 20", "4", "2", "dedupe on story, not just footage")]
+    return "".join(f'<div class="ev"><span class="evi">{icon(ic, 16, "#2BD49A")}</span><div class="evl"><b>{a}</b><span>{d}</span></div>'
+                   f'<div class="evn"><s>{b}</s><i>→</i><b>{c}</b></div></div>' for ic, a, b, c, d in rows)
 
 
-def time_bars():
-    W = 400
-    segs = "".join(f'<rect x="{i * W / 50 + .5}" y="0" width="{W / 50 - 1}" height="16" rx="1.5" fill="#C9CCD4"/>' for i in range(50))
-    w3 = W * PLAN_MIN / WATCH_MIN
-    w20 = W * TOP20_MIN / WATCH_MIN
-    return (f'<div class="tl"><b>{WATCH_MIN:.0f} min</b><span>watching all 50 episodes today</span></div><svg width="{W}" height="16">{segs}</svg>'
-            f'<div class="tl" style="margin-top:8px"><b style="color:{GOOD}">{TOP20_MIN:.0f} min</b><span>watching the top 20 clips</span></div>'
-            f'<svg width="{W}" height="16"><rect width="{w20:.1f}" height="16" rx="2" fill="{GOOD}" opacity=".55"/></svg>'
-            f'<div class="tl" style="margin-top:8px"><b style="color:{GOOD}">{PLAN_MIN:.0f} min</b><span>approving the 5 week-1 posts</span></div>'
-            f'<svg width="{W}" height="16"><rect width="{w3:.1f}" height="16" rx="2" fill="{GOOD}"/></svg>')
+def tbar(label, val, maxv, col, sub):
+    return (f'<div class="tl"><div class="tlh"><b style="color:{col}">{val:.0f} min</b><span>{sub}</span></div>'
+            f'<div class="tlt"><i style="width:{max(1.2, 100 * val / maxv):.1f}%;background:{col}"></i></div></div>')
 
 
-length_ic, hook_ic, cut_ic = rule_icons()
+CSS = """
+@font-face { font-family: Figtree; src: url('__FONT__') format('truetype'); font-weight: 300 900 }
+@page { size: 13.333in 7.5in; margin: 0 }
+* { box-sizing: border-box; margin: 0; padding: 0 }
+:root { --red:#EC1C24; --red2:#FF4D52; --tx2:#C9CBD1; --mut:#8A8D96; --line:rgba(255,255,255,.09); --card:#0F0F12; --good:#2BD49A; --vio:#B48CFF }
+body { font-family: Figtree, -apple-system, Arial, sans-serif; color:#fff; font-size:10px; line-height:1.3; background:#000 }
+.page { width:1280px; height:720px; position:relative; overflow:hidden; page-break-after:always; padding:18px 30px 14px;
+  background: radial-gradient(ellipse 60% 50% at 30% 0%, rgba(236,28,36,.20), transparent 70%), linear-gradient(90deg, #000 55%, #1C0204 100%), #000 }
+.top { display:flex; align-items:center; gap:12px; height:30px; margin-bottom:12px }
+.top svg { height:20px; width:auto } .top .pr { font-weight:700; font-size:12.5px; color:var(--tx2); padding-left:12px; border-left:1px solid rgba(255,255,255,.18) }
+.top .me { margin-left:auto; display:flex; gap:16px; align-items:center; font-size:11px; color:var(--tx2) } .top .me b { color:#fff; font-size:12px }
+.top .dot { width:6px; height:6px; border-radius:50%; background:var(--red); display:inline-block; margin-right:6px; box-shadow:0 0 8px var(--red) }
+.card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 14px; position:relative }
+.k { font-size:9px; font-weight:800; letter-spacing:1.6px; color:var(--mut); text-transform:uppercase; margin-bottom:8px; display:flex; align-items:center; gap:6px }
+.k em { color:var(--red2); font-style:normal } .k svg { flex:none }
+.grid { display:grid; gap:12px }
+/* page 1 */
+.eyebrow { display:inline-block; font-size:10px; font-weight:700; color:var(--tx2); border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:2px 10px; margin-bottom:8px }
+h1 { font-size:35px; line-height:1.02; font-weight:800; letter-spacing:-1.3px } h1 span { color:var(--red); display:block }
+.lead { font-size:12px; color:var(--tx2); margin-top:8px; line-height:1.42 } .lead b { color:#fff }
+.ba { display:grid; grid-template-columns:1fr 26px 1fr; align-items:center; margin-top:10px; gap:0 }
+.bab { border-radius:14px; padding:7px 12px; display:flex; gap:10px; align-items:center }
+.bab.o { background:#141417; border:1px solid var(--line) } .bab.n { background:rgba(43,212,154,.08); border:1px solid rgba(43,212,154,.35) }
+.bab b { display:block; font-size:21px; font-weight:800; letter-spacing:-.6px; line-height:1 } .bab span { font-size:10px; color:var(--tx2) }
+.baa { text-align:center; color:var(--mut); font-size:18px }
+.rules { margin-top:10px; border-radius:18px; padding:11px 16px; background: radial-gradient(ellipse 90% 140% at 0% 100%, #D6363B 0%, #A3080E 45%, #8E0207 100%);
+  display:grid; grid-template-columns:repeat(3,1fr); gap:0 }
+.rule { padding:0 14px; border-left:1px solid rgba(255,255,255,.28) } .rule:first-child { padding-left:0; border-left:0 }
+.rule .rh { display:flex; align-items:center; gap:6px; font-size:9px; font-weight:800; letter-spacing:1.3px; color:rgba(255,255,255,.8) }
+.rule b { display:block; font-size:22px; font-weight:800; letter-spacing:-.6px; line-height:1.05; margin:4px 0 3px } .rule span { font-size:10px; color:rgba(255,255,255,.88); line-height:1.3; display:block }
+.rule svg.mini { margin-top:4px }
+.phone { width:180px; height:318px; flex:none; border-radius:32px; background:#050505; padding:8px; box-shadow:0 0 0 2px #2A2A2E, 0 30px 60px -20px rgba(236,28,36,.35); position:relative }
+.phone::before { content:""; position:absolute; top:16px; left:50%; width:60px; height:16px; margin-left:-30px; background:#000; border-radius:9px; z-index:2 }
+.scr { height:100%; border-radius:25px; overflow:hidden; position:relative; padding:38px 12px 12px; display:flex; flex-direction:column;
+  background: radial-gradient(ellipse 120% 70% at 50% 25%, #3A1013 0%, #120709 55%, #050505 100%) }
+.ptop { display:flex; justify-content:space-between; align-items:center; font-size:9px; font-weight:700; color:rgba(255,255,255,.8) }
+.chip { font-size:8px; font-weight:800; letter-spacing:1px; padding:2px 7px; border-radius:999px; background:#fff; color:#000 }
+.feed { margin-top:auto; display:flex; flex-direction:column; gap:8px; margin-bottom:12px }
+.fi b { display:block; font-size:7.5px; letter-spacing:1px; color:var(--red2); text-transform:uppercase }
+.fi span { display:block; font-size:10px; font-weight:700; color:rgba(255,255,255,.5); line-height:1.25 } .fi.a span { font-style:italic; font-weight:500 }
+.fi.now span { font-size:12px; font-weight:800; color:#fff } .fi.now.a span { font-size:10.5px; font-weight:600; color:#E9EAEE }
+.pbar { position:relative; height:5px; border-radius:3px; background:rgba(255,255,255,.2) }
+.pbar b { position:absolute; left:0; top:0; bottom:0; background:var(--red); border-radius:3px; z-index:2 } .pbar u { position:absolute; left:0; top:0; bottom:0; background:rgba(255,255,255,.7); border-radius:3px }
+.pbar i { position:absolute; top:-3px; width:3px; height:11px; border-radius:2px; margin-left:-1px; z-index:3 }
+.pbar em { position:absolute; top:-5px; width:13px; height:13px; border-radius:50%; background:#fff; margin-left:-6px; box-shadow:0 0 0 3px rgba(236,28,36,.55); z-index:4 }
+.plab { display:flex; justify-content:space-between; font-family:Menlo,monospace; font-size:8px; color:rgba(255,255,255,.55); margin-top:6px }
+.cos { flex:1; display:flex; flex-direction:column; gap:6px; justify-content:space-between }
+.co { border-left:2px solid rgba(255,255,255,.14); padding-left:10px }
+.coh { display:flex; align-items:center; gap:5px; font-size:9.5px; font-weight:800; letter-spacing:1.2px } .coh span { color:var(--mut); font-weight:600; letter-spacing:0; margin-left:3px }
+.coq { font-size:11px; font-weight:700; line-height:1.28; margin:3px 0 2px } .cow { font-size:10px; color:var(--mut) }
+.cowin { display:flex; gap:8px; align-items:flex-start; background:rgba(255,181,71,.08); border:1px solid rgba(255,181,71,.3); border-radius:12px; padding:8px 10px; font-size:10px; color:var(--tx2) }
+.cowin b { color:#fff } .cowin svg { flex:none; margin-top:1px }
+.pipe { display:flex; align-items:stretch; gap:6px }
+.st { flex:1; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:8px 11px }
+.sth { display:flex; align-items:center; gap:7px } .sti { width:28px; height:28px; border-radius:9px; border:1px solid; display:inline-flex; align-items:center; justify-content:center }
+.stn { font-size:12.5px; font-weight:800 } .stw { margin-left:auto; font-size:8px; font-weight:800; letter-spacing:1.2px }
+.stv { font-size:10.5px; color:var(--mut); margin:4px 0 2px } .stv b { font-size:21px; font-weight:800; color:#fff; letter-spacing:-.6px; margin-right:5px }
+.stt { font-size:9.6px; color:var(--mut); line-height:1.3 } .sta { align-self:center; color:var(--red); font-size:22px; font-weight:800 }
+.posters { display:grid; grid-template-columns:repeat(5,1fr); gap:9px; flex:1 }
+.pos { border-radius:14px; padding:10px 11px; position:relative; display:flex; flex-direction:column; border:1px solid rgba(255,255,255,.08); overflow:hidden }
+.pos::after { content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); pointer-events:none }
+.pday { font-size:8.5px; font-weight:800; letter-spacing:1.4px; color:#FF8A8E } .pt { font-size:14px; font-weight:800; line-height:1.14; margin-top:auto; letter-spacing:-.2px }
+.pm { font-size:9px; color:rgba(255,255,255,.65); margin-top:4px } .pplay { position:absolute; right:9px; top:8px; width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,.14); display:flex; align-items:center; justify-content:center }
+.note { font-size:10px; color:var(--mut); line-height:1.35 } .note b { color:#fff }
+svg text { font-family:Figtree, sans-serif } .ax { font-size:8px; font-weight:800 } .ax2 { font-size:7.5px; fill:#8A8D96 }
+.lg { font-size:9px; color:var(--mut); display:flex; gap:12px; flex-wrap:wrap } .lg i { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:4px; vertical-align:0 }
+.foot { position:absolute; left:30px; right:30px; bottom:7px; display:flex; justify-content:space-between; font-size:8px; color:#5D606A }
+/* page 2 */
+h2 { font-size:30px; font-weight:800; letter-spacing:-.9px; line-height:1 } h2 span { color:var(--red) }
+.ev { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--line) } .ev:last-child { border:0 }
+.evi { width:30px; height:30px; border-radius:9px; background:rgba(43,212,154,.1); display:flex; align-items:center; justify-content:center; flex:none }
+.evl { flex:1 } .evl b { display:block; font-size:12px } .evl span { font-size:9.8px; color:var(--mut) }
+.evn { display:flex; align-items:baseline; gap:7px } .evn s { font-size:14px; color:#6E717B; font-weight:700 } .evn i { color:#6E717B; font-style:normal }
+.evn b { font-size:22px; font-weight:800; color:var(--good); letter-spacing:-.5px }
+.ts { padding:9px 0; border-bottom:1px solid var(--line) } .ts:last-of-type { border:0 }
+.tsh { display:flex; align-items:center; gap:9px; margin-bottom:6px } .tsh .ic { width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; flex:none }
+.tsh b { font-size:21px; font-weight:800; letter-spacing:-.5px } .tsh span { font-size:11px; color:var(--tx2) }
+.tss { font-size:9.6px; color:var(--mut); margin-top:5px }
+.tl { margin-bottom:9px } .tlh { display:flex; align-items:baseline; gap:8px; margin-bottom:4px } .tlh b { font-size:20px; font-weight:800; letter-spacing:-.5px } .tlh span { font-size:10.5px; color:var(--tx2) }
+.tlt { height:12px; border-radius:6px; background:#1C1C21; overflow:hidden } .tlt i { display:block; height:100%; border-radius:6px }
+.lim { display:flex; gap:10px; padding:7px 0; border-bottom:1px solid var(--line) } .lim:last-child { border:0 }
+.lim .ic { width:28px; height:28px; border-radius:9px; background:rgba(255,181,71,.1); display:flex; align-items:center; justify-content:center; flex:none }
+.lim b { display:block; font-size:11.5px } .lim span { font-size:9.8px; color:var(--mut); line-height:1.3 }
+.wr { border-radius:12px; padding:9px 11px; background:#141417; border:1px solid var(--line); font-size:10.2px; line-height:1.38; color:var(--tx2); margin-bottom:8px }
+.wr .x { color:var(--red2); font-weight:800 } .wr .ok { color:var(--good); font-weight:800 }
+.tools { display:flex; flex-wrap:wrap; gap:5px } .tool { display:inline-flex; align-items:center; gap:5px; border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:3px 9px; font-size:9.5px; color:var(--tx2); background:#121215 }
+.kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:10px }
+.kp { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:10px 12px; display:flex; gap:10px; align-items:center }
+.kp .ic { width:34px; height:34px; border-radius:10px; background:rgba(236,28,36,.12); display:flex; align-items:center; justify-content:center; flex:none }
+.kp b { display:block; font-size:14px; font-weight:800; line-height:1.15 } .kp span { display:block; font-size:9.6px; color:var(--tx2); line-height:1.3; margin-top:2px }
+.arch { display:flex; align-items:stretch; gap:0 }
+.an { flex:1; background:#141417; border:1px solid var(--line); border-radius:12px; padding:6px 8px; display:flex; flex-direction:column; gap:3px; min-width:0 }
+.anh { display:flex; align-items:center; gap:6px } .anh .ic { width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex:none }
+.anh b { font-size:11.5px; font-weight:800; line-height:1.1 } .anh i { margin-left:auto; font-style:normal; font-size:7.5px; font-weight:800; letter-spacing:1px }
+.an code { align-self:flex-start; font-size:8.5px } .an > span { font-size:9.2px; color:var(--tx2); line-height:1.28 }
+.aa { width:14px; flex:none; display:flex; align-items:center; justify-content:center; color:var(--red); font-weight:800; font-size:16px }
+.infra { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:6px }
+.infra > div { display:flex; gap:7px; align-items:flex-start; font-size:9.2px; color:var(--tx2); line-height:1.3; border-top:1px solid var(--line); padding-top:5px } .infra b { color:#fff } .infra svg { flex:none; margin-top:1px }
+.vers { display:grid; grid-template-columns:repeat(3,1fr); gap:10px }
+.vc { background:#141417; border:1px solid var(--line); border-radius:12px; padding:9px 11px }
+.vh { display:flex; align-items:center; gap:7px; margin-bottom:5px } .vh b { font-size:12.5px; font-weight:800 }
+.vt { font-size:9px; font-weight:800; background:var(--red); color:#fff; border-radius:6px; padding:2px 6px }
+.vd { font-size:9.3px; color:var(--tx2); line-height:1.28; min-height:0 } .vb { font-size:9.2px; color:#FF8A8E; font-weight:700; line-height:1.28; margin:3px 0 2px; min-height:0 }
+.vn { display:flex; align-items:baseline; gap:4px; border-top:1px solid var(--line); padding:1px 0 }
+.vn s { font-size:10px; color:var(--mut) } .vn i { font-style:normal; font-size:9px; color:var(--mut) } .vn b { font-size:13.5px; font-weight:800; color:var(--good) } .vn span { margin-left:auto; font-size:9px; color:var(--mut); text-align:right }
+.p2 .ts { padding:5px 0 } .p2 .tsh { margin-bottom:4px } .p2 .tsh b { font-size:18px; white-space:nowrap } .p2 .tsh span { font-size:10px } .p2 .tsh .ic { width:26px; height:26px }
+.p2b .lim { padding:4px 0; gap:8px } .p2b .lim .ic { width:24px; height:24px } .p2b .lim b { font-size:11px } .p2b .lim span { font-size:9.3px } .p2b .card { padding:10px 12px }
+.p2b .wr { padding:6px 9px; margin-bottom:5px; font-size:9.6px } .p2 .card { padding:10px 12px } .p2 h2 { font-size:26px }
+.lim .ic.g { background:rgba(43,212,154,.1) }
+code { font-family:Menlo,monospace; font-size:9px; background:rgba(255,255,255,.08); color:#FFB3B5; border-radius:5px; padding:1px 5px }
+""".replace("__FONT__", FONT)
 
-CSS = f"""
-@font-face {{ font-family: Figtree; src: url('{FONT}') format('truetype'); font-weight: 300 900 }}
-@page {{ size: 13.333in 7.5in; margin: 0 }}
-* {{ box-sizing: border-box; margin: 0; padding: 0 }}
-body {{ font-family: Figtree, -apple-system, 'Helvetica Neue', Arial, sans-serif; color: {INK}; font-size: 10pt; line-height: 1.3 }}
-.page {{ width: 13.333in; height: 7.5in; padding: 24px 36px 18px; position: relative; overflow: hidden; page-break-after: always; background: #fff }}
-.top {{ display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 1px solid {LINE}; margin-bottom: 14px }}
-.top svg {{ height: 20px; width: auto }} .top .div {{ width: 1px; height: 20px; background: {LINE} }}
-.top .prod {{ font-size: 9pt; font-weight: 700; letter-spacing: 1.6px; color: {MUT} }}
-.top .me {{ margin-left: auto; text-align: right; font-size: 8.6pt; color: {MUT} }} .top .me b {{ color: {INK}; font-size: 9.6pt }}
-h1 {{ font-size: 22pt; line-height: 1.12; font-weight: 800; letter-spacing: -.6px }}
-.lead {{ font-size: 10.3pt; color: #3D4250; margin-top: 6px; line-height: 1.42 }} .lead b {{ color: {INK} }}
-h2 {{ font-size: 11.5pt; font-weight: 800; margin-bottom: 8px; letter-spacing: -.1px }} h2 span {{ font-weight: 500; color: {MUT}; font-size: 9.2pt; margin-left: 6px }}
-.row {{ display: flex; gap: 26px }}
-svg text {{ font-family: Figtree, sans-serif }} .ax {{ font-size: 8px; fill: {INK}; font-weight: 700 }} .ax2 {{ font-size: 7.5px; fill: {MUT} }}
-.q2 {{ font-size: 15px; font-weight: 800; fill: {PURPLE} }}
-.rules {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px }}
-.rule {{ border: 1px solid {LINE}; border-radius: 12px; padding: 9px 12px 8px }}
-.rule b {{ display: block; font-size: 12.5pt; font-weight: 800 }} .rule span {{ display: block; font-size: 8.6pt; color: {MUT}; margin: 1px 0 4px; line-height: 1.3 }}
-.fr {{ display: flex; align-items: center; gap: 8px; height: 21px }}
-.ftrack {{ width: 252px; flex: none }} .fbar {{ height: 13px; border-radius: 3px }}
-.fr b {{ font-size: 11pt; font-weight: 800; width: 46px; text-align: right; margin-right: 4px }} .fl {{ font-size: 9.4pt; font-weight: 700; width: 150px }}
-.fs {{ font-size: 8.6pt; color: {MUT}; flex: 1 }} .fw2 {{ font-size: 7pt; font-weight: 800; letter-spacing: .8px }}
-.feat {{ display: flex; gap: 14px; align-items: stretch }}
-.phone {{ width: 150px; flex: none; background: {INK}; border-radius: 24px; padding: 6px }}
-.scr {{ height: 100%; border-radius: 19px; background: linear-gradient(180deg, #2A1416 0%, #121318 55%, #0B0C10 100%); padding: 13px 11px 11px; color: #fff; display: flex; flex-direction: column }}
-.ptag {{ font-size: 7.4pt; font-weight: 700; color: #FF8A8E }}
-.pline {{ font-size: 14pt; font-weight: 800; line-height: 1.1; margin: auto 0 9px }}
-.pfoot {{ font-size: 7.2pt; color: #A5A9B5; margin-bottom: 6px }}
-.pbar {{ height: 5px; border-radius: 3px; background: #3A3D48; position: relative }}
-.pbar b {{ position: absolute; left: 0; top: 0; bottom: 0; background: {RED}; border-radius: 3px }}
-.pbar i {{ position: absolute; top: -3px; width: 3px; height: 11px; border-radius: 2px; margin-left: -1px }}
-.plab {{ display: flex; justify-content: space-between; font-size: 6.6pt; color: #8A8E9A; margin-top: 4px }}
-.fbeats {{ flex: 1; display: flex; flex-direction: column; gap: 8px }}
-.fb {{ border-left: 2px solid {LINE}; padding-left: 9px }}
-.ft {{ font-size: 8.4pt; font-weight: 800 }} .ft span {{ color: {MUT}; font-weight: 600; margin-left: 6px }}
-.fq {{ font-size: 9.6pt; font-weight: 600; line-height: 1.28; margin-top: 1px }}
-.fmeta {{ font-size: 8.4pt; color: {MUT}; margin-top: auto; line-height: 1.35 }}
-.days {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px }}
-.day {{ border: 1px solid {LINE}; border-top: 3px solid {RED}; border-radius: 10px; padding: 7px 9px }}
-.dd {{ font-size: 7.4pt; font-weight: 800; color: {RED}; letter-spacing: 1.1px }}
-.dt {{ font-size: 9.2pt; font-weight: 800; line-height: 1.2; margin: 2px 0 3px }} .dm {{ font-size: 7.8pt; color: {MUT} }}
-.note {{ font-size: 8.6pt; color: {MUT}; margin-top: 6px; line-height: 1.35 }} .note b {{ color: {INK} }}
-.legend {{ font-size: 8.2pt; color: {MUT} }} .legend i {{ display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin: 0 3px 0 8px; vertical-align: 0 }}
-.analogy {{ background: {SOFT}; border-radius: 12px; padding: 9px 12px; font-size: 9.2pt; color: #3D4250; line-height: 1.4 }} .analogy b {{ color: {INK} }}
-.foot {{ position: absolute; left: 36px; right: 36px; bottom: 9px; display: flex; justify-content: space-between; font-size: 7pt; color: #A3A7B2 }}
-.ba {{ display: flex; align-items: center; gap: 12px; padding: 5px 0; border-bottom: 1px solid {LINE} }} .ba:last-child {{ border: 0 }}
-.bal {{ width: 175px; font-size: 9.4pt; font-weight: 700; line-height: 1.25 }} .bab {{ flex: 1 }}
-.bb {{ display: flex; align-items: center; gap: 8px; margin: 3px 0 }} .trk {{ width: 260px; height: 12px; position: relative; flex: none }}
-.trk i {{ position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px }}
-.bb em {{ font-style: normal; font-size: 8.6pt; font-weight: 800; color: {MUT}; white-space: nowrap }}
-.tst {{ padding: 8px 0; border-bottom: 1px solid {LINE} }} .tst:last-of-type {{ border: 0 }}
-.tst .h {{ display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px }} .tst .h b {{ font-size: 15pt; font-weight: 800 }} .tst .h span {{ font-size: 9pt; color: #3D4250 }}
-.tst .s {{ font-size: 8.2pt; color: {MUT}; margin-top: 3px }}
-.tl {{ display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px }} .tl b {{ font-size: 14pt; font-weight: 800 }} .tl span {{ font-size: 8.8pt; color: {MUT} }}
-.stats {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px }}
-.st {{ background: {SOFT}; border-radius: 10px; padding: 7px 10px }} .st b {{ display: block; font-size: 13pt; font-weight: 800 }} .st span {{ font-size: 7.8pt; color: {MUT} }}
-.lim div {{ padding: 6px 0; border-bottom: 1px solid {LINE} }} .lim div:last-child {{ border: 0 }}
-.lim b {{ font-size: 9.6pt }} .lim span {{ display: block; font-size: 8.6pt; color: {MUT}; line-height: 1.32 }}
-.wrong div {{ background: {SOFT}; border-radius: 10px; padding: 8px 10px; font-size: 8.7pt; line-height: 1.35; margin-bottom: 7px }}
-.wrong .x {{ color: {RED}; font-weight: 800 }} .wrong .ok {{ color: {GOOD}; font-weight: 800 }}
-code {{ font-family: Menlo, monospace; font-size: 7.8pt; background: {INK}; color: #FFB3B5; border-radius: 4px; padding: 1px 5px }}
-"""
-
-links = "  ·  ".join(x for x in [short(_L["site"]) if _L.get("site") else "", short(_L["repo"]) if _L.get("repo") else ""] if x)
-TOP = (f'<div class="top">{LOGO}<div class="div"></div><span class="prod">PROMO FINDER</span>'
-       f'<div class="me"><b>{NAME}</b><br>{links}</div></div>')
-n_cross = sum(p["kind"] == "cross" for p in P[:20])
+links = " · ".join(x for x in [short(_L["site"]) if _L.get("site") else "", short(_L["repo"]) if _L.get("repo") else ""] if x)
+TOP = (f'<div class="top">{LOGO}<span class="pr">Promo Finder</span>'
+       f'<div class="me"><span><span class="dot"></span><b>{NAME}</b></span><span>{links}</span></div></div>')
+X3 = lambda t: 4 + 132 * t / 90  # noqa: E731
+mini_len = (f'<svg class="mini" width="140" height="16"><rect x="4" y="6" width="132" height="5" rx="2.5" fill="rgba(255,255,255,.25)"/>'
+            f'<rect x="{X3(20)}" y="6" width="{X3(60) - X3(20)}" height="5" rx="2.5" fill="#fff"/><text x="{X3(20)}" y="4" font-size="6" fill="#fff" text-anchor="middle">20</text>'
+            f'<text x="{X3(60)}" y="4" font-size="6" fill="#fff" text-anchor="middle">60</text></svg>')
+mini_hook = ('<svg class="mini" width="140" height="16"><rect x="4" y="6" width="132" height="5" rx="2.5" fill="rgba(255,255,255,.25)"/>'
+             '<rect x="4" y="6" width="14" height="5" rx="2.5" fill="#fff"/><text x="24" y="11" font-size="6.5" fill="#fff">first 3 s</text></svg>')
+mini_cut = ('<svg class="mini" width="140" height="16"><rect x="4" y="6" width="100" height="5" rx="2.5" fill="rgba(255,255,255,.25)"/>'
+            '<rect x="80" y="6" width="24" height="5" rx="2.5" fill="#fff"/><line x1="110" y1="1" x2="110" y2="16" stroke="#fff" stroke-dasharray="2 2"/>'
+            '<text x="116" y="12" font-size="10" font-weight="800" fill="#fff">?</text></svg>')
 
 page1 = f"""<div class="page">{TOP}
- <div class="row" style="align-items:flex-end;margin-bottom:14px">
-  <div style="flex:1"><h1>Promo Finder picks a show's promo clips from its script.</h1>
-   <div class="lead">To choose promos today, an editor watches all {WATCH_MIN:.0f} minutes of a new show, and a new show arrives every week.
-    This tool reads the timestamped screenplay instead and returns clips that already meet the three promo rules, ranked, with a plan for the first week.</div></div>
-  <div class="analogy" style="width:410px"><b>Think of it as a paper edit.</b> Film editors often plan cuts from a transcript before opening the footage.
-   Promo Finder does that step for promos: the editor still opens the footage, but only to check {len(PLAN)} clips.</div>
- </div>
-
- <div class="row">
-  <div style="flex:1">
-   <h2>The three rules every clip must pass</h2>
-   <div class="rules">
-    <div class="rule"><b>20 to 60 seconds</b><span>One stretch, or two moments joined, even across episodes</span>{length_ic}</div>
-    <div class="rule"><b>Hook within 3 seconds</b><span>The clip opens on the slap, threat or reveal, not a lead-in</span>{hook_ic}</div>
-    <div class="rule"><b>Cut before the answer</b><span>It ends at peak tension and still makes sense to a new viewer</span>{cut_ic}</div>
+ <div class="grid" style="grid-template-columns: 1fr 530px; gap:22px">
+  <div>
+   <div class="eyebrow">Kuku AI Generalist · Problem 1 · Find the promos</div>
+   <h1>every show hides its best promo.<span>we find it in the script.</span></h1>
+   <div class="lead">An editor watches all <b>{WATCH_MIN:.0f} minutes</b> of every new show to choose promo moments, and a new show ships every week.
+    Promo Finder reads the timestamped screenplay instead and hands back <b>{meta['ranked']} ranked, post-ready promos</b> and a week-1 plan.</div>
+   <div class="ba">
+    <div class="bab o">{icon("eye-off", 22, "#8A8D96")}<div><b>{WATCH_MIN:.0f} min</b><span>of footage watched per show, today</span></div></div>
+    <div class="baa">→</div>
+    <div class="bab n">{icon("wand-sparkles", 22, "#2BD49A")}<div><b style="color:#2BD49A">~7 min</b><span>script to ranked promos, then {PLAN_MIN:.0f} min to approve</span></div></div>
    </div>
-   <h2 style="margin-top:14px">From 50 scripts to 5 posts <span>bar length on a log scale</span></h2>
-   {funnel()}
-   <div class="note"><b>Code handles every timestamp and length</b>, so no clip can break a rule ({meta['rule_violations']} of {meta['candidates']} did).
-    The AI makes only judgement calls: which line hooks, which beat leaves the viewer hanging, and which of two clips is stronger.</div>
+   <div class="rules">
+    <div class="rule"><div class="rh">{icon("timer", 12, "#fff")}RULE 1</div><b>20–60 s</b><span>One stretch, or moments joined across episodes</span>{mini_len}</div>
+    <div class="rule"><div class="rh">{icon("zap", 12, "#fff")}RULE 2</div><b>hook ≤ 3 s</b><span>Opens on the slap, threat or reveal, not a lead-in</span>{mini_hook}</div>
+    <div class="rule"><div class="rh">{icon("scissors", 12, "#fff")}RULE 3</div><b>cut early</b><span>Ends before the answer, and still makes sense cold</span>{mini_cut}</div>
+   </div>
   </div>
-  <div style="width:440px"><h2>The #1 clip, second by second</h2>{featured()}</div>
+  <div class="card" style="display:flex; gap:14px; padding:11px 12px; background:linear-gradient(160deg,#160709,#0B0B0D)">
+   {phone()}
+   <div class="cos"><div class="k" style="margin:0">{icon("clapperboard", 12, "#8A8D96")}the #1 promo, beat by beat</div>{callouts()}</div>
+  </div>
  </div>
 
- <div class="row" style="margin-top:10px">
-  <div style="flex:1"><h2>Week 1 <span>{PLAN_MIN:.0f} minutes of clips to approve</span></h2><div class="days">{week()}</div>
-   <div class="note">{len(HOLD)} strong clips are held back because they give away twists. The same scene never runs two days in a row.</div></div>
-  <div style="width:560px"><h2>Where the top 20 come from <span>episodes 1–50</span></h2>{episode_strip()}
-   <div class="legend"><i style="background:{INK}"></i>one top-20 clip<i style="background:{RED}"></i>the #1 clip<i style="background:{PURPLE};border-radius:0;height:2px;width:12px;vertical-align:2px"></i>{n_cross} clips that join two episodes</div></div>
+ <div style="margin-top:10px"><div class="k">{icon("cpu", 12, "#8A8D96")}how it works · <em>code owns every timestamp and length, so 0 of {meta['candidates']} clips break a rule; the AI only judges drama</em></div>
+  <div class="pipe">{pipeline()}</div></div>
+
+ <div class="grid" style="grid-template-columns: 1fr 432px; gap:14px; margin-top:10px; height:146px">
+  <div style="display:flex; flex-direction:column"><div class="k">{icon("calendar-days", 12, "#8A8D96")}week 1 · <em>post these first</em><span style="margin-left:auto;text-transform:none;letter-spacing:0;font-weight:600">{len(HOLD)} clips held back for giving away twists</span></div>
+   <div class="posters">{posters()}</div></div>
+  <div class="card" style="padding:10px 14px"><div class="k" style="margin-bottom:2px">{icon("crosshair", 12, "#8A8D96")}where the top 20 come from · episodes 1–50</div>{episode_map()}
+   <div class="lg"><span><i style="background:#fff"></i>top-20 clip</span><span><i style="background:#EC1C24"></i>the #1 clip</span><span><i style="background:#B48CFF;border-radius:0;height:2px;width:12px;vertical-align:2px"></i>joins two episodes</span></div></div>
  </div>
  <div class="foot"><span>Run on all 50 episodes of <i>I Married a Broken Soldier. He was a Duke</i>. Every number is generated from the run files.</span><span>1 / 2</span></div>
 </div>"""
 
-page2 = f"""<div class="page">{TOP}
- <h1 style="font-size:20pt;margin-bottom:8px">How I checked it</h1>
- <div class="row">
-  <div style="flex:1.05"><h2>Before vs after each fix <span>grey = before, green = final</span></h2>{before_after()}
-   <div class="note">The big change: in the first version the AI chose the start and end of each clip and got the arithmetic wrong.
-    Now it only marks moments, code builds the clips, and clips are ranked by comparing them two at a time instead of scoring each one alone.</div></div>
-  <div style="flex:1"><h2>Tests where the right answer was known <span>no AI involved in the answer key</span></h2>
-   <div class="tst"><div class="h"><b>26 of 29</b><span>shocking lines I planted in real episodes were tagged as hooks</span></div>{dots(29, 26, GOOD)}
-    <div class="s">A random tagger would find about 4 (13%).</div></div>
-   <div class="tst"><div class="h"><b>0 of 29</b><span>dull lines planted the same way were wrongly tagged</span></div>{dots(29, 0, RED)}</div>
-   <div class="tst"><div class="h"><b>41–47 of 50</b><span>episodes where it found the writers' own closing cliffhanger</span></div>{dots(50, 47, GOOD, per_row=50, r=2.6, gap=6.7)}
-    <div class="s">Depending on the model (82–94%); chance is 18–26%.</div></div>
+PC = int(pw["position_consistency"] * 100 + 0.5)
+FIRST = int(pw["first_position_win_rate"] * 100 + 0.5)
+DUPS = meta["story_duplicates_removed"]
+
+
+def arch():
+    n = [("scroll-text", "parse", "parser.py", "CODE", f"50 scripts become {meta.get('beats', 3727):,} beats, each with an ID, start, end and speaker"),
+         ("sparkles", "tag", "moments.py", "AI", "Gemini 3.5 Flash (Vertex) marks hook and cliff beats by ID. 500 tags, 0 bad IDs"),
+         ("scissors", "build windows", "moments.py", "CODE", f"Each hook→cliff pair becomes a clip: 20–60 s, two parts, or two episodes. {meta['candidates']} clips"),
+         ("gauge", "screen", "jev.py", "AI", "Jev scores each clip on a rubric, in both list orders. 660 calls, 218 s"),
+         ("split", "dedupe + shortlist", "diversity.py", "CODE", f"Embeddings drop {DUPS} same-story clips. MMR keeps a varied top {meta['shortlist_size']}"),
+         ("swords", "rank", "rerank.py", "AI", f"Jev judges {pw['pairs_asked_both_ways']} pairs both ways. Bradley-Terry orders {pw['verdicts']} verdicts"),
+         ("calendar-days", "notes + plan", "explain.py", "AI", "Hook, cliff and why for the top 30, plus the week-1 plan, after ranking"),
+         ("film", "review site", "web/ · export.py", "EDITOR", "Phone player, notes, CSV. The editor approves or rejects")]
+    col = {"CODE": "#2BD49A", "AI": "#FF4D52", "EDITOR": "#C9CBD1"}
+    out = []
+    for i, (ic, t, f, kind, d) in enumerate(n):
+        c = col[kind]
+        out.append(f'<div class="an"><div class="anh"><span class="ic" style="background:{c}1F">{icon(ic, 14, c)}</span><b>{t}</b><i style="color:{c}">{kind}</i></div>'
+                   f'<code>{f}</code><span>{d}</span></div>' + ('<div class="aa">›</div>' if i < len(n) - 1 else ''))
+    return "".join(out)
+
+
+def ver(tag, title, did, broke, nums):
+    rows = "".join(f'<div class="vn">' + (f'<s>{b}</s><i>→</i>' if b else '') + f'<b>{c}</b><span>{l}</span></div>' for l, b, c in nums)
+    return (f'<div class="vc"><div class="vh"><span class="vt">{tag}</span><b>{title}</b></div><div class="vd">{did}</div>'
+            f'<div class="vb">{broke}</div>{rows}</div>')
+
+
+page2 = f"""<div class="page p2">{TOP}
+ <h2 style="margin-bottom:6px">how it's built <span>· and how i got there</span></h2>
+ <div class="card" style="padding:10px 12px 10px">
+  <div class="k">{icon("cpu", 12, "#8A8D96")}architecture · <em>code owns time and length, AI only judges drama, the editor decides</em>
+   <span style="margin-left:auto;text-transform:none;letter-spacing:0;font-weight:600"><b style="color:#2BD49A">CODE</b> deterministic · <b style="color:#FF4D52">AI</b> model call · <b style="color:#C9CBD1">EDITOR</b> person</span></div>
+  <div class="arch">{arch()}</div>
+  <div class="infra">
+   <div>{icon("git-compare-arrows", 12, "#C9CBD1")}<span><b>Model layer.</b> LiteLLM with one env var per role (<code>PROMO_TAG_MODEL</code>, <code>PROMO_RANK_MODEL</code>…) and fallback chains. Every call logs which model answered.</span></div>
+   <div>{icon("zap", 12, "#C9CBD1")}<span><b>Serving.</b> Vercel: static site plus a Python function (<code>api/run.py</code>) for passphrase-gated live runs. Keys live in Vercel env, never in code.</span></div>
+   <div>{icon("shield-check", 12, "#C9CBD1")}<span><b>Confidential pack.</b> Results are AES-256-GCM encrypted (PBKDF2, 310k rounds) and decrypted in the browser. Scripts never enter the repo.</span></div>
   </div>
  </div>
 
- <div class="row" style="margin-top:14px">
-  <div style="width:410px"><h2>Editor time per show</h2>{time_bars()}
-   <div class="stats"><div class="st"><b>~7 min</b><span>to process a 50-episode show</span></div>
-    <div class="st"><b>${SHOW_USD:.2f}</b><span>per show at API list prices</span></div>
-    <div class="st"><b>1 command</b><span>for a new show or a new model</span></div></div></div>
-  <div style="flex:1"><h2>What it can't do yet</h2><div class="lim">
-    <div><b>Prove its taste.</b><span>Three AI judges agree with each other only weakly (ρ 0.26–0.49). Ratings from real editors would settle it.</span></div>
-    <div><b>See the performance.</b><span>A slap is judged from the script's description, not from how the actor plays it.</span></div>
-    <div><b>Know the final cut.</b><span>Times come from the script; if the edit drifts, the editor nudges the in and out points.</span></div>
-    <div><b>Catch every repeat.</b><span>Two same-story pairs are still in the top 20.</span></div></div></div>
-  <div style="width:360px"><h2>Where AI tools misled me</h2><div class="wrong">
-    <div><span class="x">Asked for 20–60 s clips, it returned 9–160 s.</span> Models don't add up timestamps reliably. <span class="ok">So code now builds every clip.</span></div>
-    <div><span class="x">The first picker rated its own clips 9.5/10.</span> Those scores had no relation to an independent judge's. <span class="ok">So a separate judge ranks the clips.</span></div>
-    <div style="background:none;padding:2px 0 0;color:{MUT}">Built with Kiro (Claude), Gemini 3.5 Flash on Vertex for tagging and notes, TypeSafe Jev for ranking, and LiteLLM, so any model plugs in with one setting such as <code>PROMO_RANK_MODEL=openai/gpt-5</code>.</div></div></div>
+ <div class="grid" style="grid-template-columns: 1fr 420px; gap:12px; margin-top:8px">
+  <div class="card"><div class="k">{icon("flask-conical", 12, "#8A8D96")}how i got there · <em>measure what fails, fix it, measure again</em></div>
+   <div class="vers">
+    {ver("v1", "LLM picks the clip", "The model chose start and end beats and scored each clip 1–10 in one pass.",
+         "Broke: models can't add up timestamps, and 1–10 scores tie.",
+         [("raw clips in 20–60 s", "", "84%"), ("endings re-cut by code", "", "21/105"), ("tied scores", "", "81%")])}
+    {ver("v2", "LLM tags, code builds", "The model only labels hook and cliff beats. Code builds every window. Jev ranks pairs.",
+         "Fixed: rules hold by construction; head-to-head can't tie.",
+         [("clips in 20–60 s", "84%", "100%"), ("endings re-cut", "21", "0"), ("re-check order ρ", "0.44", "0.75–0.90")])}
+    {ver("v3", "Story-level dedupe, notes", "Stronger tagger on Vertex. Dedupe by story, not footage. Teasers can join two episodes.",
+         "Added: notes and week-1 plan, written after ranking so they can't bias it.",
+         [("same-story pairs, top 20", "4", "2"), ("cross-episode clips, top 20", "", "2"), ("cost per show", "", f"${SHOW_USD:.2f}")])}
+   </div></div>
+  <div class="card"><div class="k">{icon("target", 12, "#8A8D96")}tests with a known answer <em>· I wrote the key</em></div>
+   <div class="ts"><div class="tsh"><span class="ic" style="background:rgba(43,212,154,.1)">{icon("badge-check", 15, "#2BD49A")}</span><b>26 of 29</b><span>planted shocking lines tagged as hooks; random finds ~4</span></div>
+    {dots(29, 26, "#2BD49A", r=3.1, g=8.2)}</div>
+   <div class="ts"><div class="tsh"><span class="ic" style="background:rgba(236,28,36,.12)">{icon("ban", 15, "#FF4D52")}</span><b>0 of 29</b><span>dull decoy lines wrongly tagged</span></div>
+    {dots(29, 0, "#FF4D52", r=3.1, g=8.2)}</div>
+   <div class="ts"><div class="tsh"><span class="ic" style="background:rgba(43,212,154,.1)">{icon("clapperboard", 15, "#2BD49A")}</span><b>41–47 of 50</b><span>writers' own episode cliffhanger found; chance 18–26%</span></div>
+    {dots(50, 47, "#2BD49A", per=50, r=2.3, g=7.0)}</div>
+  </div>
  </div>
- <div class="foot"><span>Sources: experiments/BASELINE_v1 · RESULTS · JEV_RESULTS · REALWORLD_RESULTS(_lite) · AUDIT_* · DECK_EVIDENCE · runs/v3_final</span><span>2 / 2</span></div>
+
+ <div class="grid p2b" style="grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-top:8px">
+  <div class="card"><div class="k">{icon("brain-circuit", 12, "#8A8D96")}design choices, and why</div>
+   <div class="lim"><span class="ic g">{icon("scissors", 14, "#2BD49A")}</span><div><b>Select, don't generate</b><span>The model picks beat IDs; code does the maths. Rules can't break.</span></div></div>
+   <div class="lim"><span class="ic g">{icon("git-compare-arrows", 14, "#2BD49A")}</span><div><b>Ask every pair both ways</b><span>First-shown wins {FIRST}%, so order bias cancels. {PC}% of verdicts match.</span></div></div>
+   <div class="lim"><span class="ic g">{icon("timer", 14, "#2BD49A")}</span><div><b>Jev as the judge</b><span>Returns a probability in ~0.3 s. {pw['verdicts']} verdicts cost ${jev['cost_usd']:.3f}.</span></div></div>
+   <div class="lim"><span class="ic g">{icon("eye-off", 14, "#2BD49A")}</span><div><b>Judges see only the clip</b><span>Like a stranger scrolling, with no show context.</span></div></div>
+</div>
+  <div class="card"><div class="k">{icon("triangle-alert", 12, "#8A8D96")}what it can't do yet</div>
+   <div class="lim"><span class="ic">{icon("brain-circuit", 14, "#FFB547")}</span><div><b>Prove its taste</b><span>AI judges agree weakly (ρ 0.26–0.49). Editor labels would settle it.</span></div></div>
+   <div class="lim"><span class="ic">{icon("film", 14, "#FFB547")}</span><div><b>See the performance</b><span>It reads the script, not the actor's delivery.</span></div></div>
+   <div class="lim"><span class="ic">{icon("clock", 14, "#FFB547")}</span><div><b>Know the final cut</b><span>If the edit drifts from script times, the editor nudges cuts.</span></div></div>
+   <div class="lim"><span class="ic">{icon("split", 14, "#FFB547")}</span><div><b>Catch every repeat</b><span>Two same-story pairs remain in the top 20.</span></div></div>
+</div>
+  <div class="card"><div class="k">{icon("wand-sparkles", 12, "#8A8D96")}where AI tools misled me</div>
+   <div class="wr"><span class="x">Asked for 20–60 s clips, it returned 9–160 s.</span> <span class="ok">So code builds every clip.</span></div>
+   <div class="wr"><span class="x">The first picker rated its own clips 9.5/10;</span> an independent judge disagreed (ρ ≈ 0). <span class="ok">So a separate judge ranks.</span></div>
+   <div class="wr"><span class="x">One audit said v2 beat v1 (p = 0.01);</span> a stronger one saw no gain. <span class="ok">So I claim only what's measured.</span></div>
+   <div class="note" style="margin-top:2px"><b>Tools:</b> Kiro (Claude) for code · Gemini 3.5 Flash · TypeSafe Jev · Gemma and Gemini 3.8 as blind auditors</div></div>
+ </div>
+ <div class="foot"><span>Sources: experiments/BASELINE_v1 · RESULTS · ANALYSIS · JEV_RESULTS · REALWORLD_RESULTS(_lite) · AUDIT_* · runs/v3_final/meta.json · Icons: Lucide (ISC)</span><span>2 / 2</span></div>
 </div>"""
 
 (OUT / "solution.html").write_text(f"<!doctype html><html><head><meta charset='utf-8'><style>{CSS}</style></head><body>{page1}{page2}</body></html>")
 from playwright.sync_api import sync_playwright  # noqa: E402
 
+CHECK = """() => [...document.querySelectorAll('.page')].map(pg => {
+  const R = pg.getBoundingClientRect(), padB = 26, padR = 30;
+  let over = -999;
+  pg.querySelectorAll('*').forEach(e => { if (e.closest('.foot')) return; const q = e.getBoundingClientRect();
+    if (q.width && q.height) over = Math.max(over, q.bottom - (R.bottom - padB), q.right - (R.right - padR)); });
+  // largest fully empty horizontal band between the header and the footer
+  const blocks = [...pg.children].filter(c => !c.classList.contains('foot')).map(c => c.getBoundingClientRect());
+  const ys = []; for (let y = R.top + 50; y < R.bottom - padB; y += 2) {
+    const hit = [...pg.querySelectorAll('.card, .rules, .pos, .st, h1, h2, .lead, .ba, .eyebrow, .k, .kp, .phone')].some(el => { const q = el.getBoundingClientRect(); return y >= q.top && y <= q.bottom; });
+    ys.push(hit); }
+  let gap = 0, run = 0; ys.forEach(h => { run = h ? 0 : run + 2; gap = Math.max(gap, run); });
+  // slack inside cards: empty space under the last child
+  let slack = 0, where = '';
+  pg.querySelectorAll('.card').forEach(c => { const kids = [...c.children]; if (!kids.length) return;
+    const last = Math.max(...kids.map(k => k.getBoundingClientRect().bottom)); const s = c.getBoundingClientRect().bottom - last - 14;
+    if (s > slack) { slack = s; where = (c.querySelector('.k') || c).textContent.slice(0, 30); } });
+  const lastBottom = Math.max(...blocks.map(b => b.bottom));
+  return { overflow: Math.round(over), biggest_empty_band: gap, bottom_gap: Math.round(R.bottom - padB - lastBottom), card_slack: Math.round(slack), slack_in: where };
+})"""
+
 with sync_playwright() as pwr:
     b = pwr.chromium.launch()
-    pg = b.new_page(viewport={"width": 1280, "height": 720}, device_scale_factor=1.6)
+    pg = b.new_page(viewport={"width": 1280, "height": 720}, device_scale_factor=2)
     pg.goto((OUT / "solution.html").as_uri())
-    pg.wait_for_timeout(300)
+    pg.wait_for_timeout(400)
     pg.pdf(path=str(OUT / "solution.pdf"), width="13.333in", height="7.5in", print_background=True)
-    over = pg.evaluate("""() => [...document.querySelectorAll('.page')].map(p => { const r = p.getBoundingClientRect(); let w = -999;
-        p.querySelectorAll('*').forEach(e => { if (e.closest('.foot')) return; const q = e.getBoundingClientRect();
-          w = Math.max(w, q.bottom - (r.bottom - 26), q.right - (r.right - 30)); });
-        return Math.round(w); })""")
+    rep = pg.evaluate(CHECK)
     font_ok = pg.evaluate("document.fonts.check('12px Figtree')")
     for i, el in enumerate(pg.query_selector_all(".page"), 1):
         el.screenshot(path=str(OUT / f"page-{i}.png"))
     b.close()
-print("overflow px per page (must be <= 0):", over, "| Figtree loaded:", font_ok)
+for i, r in enumerate(rep, 1):
+    print(f"page {i}: {r}")
+print("Figtree loaded:", font_ok)

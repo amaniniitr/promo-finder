@@ -9,7 +9,6 @@
 <a href="#what-it-cant-do-yet">Limits</a>
 </p>
 
-Built by **Aman Kumar**.
 
 ## The problem
 

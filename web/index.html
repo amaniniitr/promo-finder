@@ -104,17 +104,59 @@ section { padding:70px 0 10px }
 .stat b { display:block; font-size:44px; font-weight:800; letter-spacing:-1.4px; line-height:1 } .stat b s { font-size:20px; color:var(--mut); margin-right:8px; font-weight:700 }
 .stat b em { color:var(--red); font-style:normal } .stat span { display:block; margin-top:10px; color:var(--mut); font-size:14px }
 
-/* scroll-driven steps */
-.how { height:250vh; padding:0 }
-.howsticky { position:sticky; top:72px; height:calc(100vh - 72px); display:flex; flex-direction:column; justify-content:center }
-.rail { height:3px; background:rgba(255,255,255,.1); border-radius:2px; margin:40px 0 0 }
-.rail .fill { height:100%; width:0; background:linear-gradient(90deg, var(--red), var(--red2)); border-radius:2px; box-shadow:0 0 14px rgba(236,28,36,.8) }
-.how .pipe::before { display:none } .how .pipe { margin-top:0; padding-top:18px }
-.how .stg { opacity:.28; transform:translateY(16px) scale(.98); transition:opacity .45s, transform .45s, border-color .45s, box-shadow .45s }
-.how .stg.done { opacity:.75; transform:none }
-.how .stg.on { opacity:1; transform:translateY(-6px); border-color:rgba(236,28,36,.7); box-shadow:0 22px 50px -22px rgba(236,28,36,.75) }
-.stg .big { font-size:14px; color:var(--mut); margin:2px 0 8px } .stg .big b { font-size:34px; font-weight:800; color:#fff; letter-spacing:-.8px; margin-right:7px; font-variant-numeric:tabular-nums }
-.how .stg.on .big b { color:var(--red2) }
+/* scroll-driven steps, Kuku "story" style */
+.how { height:420vh; padding:0 }
+.howsticky { position:sticky; top:72px; height:calc(100vh - 72px); display:flex; flex-direction:column; justify-content:center; overflow:hidden }
+.howsticky .h2 { margin-bottom:22px }
+.stage { position:relative; height:430px; -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 18%, #000 82%, transparent 100%); mask-image:linear-gradient(90deg, transparent 0, #000 18%, #000 82%, transparent 100%) }
+.strack { position:absolute; top:0; left:0; display:flex; will-change:transform }
+.slide { width:380px; flex:none; display:flex; flex-direction:column; align-items:center; transition:opacity .4s, filter .4s; opacity:.22; filter:blur(3px) grayscale(.6) }
+.slide .dev { transition:transform .5s cubic-bezier(.2,.7,.2,1); transform:scale(.82) }
+.slide.on { opacity:1; filter:none } .slide.on .dev { transform:scale(1) }
+.slide.near { opacity:.45; filter:blur(1.5px) grayscale(.3) }
+.dev { width:230px; height:372px; border-radius:30px; background:#050505; padding:8px; position:relative; box-shadow:0 0 0 2px #2A2A2E, 0 30px 60px -25px rgba(0,0,0,.9) }
+.dscr { height:100%; border-radius:23px; background:linear-gradient(180deg,#17090B 0%,#0B0B0D 60%); padding:16px 13px 12px; position:relative; overflow:hidden; display:flex; flex-direction:column }
+.dhd { display:flex; justify-content:space-between; font-size:10.5px; font-weight:700; color:var(--tx2); padding-bottom:9px; border-bottom:1px solid var(--line); margin-bottom:8px }
+.dhd .mono { color:var(--red2); font-size:10px }
+.ln { font-size:10.5px; line-height:1.3; color:var(--tx2); padding:5px 6px; border-radius:7px; margin-bottom:3px; position:relative }
+.ln b { font-size:8.5px; letter-spacing:.8px; color:#fff; margin-right:4px } .ln.dim { opacity:.4 }
+.ln .ts { display:inline-block; font-style:normal; font-family:var(--mono); font-size:8.5px; background:rgba(236,28,36,.18); color:var(--red2); border-radius:4px; padding:0 4px; margin-right:5px }
+.tagged.h { background:rgba(236,28,36,.16); box-shadow:inset 2px 0 0 var(--red) } .tagged.c { background:rgba(255,255,255,.08); box-shadow:inset 2px 0 0 #fff }
+.tg { position:absolute; right:5px; top:-6px; font-style:normal; font-size:7.5px; font-weight:800; letter-spacing:.8px; border-radius:6px; padding:1px 5px }
+.tg.hk { background:var(--red); color:#fff } .tg.cf { background:#fff; color:#000 }
+.dft { margin-top:auto; font-size:10.5px; color:var(--mut); padding-top:8px; border-top:1px solid var(--line) } .dft b { color:#fff; font-size:16px; margin-right:3px; font-variant-numeric:tabular-nums }
+.badge { position:absolute; right:-26px; bottom:44px; width:62px; height:62px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; letter-spacing:1px; box-shadow:0 14px 30px -10px rgba(0,0,0,.8) }
+.badge.code { background:#F2F2F4; color:#111 } .badge.ai { background:var(--red); color:#fff }
+.cap { margin-top:16px; font-weight:700; font-size:15px; color:var(--tx2) } .slide.on .cap { color:#fff }
+.tlx { position:relative; height:190px; margin-top:6px } .tlbar { position:absolute; left:0; right:0; top:50%; height:2px; background:rgba(255,255,255,.12) }
+.win { position:absolute; height:30px; border-radius:8px; border:1.5px solid var(--red); background:rgba(236,28,36,.14); display:flex; align-items:center; justify-content:space-between; padding:0 6px; font-size:8.5px; color:var(--tx2) }
+.win em { font-style:normal; font-weight:800; color:#fff; font-size:10px; margin:auto } .win span { font-size:7.5px; text-transform:uppercase; letter-spacing:.6px; color:var(--red2) }
+.win.w1 { left:2%; width:56%; top:4px } .win.w2 { left:36%; width:46%; top:44px } .win.w3 { left:8%; width:90%; top:84px; border-color:#555; background:transparent; border-style:dashed } .win.w3 em { color:#777 }
+.win.w4 { left:20%; width:72%; top:124px } .win.w5 { left:2%; width:96%; top:160px; border-color:#fff; background:rgba(255,255,255,.07) }
+.rulechips { display:flex; gap:4px; flex-wrap:wrap; margin-top:6px } .rulechips span { font-size:8.5px; font-weight:700; border:1px solid var(--line2); border-radius:999px; padding:2px 7px; color:var(--tx2) }
+.vs { display:flex; align-items:center; gap:6px; margin:10px 0 4px } .vc { flex:1; height:84px; border-radius:12px; background:#1B1B1F; border:1px solid var(--line2); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--tx2) }
+.vc.vwin { border-color:var(--red); background:rgba(236,28,36,.18); color:#fff } .vc b { color:var(--red2); font-size:18px } .vsx { font-size:10px; font-weight:800; color:var(--mut) }
+.vsn { font-size:9px; color:var(--mut); text-align:center; margin-bottom:10px }
+.lb div { display:flex; align-items:center; gap:6px; margin:5px 0 } .lb span { font-size:9.5px; font-weight:800; color:var(--red2); width:10px } .lb i { height:7px; border-radius:4px; background:linear-gradient(90deg, var(--red), var(--red2)) }
+/* in-screen motion when a slide becomes active */
+.slide .ln, .slide .win, .slide .lb div, .slide .vc { opacity:0; transform:translateY(6px); transition:opacity .35s, transform .35s }
+.slide.on .ln, .slide.on .win, .slide.on .lb div, .slide.on .vc { opacity:1; transform:none }
+.slide.on .ln.dim { opacity:.4 }
+.slide.on .ln:nth-of-type(1), .slide.on .win:nth-of-type(1), .slide.on .lb div:nth-of-type(1) { transition-delay:0.00s }
+.slide.on .ln:nth-of-type(2), .slide.on .win:nth-of-type(2), .slide.on .lb div:nth-of-type(2) { transition-delay:0.09s }
+.slide.on .ln:nth-of-type(3), .slide.on .win:nth-of-type(3), .slide.on .lb div:nth-of-type(3) { transition-delay:0.18s }
+.slide.on .ln:nth-of-type(4), .slide.on .win:nth-of-type(4), .slide.on .lb div:nth-of-type(4) { transition-delay:0.27s }
+.slide.on .ln:nth-of-type(5), .slide.on .win:nth-of-type(5), .slide.on .lb div:nth-of-type(5) { transition-delay:0.36s }
+.slide.on .ln:nth-of-type(6), .slide.on .win:nth-of-type(6), .slide.on .lb div:nth-of-type(6) { transition-delay:0.45s }
+.slide.on .ln:nth-of-type(7), .slide.on .win:nth-of-type(7), .slide.on .lb div:nth-of-type(7) { transition-delay:0.54s }
+
+.stepbar { max-width:880px; width:100%; margin:26px auto 0 }
+.steplab { font-size:34px; font-weight:800; color:var(--red); letter-spacing:-.6px; margin-bottom:12px }
+.srail { position:relative; height:8px; border-radius:4px; background:rgba(255,255,255,.14) }
+.sfill { position:absolute; left:0; top:0; bottom:0; border-radius:4px; background:linear-gradient(90deg, rgba(236,28,36,.4), var(--red)) }
+.sknob { position:absolute; top:-5px; width:18px; height:18px; border-radius:5px; background:var(--red); margin-left:-9px; box-shadow:0 0 16px rgba(236,28,36,.9) }
+.sticks { position:absolute; inset:0; display:flex; justify-content:space-between; pointer-events:none } .sticks i { width:2px; height:8px; background:rgba(0,0,0,.6) }
+.stepdesc { text-align:center; color:var(--tx2); font-size:16.5px; margin-top:18px; min-height:52px; transition:opacity .3s }
 
 /* studio */
 .studio { padding:80px 0 20px }
@@ -154,8 +196,8 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
 
 /* motion */
 .rv { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease } .rv.in { opacity:1; transform:none }
-@media (prefers-reduced-motion: reduce) { .how { height:auto; padding:70px 0 10px } .howsticky { position:static; height:auto } .how .stg { opacity:1; transform:none } .rv { opacity:1; transform:none; transition:none } .nav .dot { animation:none } * { scroll-behavior:auto } }
-@media (max-width:980px) { .how { height:auto; padding:60px 0 10px } .howsticky { position:static; height:auto } .how .stg { opacity:1; transform:none }
+@media (prefers-reduced-motion: reduce) { .how { height:auto; padding:70px 0 10px } .howsticky { position:static; height:auto; overflow:visible } .stage { height:auto; -webkit-mask-image:none; mask-image:none } .strack { position:static; flex-wrap:wrap; justify-content:center; gap:20px; transform:none !important } .slide, .slide.near { opacity:1; filter:none } .slide .dev { transform:none } .slide .ln, .slide .win, .slide .lb div, .slide .vc { opacity:1; transform:none; transition:none } .stepbar { display:none } .rv { opacity:1; transform:none; transition:none } .nav .dot { animation:none } * { scroll-behavior:auto } }
+@media (max-width:980px) { .how { height:auto; padding:60px 0 10px } .howsticky { position:static; height:auto; overflow:visible } .stage { height:auto; -webkit-mask-image:none; mask-image:none } .strack { position:static; flex-direction:column; align-items:center; gap:30px; transform:none !important } .slide, .slide.near { opacity:1; filter:none } .slide .dev { transform:none } .slide .ln, .slide .win, .slide .lb div, .slide .vc { opacity:1; transform:none } .stepbar { display:none }
   .show { grid-template-columns:1fr; padding:30px 24px } .phone { justify-self:center } .rules { flex-wrap:wrap; gap:14px } .rule { padding:0 14px }
   .pipe, .stats { grid-template-columns:1fr 1fr } .pipe::before { display:none } .grid { grid-template-columns:1fr } .kpis { grid-template-columns:repeat(2,1fr) }
   .side { position:static; max-height:none } .nav .prod { display:none } .hero { padding-top:56px }
@@ -202,16 +244,64 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
 
  <section class="how" id="how">
   <div class="howsticky">
-   <div class="h2">how it works <span class="r">in four steps</span></div>
-   <div class="sub">The 50-episode show, from script to week-1 posts. Keep scrolling to follow it.</div>
-   <div class="rail"><div class="fill" id="howfill"></div></div>
-   <div class="pipe">
-    <div class="stg" data-n="3727"><span class="n">1</span><span class="w">CODE</span><h3>Parse</h3><div class="big"><b>0</b>timed beats</div><p>Every line, action and sound in the script, with its exact start and end time.</p></div>
-    <div class="stg" data-n="500"><span class="n">2</span><span class="w ai">AI</span><h3>Tag</h3><div class="big"><b>0</b>moments</div><p>Gemini marks hook lines and cliffhanger beats by ID. It never writes a timestamp.</p></div>
-    <div class="stg" data-n="176"><span class="n">3</span><span class="w">CODE</span><h3>Assemble</h3><div class="big"><b>0</b>clips</div><p>Every hook → cliff window that fits 20–60 s, including clips that join two episodes.</p></div>
-    <div class="stg" data-n="20"><span class="n">4</span><span class="w ai">AI</span><h3>Rank</h3><div class="big"><b>0</b>shortlisted</div><p>TypeSafe Jev compares clips head to head, in both orders, then plans week 1.</p></div>
+   <div class="h2">how it works</div>
+   <div class="stage" id="stage"><div class="strack" id="track4">
+
+    <div class="slide" data-i="0"><div class="dev"><div class="dscr">
+      <div class="dhd"><span>Episode 03.txt</span><span class="mono">parsed</span></div>
+      <div class="ln"><i class="ts">0:00.0</i><b>ACTION</b> Victoria turns and slaps Carter.</div>
+      <div class="ln"><i class="ts">0:03.0</i><b>SOUND</b> A loud, echoing slap.</div>
+      <div class="ln"><i class="ts">0:04.0</i><b>VICTORIA</b> “You spineless traitor!”</div>
+      <div class="ln"><i class="ts">0:07.2</i><b>CARTER</b> “Vicky, listen to me…”</div>
+      <div class="ln"><i class="ts">0:10.5</i><b>CAMERA</b> Close-up on Leo, smiling.</div>
+      <div class="ln"><i class="ts">0:13.1</i><b>LEO</b> “Careful. Assault charges…”</div>
+      <div class="dft"><b class="cnt" data-n="3727">0</b> beats, each with a start and end time</div>
+     </div><div class="badge code">CODE</div></div>
+     <div class="cap">Read the screenplay</div></div>
+
+    <div class="slide" data-i="1"><div class="dev"><div class="dscr">
+      <div class="dhd"><span>Episode 03.txt</span><span class="mono">tagged</span></div>
+      <div class="ln tagged h"><i class="tg hk">HOOK</i><b>ACTION</b> Victoria turns and slaps Carter.</div>
+      <div class="ln dim"><b>SOUND</b> A loud, echoing slap.</div>
+      <div class="ln tagged h"><i class="tg hk">HOOK</i><b>VICTORIA</b> “You spineless traitor!”</div>
+      <div class="ln dim"><b>CARTER</b> “Vicky, listen to me…”</div>
+      <div class="ln dim"><b>CAMERA</b> Close-up on Leo, smiling.</div>
+      <div class="ln tagged c"><i class="tg cf">CLIFF</i><b>LEO</b> pulls out a syringe.</div>
+      <div class="dft"><b class="cnt" data-n="500">0</b> hooks and cliffhangers marked by ID</div>
+     </div><div class="badge ai">AI</div></div>
+     <div class="cap">Mark the hooks and cliffhangers</div></div>
+
+    <div class="slide" data-i="2"><div class="dev"><div class="dscr">
+      <div class="dhd"><span>Episodes 1–50</span><span class="mono">assembled</span></div>
+      <div class="tlx"><div class="tlbar"></div>
+       <div class="win w1"><span>hook</span><em>42 s</em><span>cliff</span></div>
+       <div class="win w2"><span>hook</span><em>27 s</em><span>cliff</span></div>
+       <div class="win w3 bad"><em>74 s · too long</em></div>
+       <div class="win w4"><span>hook</span><em>55 s</em><span>cliff</span></div>
+       <div class="win w5 x"><em>Ep 25 + Ep 36</em></div>
+      </div>
+      <div class="rulechips"><span>20–60 s</span><span>starts on the hook</span><span>ends on the cliff</span></div>
+      <div class="dft"><b class="cnt" data-n="176">0</b> clips that pass all three rules</div>
+     </div><div class="badge code">CODE</div></div>
+     <div class="cap">Build every clip that fits</div></div>
+
+    <div class="slide" data-i="3"><div class="dev"><div class="dscr">
+      <div class="dhd"><span>Head to head</span><span class="mono">ranked</span></div>
+      <div class="vs"><div class="vc vwin">Clip A<b>✓</b></div><div class="vsx">vs</div><div class="vc">Clip B</div></div>
+      <div class="vsn">asked again with B shown first</div>
+      <div class="lb"><div><span>1</span><i style="width:92%"></i></div><div><span>2</span><i style="width:80%"></i></div>
+       <div><span>3</span><i style="width:71%"></i></div><div><span>4</span><i style="width:63%"></i></div><div><span>5</span><i style="width:55%"></i></div></div>
+      <div class="dft"><b class="cnt" data-n="20">0</b> shortlisted · <b>5</b> posts for week 1</div>
+     </div><div class="badge ai">AI</div></div>
+     <div class="cap">Rank them head to head</div></div>
+
+   </div></div>
+   <div class="stepbar">
+    <div class="steplab" id="steplab">01 · parse</div>
+    <div class="srail" id="srail"><div class="sfill" id="sfill"></div><div class="sknob" id="sknob"></div>
+     <div class="sticks"><i></i><i></i><i></i><i></i></div></div>
+    <div class="stepdesc" id="stepdesc"></div>
    </div>
-   <div class="principle">Code handles every timestamp and duration, so <b>0 of 176 clips break a rule</b>. The AI only judges drama.</div>
   </div>
  </section>
 
@@ -448,21 +538,34 @@ cp .env.example .env          # add GEMINI_API_KEY (free); optional VERTEX_API_K
 function show(t) { TAB = t; document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x.dataset.t === t)); render(); }
 function go(t) { show(t); $("#studio").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" }); }
 document.querySelectorAll(".tab").forEach(x => x.onclick = () => show(x.dataset.t));
-/* scroll-driven walkthrough of the 4 steps */
+/* scroll-driven slider of the 4 steps (like kuku.app's "the story of kuku") */
 (() => {
-  const sec = $("#how"), cards = [...sec.querySelectorAll(".stg")], fill = $("#howfill"), shown = cards.map(() => 0);
-  const count = (el, to) => { const b = el.querySelector(".big b"); const t0 = performance.now(), d = 800;
-    const f = now => { const k = Math.min(1, (now - t0) / d); b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))).toLocaleString("en-US"); if (k < 1) requestAnimationFrame(f); };
+  const sec = $("#how"), stage = $("#stage"), track = $("#track4"), slides = [...track.children];
+  const STEPS = [["01 · parse", "Code reads every episode's script into timed beats: each line, action and sound with its exact start and end. All 3,727 of them."],
+                 ["02 · tag", "Gemini reads each episode and marks the lines that hook a scroller and the beats that leave a cliffhanger. It points at IDs and never writes a time."],
+                 ["03 · assemble", "Code builds every hook → cliff window that fits 20–60 s, plus clips that join two episodes. Anything too long or too short never exists."],
+                 ["04 · rank", "TypeSafe Jev compares clips two at a time, in both orders, so the order shown can't pick the winner. The top 20 become a week-1 plan."]];
+  const counted = slides.map(() => 0);
+  const count = el => { const b = el.querySelector(".cnt"); if (!b) return; const to = +b.dataset.n, t0 = performance.now();
+    const f = now => { const k = Math.min(1, (now - t0) / 900); b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))).toLocaleString("en-US"); if (k < 1) requestAnimationFrame(f); };
     requestAnimationFrame(f); };
   const flat = () => matchMedia("(max-width:980px)").matches || REDUCED;
+  let lastStep = -1;
   const update = () => {
-    if (flat()) { cards.forEach((c, i) => { c.classList.add("done"); if (!shown[i]) { shown[i] = 1; count(c, +c.dataset.n); } }); fill.style.width = "100%"; return; }
+    if (flat()) { slides.forEach((sl, i) => { sl.classList.add("on"); if (!counted[i]) { counted[i] = 1; count(sl); } }); return; }
     const r = sec.getBoundingClientRect(), span = sec.offsetHeight - innerHeight;
-    const p = Math.max(0, Math.min(1, -r.top / span)); fill.style.width = (p * 100).toFixed(1) + "%";
-    const active = r.top > innerHeight * .4 ? -1 : Math.min(3, Math.floor(p * 4.2));
-    cards.forEach((c, i) => { c.classList.toggle("on", i === active); c.classList.toggle("done", i < active);
-      if (i <= active && !shown[i]) { shown[i] = 1; count(c, +c.dataset.n); } });
+    const p = Math.max(0, Math.min(1, -r.top / span));
+    const f = p * (slides.length - 1), w = slides[0].offsetWidth;
+    track.style.transform = `translateX(${stage.offsetWidth / 2 - w / 2 - f * w}px)`;
+    const cur = Math.round(f);
+    slides.forEach((sl, i) => { sl.classList.toggle("on", i === cur); sl.classList.toggle("near", Math.abs(i - cur) === 1);
+      if (i === cur && !counted[i]) { counted[i] = 1; count(sl); } });
+    $("#sfill").style.width = (p * 100) + "%"; $("#sknob").style.left = (p * 100) + "%";
+    if (cur !== lastStep) { lastStep = cur; $("#steplab").textContent = STEPS[cur][0]; const d = $("#stepdesc"); d.style.opacity = 0;
+      setTimeout(() => { d.textContent = STEPS[cur][1]; d.style.opacity = 1; }, 150); }
   };
+  $("#srail").addEventListener("click", e => { const r = $("#srail").getBoundingClientRect(), k = (e.clientX - r.left) / r.width;
+    scrollTo({ top: sec.offsetTop + (sec.offsetHeight - innerHeight) * k - 72 + 1, behavior: "smooth" }); });
   addEventListener("scroll", () => requestAnimationFrame(update), { passive: true }); addEventListener("resize", update); update();
 })();
 const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add("in")), { threshold: .12 });

@@ -18,3 +18,5 @@ deck/*.json
 .env*
 DESIGN_BRIEF*.md
 web/data/kuku.json
+web/data/*.pdf
+web/data/promos.csv

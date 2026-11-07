@@ -26,6 +26,9 @@ header { position:sticky; top:0; z-index:60; background:rgba(0,0,0,.72); backdro
 .nav img { height:26px; display:block } .nav .prod { font-weight:700; font-size:15px; color:var(--tx2); padding-left:14px; border-left:1px solid var(--line2) }
 .nav .me { margin-left:auto; display:flex; gap:22px; align-items:center; font-weight:700; font-size:14.5px }
 .nav .me a { text-decoration:none; color:var(--tx2); transition:color .2s } .nav .me a:hover { color:#fff }
+.nav .me .who, .nav .me a.navdl { white-space:nowrap } .nav .me .sm { display:none }
+.nav .me a.navdl { background:var(--red); color:#fff; font-weight:800; font-size:14px; border-radius:999px; padding:9px 16px; box-shadow:0 0 0 1px rgba(255,255,255,.08) } .nav .me a.navdl:hover { background:#FF2D35; color:#fff }
+.nav .me a.navdl.ghost { background:#1C1C20; border:1px solid var(--line2) } .nav .me a.navdl.ghost:hover { background:#26262B }
 .nav .dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--red); margin-right:8px; vertical-align:1px; animation:pulse 2s infinite }
 @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(236,28,36,.6) } 50% { box-shadow:0 0 0 6px rgba(236,28,36,0) } }
 
@@ -196,12 +199,15 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
 
 /* motion */
 .rv { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease } .rv.in { opacity:1; transform:none }
-@media (prefers-reduced-motion: reduce) { .how { height:auto; padding:70px 0 10px } .howsticky { position:static; height:auto; overflow:visible } .stage { height:auto; -webkit-mask-image:none; mask-image:none } .strack { position:static; flex-wrap:wrap; justify-content:center; gap:20px; transform:none !important } .slide, .slide.near { opacity:1; filter:none } .slide .dev { transform:none } .slide .ln, .slide .win, .slide .lb div, .slide .vc { opacity:1; transform:none; transition:none } .stepbar { display:none } .rv { opacity:1; transform:none; transition:none } .nav .dot { animation:none } * { scroll-behavior:auto } }
+@media (prefers-reduced-motion: reduce) { .how { height:auto; padding:70px 0 10px } .howsticky { position:static; height:auto; overflow:visible } .stage { height:auto; -webkit-mask-image:none; mask-image:none } .strack { position:static; flex-wrap:wrap; justify-content:center; gap:20px; transform:none !important } .slide, .slide.near { opacity:1; filter:none } .slide .dev { transform:none } .slide .ln, .slide .win, .slide .lb div, .slide .vc { opacity:1; transform:none; transition:none } .stepbar { display:none } .rv { opacity:1; transform:none; transition:none } .nav .me .who, .nav .me a.navdl { white-space:nowrap } .nav .me .sm { display:none }
+.nav .me a.navdl { background:var(--red); color:#fff; font-weight:800; font-size:14px; border-radius:999px; padding:9px 16px; box-shadow:0 0 0 1px rgba(255,255,255,.08) } .nav .me a.navdl:hover { background:#FF2D35; color:#fff }
+.nav .me a.navdl.ghost { background:#1C1C20; border:1px solid var(--line2) } .nav .me a.navdl.ghost:hover { background:#26262B }
+.nav .dot { animation:none } * { scroll-behavior:auto } }
 @media (max-width:980px) { .how { height:auto; padding:60px 0 10px } .howsticky { position:static; height:auto; overflow:visible } .stage { height:auto; -webkit-mask-image:none; mask-image:none } .strack { position:static; flex-direction:column; align-items:center; gap:30px; transform:none !important } .slide, .slide.near { opacity:1; filter:none } .slide .dev { transform:none } .slide .ln, .slide .win, .slide .lb div, .slide .vc { opacity:1; transform:none } .stepbar { display:none }
   .show { grid-template-columns:1fr; padding:30px 24px } .phone { justify-self:center } .rules { flex-wrap:wrap; gap:14px } .rule { padding:0 14px }
   .pipe, .stats { grid-template-columns:1fr 1fr } .pipe::before { display:none } .grid { grid-template-columns:1fr } .kpis { grid-template-columns:repeat(2,1fr) }
   .side { position:static; max-height:none } .nav .prod { display:none } .hero { padding-top:56px }
-  .nav .me { gap:12px; font-size:13px } .nav .me #links { display:none } .wrap { padding:0 18px } .phone { width:280px; height:570px } }
+  .nav .me { gap:12px; font-size:13px } .nav .me #links, .nav .me a.navdl.ghost { display:none } .nav .me a.navdl { padding:7px 12px; font-size:12.5px } .nav .me .lg { display:none } .nav .me .sm { display:inline } .nav .me .who { font-size:12px } .wrap { padding:0 18px } .phone { width:280px; height:570px } }
 .dlbar { display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:18px 22px; margin-bottom:18px; border-color:rgba(236,28,36,.45); background:linear-gradient(120deg,#1A0507,var(--card) 55%) }
 .dlbar > div { flex:1; min-width:240px } .dlbar b { display:block; font-size:17px } .dlbar span { font-size:13px; color:var(--tx2) }
 </style>
@@ -210,7 +216,7 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
 <header><div class="wrap nav">
  <a href="https://kuku.app/" target="_blank" rel="noopener"><img src="kuku-logo-white.svg" alt="kuku"></a>
  <span class="prod">Promo Finder</span>
- <div class="me"><span><span class="dot"></span>Aman Kumar · 22322004</span><span id="links"></span></div>
+ <div class="me"><span class="who"><span class="dot"></span>Aman Kumar · 22322004</span><a class="navdl" href="data/promo-finder-solution-aman-kumar.pdf" download>⬇ <span class="lg">Solution deck</span><span class="sm">Deck</span></a><a class="navdl ghost" href="data/promos.csv" download>⬇ Promos CSV</a><span id="links"></span></div>
 </div></header>
 
 <div class="wrap">

@@ -67,6 +67,9 @@ if final.exists():
     if pdf.exists():
         kuku["deck_pdf_b64"] = base64.b64encode(pdf.read_bytes()).decode()
     kuku["csv"] = (final / "promos.csv").read_text()
+    if pdf.exists():
+        (WEB / "data" / "promo-finder-solution-aman-kumar.pdf").write_bytes(pdf.read_bytes())
+    (WEB / "data" / "promos.csv").write_text(kuku["csv"])
     # Published openly on the site (the show is public). Git-ignored, so the repo itself stays free of script text.
     (WEB / "data" / "kuku.json").write_text(json.dumps(kuku, separators=(",", ":")))
     print(f"web/data/kuku.json: {len(kuku['promos'])} promos + deck (public on the site, not in git)")

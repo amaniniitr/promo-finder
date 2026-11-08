@@ -169,6 +169,7 @@ section { padding:70px 0 10px }
 .tab:hover { color:#fff; background:rgba(255,255,255,.06) } .tab.on { color:#fff; background:var(--red) }
 #view { padding:26px 0 80px; min-height:420px }
 .card { background:var(--card); border:1px solid var(--line); border-radius:22px; padding:22px 24px; margin-bottom:18px; transition:transform .25s, border-color .25s, box-shadow .25s }
+#view .card { min-width:0; max-width:100%; overflow-x:auto }
 .card h2 { font-size:12px; font-weight:800; letter-spacing:1.8px; color:var(--mut); text-transform:uppercase; margin-bottom:14px }
 .note { font-size:14.5px; color:var(--mut) } .note b { color:#fff }
 .kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:18px }
@@ -320,6 +321,16 @@ footer { border-top:1px solid var(--line); padding:26px 0 40px; font-size:13px; 
    <div class="stat"><b>26<em>/29</em></b><span>shocking lines planted in real episodes were found; 0 of 29 dull decoys were picked</span></div>
    <div class="stat"><b>~7<em> min</em></b><span>per 50-episode show, about $1.48 at API list prices. Any model swaps in with one setting</span></div>
   </div>
+ </section>
+
+ <section class="rv"><div class="h2">where it picks badly <span class="r">and the next fix</span></div>
+  <div class="stats">
+   <div class="stat"><b>#11</b><span>ends on a payoff: her fist closes round the ring she was looking for. The tagger called it a cliffhanger. Next: reject endings that resolve the hook</span></div>
+   <div class="stat"><b>2</b><span>pairs in the top 20 tell the same story twice (cosine 0.897 and 0.876, just under the 0.90 cut). Next: dedupe by scene, not text</span></div>
+   <div class="stat"><b>7<em>/20</em></b><span>top clips give away a twist. Only the week-1 plan holds them back. Next: a spoiler penalty in the ranking</span></div>
+   <div class="stat"><b>0.26<em>–.49</em></b><span>Spearman ρ between AI judges, so taste isn't proven, and it reads words, not acting. Next: editor labels</span></div>
+  </div>
+  <div class="sub" style="margin-top:14px"><b>Assumptions:</b> script times match the final cut · 20–60 s and hook ≤ 3 s are hard rules · viewers are strangers, so judges see only the clip · "best" means stops the scroll and pulls to the next episode · two moments may join if one lead links them.</div>
  </section>
 
  <div class="studio" id="studio"><div class="h2">the studio <span class="r">see it work</span></div>

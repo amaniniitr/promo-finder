@@ -96,14 +96,26 @@ I tested the parts I could check against an answer key that no AI wrote ([`exper
 - **Writers' cliffhangers.** Each episode ends on a cliffhanger the writers chose. The tagger found it in 41–47 of 50 episodes depending on the model, against 18–26% by chance.
 - **Rules.** 0 of 176 clips break the length or hook rule. 81% of pairwise verdicts are the same in both orders.
 
-## What it can't do yet
+## Where it picks badly
 
-<img src="docs/limits.png" alt="Limits" width="49%"> <img src="docs/ai-tools.png" alt="Where AI tools misled me" width="49%">
+<img src="docs/limits.png" alt="Where it picks badly" width="49%"> <img src="docs/ai-tools.png" alt="Where AI tools misled me" width="49%">
 
-- **Prove its taste.** Three AI judges agree with each other only weakly (Spearman 0.26–0.49), and two blind audits disagreed on whether v2 beat v1. What's proven is the process: rules, no re-cuts, no ties, a reproducible order, speed and cost. Whether people prefer these promos needs editor labels or view data, which the review UI collects.
-- **See the performance.** It reads the script, so a slap is judged from the description, not the actor's delivery.
-- **Know the final cut.** Times come from the script. If the edit drifts, the editor nudges the in and out points.
-- **Catch every repeat.** Two same-story pairs are still in the top 20.
+Real cases from the final run, each with the fix I'd build next:
+
+- **It ends on a payoff.** #11 (E13) closes on her fist gripping the ring she was searching for, which answers the clip's question. The tagger labelled that beat a cliffhanger. *Fix:* reject a window when its last beats resolve the hook.
+- **It keeps the same story twice.** Two same-story pairs are still in the top 20: #2 and #4 are one thug fight across episodes 15 and 16 (cosine 0.897), and #5 and #6 are one chapel scene (0.876). Both sit just under the 0.90 dedupe cut. *Fix:* dedupe by scene and characters, not text alone.
+- **Spoilers rank high.** 7 of the top 20 give away a twist. The ranking ignores spoiler risk; only the week-1 plan holds them back. *Fix:* a spoiler penalty in the rank, stronger for later episodes.
+- **Its taste is not proven.** Three AI judges agree only weakly (Spearman 0.26–0.49), and two blind audits disagreed on whether v2 beat v1. What's proven is the process: rules, no re-cuts, no ties, a reproducible order, speed and cost. *Fix:* editor labels or view data, which the review UI collects.
+- **It reads words, not pictures.** A slap is judged from its description, not the actor's delivery. A strong silent shot is underrated.
+
+## Assumptions
+
+1. Script times match the final cut. If the edit drifts, the editor nudges the in and out points.
+2. 20–60 s and a hook in the first 3 s are hard rules, so code enforces them. "Cut before the answer" is judgement, so the AI judges it.
+3. A viewer has never seen the show, so the judges see only the clip.
+4. "Best" means most likely to stop a scroll and pull the viewer to the next episode.
+5. A clip may join two moments, even across episodes, if one lead character links them.
+6. Cuts land on beat boundaries, never mid-line.
 
 ## AI tools I used, and where they misled me
 
@@ -124,10 +136,13 @@ cp .env.example .env                                   # add keys, see below
 .venv/bin/python demo.py runs/new_show_test                     # no keys: view a saved run
 .venv/bin/streamlit run app.py                                  # editor review UI (approve / reject)
 .venv/bin/python tests/test_parser.py                           # parser tests, no keys
+.venv/bin/python scripts/verify_outputs.py "<show folder>"      # re-check a run against the scripts, no keys
 .venv/bin/python scripts/dev_server.py                          # the site + live-run API on localhost:3000
 ```
 
 **Keys.** A free `GEMINI_API_KEY` from AI Studio runs everything, with fallbacks. `VERTEX_API_KEY` moves tagging and notes to Vertex Gemini 3.5 Flash. `TYPESAFE_API_KEY` turns on Jev for screening and ranking. Any LiteLLM model string can be set per role, for example `PROMO_RANK_MODEL=openai/gpt-5-mini`.
+
+**Free version.** With only the free Gemini key, every step still runs: Gemini tags, screens and judges the pairs (a Swiss tournament instead of all pairs), within free-tier quotas. The cliffhanger test above scored 94% on the free `gemini-3.1-flash-lite` tagger. Jev is the paid upgrade. On the same shortlist it gave the same winner in both orders 80% of the time against 68% for the free ranker, with split-half ρ 0.90 against 0.44, in 16 s against about 25 min ([details](experiments/JEV_RESULTS.md)).
 
 **Input.** One file per episode (`.txt`, `.md` or `.fountain`). The parser accepts several layouts: `**LABEL:**` or `LABEL:` blocks, `NAME (Emotion):` dialogue, and times like `Start: (mm:ss.ff) | End: (...)`, `[mm:ss.ff - mm:ss.ff]`, `mm:ss,ff --> mm:ss,ff` or `1.0s - 4.8s`. If it finds nothing usable it stops with a clear error. [`tests/fixtures/new_show/`](tests/fixtures/new_show/) is an AI-written 4-episode show in a different format that proves a new show runs end to end ([output](runs/new_show_test/report.md)).
 

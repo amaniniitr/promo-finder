@@ -112,11 +112,11 @@ def callouts():
 
 
 def pipeline():
-    steps = [("scroll-text", "parse", f"{N_BEATS:,}", "timed beats", "CODE", "Every line, action and sound with its exact start and end"),
-             ("sparkles", "tag", f"{N_TAGS}", "moments", "AI", "Gemini marks hook and cliffhanger lines by ID. It never writes a time"),
-             ("scissors", "assemble", f"{meta['candidates']}", "clips", "CODE", "Every hook → cliff window that fits 20–60 s, incl. cross-episode"),
-             ("git-compare-arrows", "rank", "20", "shortlisted", "AI", f"{pw['verdicts']} head-to-heads, each asked in both orders"),
-             ("calendar-days", "plan", f"{len(PLAN)}", "posts, week 1", "EDITOR", f"{len(HOLD)} spoiler-heavy clips held for later weeks")]
+    steps = [("scroll-text", "parse", f"{N_BEATS:,}", "timed beats", "CODE", "Every line and action, with exact times"),
+             ("sparkles", "tag", f"{N_TAGS}", "moments", "AI", "Marks hooks and cliffs by ID, never a time"),
+             ("scissors", "assemble", f"{meta['candidates']}", "clips", "CODE", "Hook → cliff windows inside 20–60 s"),
+             ("git-compare-arrows", "rank", "20", "shortlisted", "AI", f"{pw['verdicts']} head-to-heads, both orders"),
+             ("calendar-days", "plan", f"{len(PLAN)}", "posts, week 1", "EDITOR", f"{len(HOLD)} spoiler clips held for later")]
     out = []
     for i, (ic, name, num, unit, who, txt) in enumerate(steps):
         col = {"CODE": "#2BD49A", "AI": "#EC1C24", "EDITOR": "#FFFFFF"}[who]
@@ -248,8 +248,11 @@ h1 { font-size:35px; line-height:1.02; font-weight:800; letter-spacing:-1.3px } 
 .coq { font-size:11px; font-weight:700; line-height:1.28; margin:3px 0 2px } .cow { font-size:10px; color:var(--mut) }
 .cowin { display:flex; gap:8px; align-items:flex-start; background:rgba(255,181,71,.08); border:1px solid rgba(255,181,71,.3); border-radius:12px; padding:8px 10px; font-size:10px; color:var(--tx2) }
 .cowin b { color:#fff } .cowin svg { flex:none; margin-top:1px }
+.nx { font-style:normal; color:#2BD49A }
+.asm { display:flex; align-items:stretch; gap:6px; margin-top:6px } .asm > span { flex:1; font-size:9.2px; color:var(--tx2); line-height:1.3; background:#0E0E10; border:1px solid var(--line); border-radius:10px; padding:4px 8px; display:flex; gap:6px; align-items:center; white-space:nowrap }
+.asm b { color:var(--red2); font-weight:800 } .asm .asmk { flex:0 0 92px; background:none; border:0; padding:5px 0; font-size:8.5px; font-weight:800; letter-spacing:1.4px; text-transform:uppercase; color:var(--mut); align-items:center }
 .pipe { display:flex; align-items:stretch; gap:6px }
-.st { flex:1; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:8px 11px }
+.st { flex:1; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:6px 11px }
 .sth { display:flex; align-items:center; gap:7px } .sti { width:28px; height:28px; border-radius:9px; border:1px solid; display:inline-flex; align-items:center; justify-content:center }
 .stn { font-size:12.5px; font-weight:800 } .stw { margin-left:auto; font-size:8px; font-weight:800; letter-spacing:1.2px }
 .stv { font-size:10.5px; color:var(--mut); margin:4px 0 2px } .stv b { font-size:21px; font-weight:800; color:#fff; letter-spacing:-.6px; margin-right:5px }
@@ -350,11 +353,17 @@ page1 = f"""<div class="page">{TOP}
 
  <div style="margin-top:10px"><div class="k">{icon("cpu", 12, "#8A8D96")}how it works · <em>code owns every timestamp and length, so 0 of {meta['candidates']} clips break a rule; the AI only judges drama</em></div>
   <div class="pipe">{pipeline()}</div></div>
+ <div class="asm"><span class="asmk">{icon("flag", 11, "#8A8D96")}assumptions I made</span>
+  <span><b>1</b>Script times match the final cut</span>
+  <span><b>2</b>20–60 s and hook ≤ 3 s are hard rules</span>
+  <span><b>3</b>Viewers are strangers: judges see only the clip</span>
+  <span><b>4</b>"Best" = stops the scroll, pulls to next episode</span>
+  <span><b>5</b>Two episodes may join if one lead links them</span></div>
 
- <div class="grid" style="grid-template-columns: 1fr 432px; gap:14px; margin-top:10px; height:146px">
+ <div class="grid" style="grid-template-columns: 1fr 432px; gap:14px; margin-top:8px; height:122px">
   <div style="display:flex; flex-direction:column"><div class="k">{icon("calendar-days", 12, "#8A8D96")}week 1 · <em>post these first</em><span style="margin-left:auto;text-transform:none;letter-spacing:0;font-weight:600">{len(HOLD)} clips held back for giving away twists</span></div>
    <div class="posters">{posters()}</div></div>
-  <div class="card" style="padding:10px 14px"><div class="k" style="margin-bottom:2px">{icon("crosshair", 12, "#8A8D96")}where the top 20 come from · episodes 1–50</div>{episode_map()}
+  <div class="card" style="padding:7px 14px 6px"><div class="k" style="margin-bottom:0">{icon("crosshair", 12, "#8A8D96")}where the top 20 come from · episodes 1–50</div>{episode_map()}
    <div class="lg"><span><i style="background:#fff"></i>top-20 clip</span><span><i style="background:#EC1C24"></i>the #1 clip</span><span><i style="background:#B48CFF;border-radius:0;height:2px;width:12px;vertical-align:2px"></i>joins two episodes</span></div></div>
  </div>
  <div class="foot"><span>Run on all 50 episodes of <i>I Married a Broken Soldier. He was a Duke</i>. Every number is generated from the run files.</span><span>1 / 2</span></div>
@@ -460,7 +469,7 @@ page2 = f"""<div class="page p2">{TOP}
    <span style="margin-left:auto;text-transform:none;letter-spacing:0;font-weight:600"><b style="color:#2BD49A">CODE</b> deterministic · <b style="color:#FF4D52">AI</b> model call · <b style="color:#C9CBD1">EDITOR</b> person</span></div>
   <div class="arch">{arch()}</div>
   <div class="infra">
-   <div>{icon("git-compare-arrows", 12, "#C9CBD1")}<span><b>Model layer.</b> LiteLLM with one env var per role (<code>PROMO_TAG_MODEL</code>, <code>PROMO_RANK_MODEL</code>…) and fallback chains. Every call logs which model answered.</span></div>
+   <div>{icon("git-compare-arrows", 12, "#C9CBD1")}<span><b>Model layer.</b> LiteLLM with one env var per role (<code>PROMO_TAG_MODEL</code>, <code>PROMO_RANK_MODEL</code>…) and fallback chains. <b>Free version:</b> one free Gemini key runs every step; without Jev, Gemini judges the pairs.</span></div>
    <div>{icon("zap", 12, "#C9CBD1")}<span><b>Serving.</b> Vercel: static site plus a Python function (<code>api/run.py</code>) for passphrase-gated live runs. Keys live in Vercel env, never in code.</span></div>
    <div>{icon("shield-check", 12, "#C9CBD1")}<span><b>Safe by default.</b> A pre-push check blocks keys, <code>.env</code> and script text from the repo. Live runs need a passphrase because they call paid APIs.</span></div>
   </div>
@@ -496,11 +505,11 @@ page2 = f"""<div class="page p2">{TOP}
      <div class="lim"><div><b>Bradley-Terry fit</b><span>Turns {pw['verdicts']} verdicts into one strength per clip. The #1 clip beats all 19 others.</span></div></div>
      <div class="lim"><div><b>Cheap enough to ask all</b><span>{pw['verdicts']} verdicts for ${jev['cost_usd']:.3f}, ~0.3 s each.</span></div></div>
     </div></div></div>
-  <div class="card"><div class="k">{icon("triangle-alert", 12, "#8A8D96")}what it can't do yet</div>
-   <div class="lim"><span class="ic">{icon("brain-circuit", 14, "#FFB547")}</span><div><b>Prove its taste</b><span>AI judges agree weakly (ρ 0.26–0.49). Editor labels would settle it.</span></div></div>
-   <div class="lim"><span class="ic">{icon("film", 14, "#FFB547")}</span><div><b>See the performance</b><span>It reads the script, not the actor's delivery.</span></div></div>
-   <div class="lim"><span class="ic">{icon("clock", 14, "#FFB547")}</span><div><b>Know the final cut</b><span>If the edit drifts from script times, the editor nudges cuts.</span></div></div>
-   <div class="lim"><span class="ic">{icon("split", 14, "#FFB547")}</span><div><b>Catch every repeat</b><span>Two same-story pairs remain in the top 20.</span></div></div>
+  <div class="card"><div class="k">{icon("triangle-alert", 12, "#8A8D96")}where it picks badly <em>· and the next fix</em></div>
+   <div class="lim"><span class="ic">{icon("scissors", 14, "#FFB547")}</span><div><b>Ends on a payoff: #11</b><span>Closes on her fist round the found ring. <i class="nx">Fix: reject endings that resolve.</i></span></div></div>
+   <div class="lim"><span class="ic">{icon("split", 14, "#FFB547")}</span><div><b>Same story twice: 2 pairs</b><span>#2/#4 and #5/#6, cosine 0.897, 0.876 &lt; 0.90 cut. <i class="nx">Fix: dedupe by scene.</i></span></div></div>
+   <div class="lim"><span class="ic">{icon("eye-off", 14, "#FFB547")}</span><div><b>Spoilers rank high: 7 of 20</b><span>Only the plan holds them back. <i class="nx">Fix: penalise in the rank.</i></span></div></div>
+   <div class="lim"><span class="ic">{icon("brain-circuit", 14, "#FFB547")}</span><div><b>Taste not proven</b><span>AI judges agree at ρ 0.26–0.49; it reads words, not acting. <i class="nx">Fix: editor labels.</i></span></div></div>
 </div>
   <div class="card"><div class="k">{icon("wand-sparkles", 12, "#8A8D96")}where AI tools misled me</div>
    <div class="wr"><span class="x">Asked for 20–60 s clips, it returned 9–160 s.</span> <span class="ok">So code builds every clip.</span></div>

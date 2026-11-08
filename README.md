@@ -6,7 +6,7 @@
 <a href="#how-it-works">How it works</a> ·
 <a href="#how-i-got-there">How I got there</a> ·
 <a href="#does-it-work">Does it work</a> ·
-<a href="#what-it-cant-do-yet">Limits</a>
+<a href="#where-it-picks-badly">Limits</a>
 </p>
 
 
